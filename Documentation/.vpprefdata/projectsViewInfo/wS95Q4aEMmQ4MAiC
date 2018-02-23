@@ -2,10 +2,14 @@
 <ProjectsViewInfo>
 	<DiagramOpenInfos activeDiagramId="_QwrQ4aEMmQ4MBlF">
 		<Info bounds="Re:0.0,0.0,0.0,0.0" diagramId="UvwFQ4aEMmQ4MAv7" maximized="true" offsetX="0" offsetY="0"/>
-		<Info bounds="Re:0.0,0.0,1708.0,886.0" diagramId="_QwrQ4aEMmQ4MBlF" maximized="true" offsetX="0" offsetY="0"/>
+		<Info bounds="Re:0.0,0.0,1816.0,886.0" diagramId="_QwrQ4aEMmQ4MBlF" maximized="true" offsetX="0" offsetY="0"/>
 	</DiagramOpenInfos>
 	<DiagramLastActivated>
-		<Diagram id="_QwrQ4aEMmQ4MBlF" time="1519392407304"/>
-		<Diagram id="UvwFQ4aEMmQ4MAv7" time="1519392141649"/>
+		<Diagram id="_QwrQ4aEMmQ4MBlF" time="1519397596758"/>
+		<Diagram id="UvwFQ4aEMmQ4MAv7" time="1519397586156"/>
+		<Diagram id="Use Case Statement" time="0"/>
+		<Diagram id="UeXceler Use Case" time="0"/>
+		<Diagram id="User Story" time="0"/>
+		<Diagram id="Sprint" time="0"/>
 	</DiagramLastActivated>
 </ProjectsViewInfo>
