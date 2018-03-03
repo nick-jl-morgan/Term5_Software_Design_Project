@@ -12,4 +12,6 @@ public class CreatePostingActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_create_posting);
     }
+
+
 }
