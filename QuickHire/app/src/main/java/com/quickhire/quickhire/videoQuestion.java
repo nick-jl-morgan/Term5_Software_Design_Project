@@ -12,8 +12,8 @@ public class videoQuestion extends Question {
         this.length=length;
     }
 
-    public String toString(){
-        String string ="type:"+this.numericQuestionType+",length:"+this.length+",question:"+this.questionText; //i.e 'type:0,length:60,question:Why do you want this position?'
+    public String toJSON(){
+        String string ="{'type':"+this.numericQuestionType+",'length':"+this.length+",'question':"+this.questionText+"'}"; //i.e 'type':0,length:60,question:Why do you want this position?'
         return string;
     }
 }

@@ -35,7 +35,7 @@ public class User implements java.io.Serializable{
 
     public void saveUser(){
         try {
-            FileOutputStream stream = new FileOutputStream("/tmp/user.data");
+            FileOutputStream stream = new FileOutputStream("user.data");
             ObjectOutputStream objectStream = new ObjectOutputStream(stream);
             objectStream.writeObject(theUser);
         }
@@ -51,7 +51,7 @@ public class User implements java.io.Serializable{
         boolean recovered;
         if(theUser == null) {
             try {
-                FileInputStream stream = new FileInputStream("/tmp/user.data");
+                FileInputStream stream = new FileInputStream("user.data");
                 ObjectInputStream objectStream = new ObjectInputStream(stream);
                 theUser  = (User) objectStream.readObject();
                 recovered = true;

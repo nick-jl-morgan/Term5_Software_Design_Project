@@ -25,6 +25,6 @@ public class jobPosting {
         this.postID=postID;
         this.ownerID=ownerID;
     }
-    
+
 
 }
