@@ -23,7 +23,7 @@ db = SQLAlchemy(app)
 jwt = JWTManager(app)
 
 
-import resources
+import loginController, applicationController
 
 #LandingPage for WebApp
 @app.route('/')
@@ -34,10 +34,10 @@ def landingController():
 
 
 #Mobile API Routes
-mobileAPI.add_resource(resources.UserRegistration, '/API/registration')
-mobileAPI.add_resource(resources.UserLogin, '/API/login')
-mobileAPI.add_resource(resources.UserLogoutAccess, '/API/logout/access')
-mobileAPI.add_resource(resources.UserLogoutRefresh, '/API/logout/refresh')
-mobileAPI.add_resource(resources.TokenRefresh, '/API/token/refresh')
-mobileAPI.add_resource(resources.AllUsers, '/API/users')
-mobileAPI.add_resource(resources.SecretResource, '/API/secret')
+mobileAPI.add_resource(loginController.UserRegistration, '/API/registration')
+mobileAPI.add_resource(loginController.UserLogin, '/API/login')
+mobileAPI.add_resource(loginController.UserLogoutAccess, '/API/logout/access')
+mobileAPI.add_resource(loginController.UserLogoutRefresh, '/API/logout/refresh')
+mobileAPI.add_resource(loginController.TokenRefresh, '/API/token/refresh')
+mobileAPI.add_resource(applicationController.addApplication,'/API/AddApplication')
+app.run(host='0.0.0.0')
