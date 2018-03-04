@@ -347,5 +347,15 @@ public class RegisterLoginActivity extends AppCompatActivity implements LoaderCa
             showProgress(false);
         }
     }
+
+    public class DataBaseRequest implements DatabaseConnection {
+
+        @Override
+        public String GetUser(String username, String password) {
+            String userResponse = 
+
+            return null;
+        }
+    }
 }
 
