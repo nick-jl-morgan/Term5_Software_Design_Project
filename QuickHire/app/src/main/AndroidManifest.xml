@@ -24,6 +24,7 @@
         <activity
             android:name=".CreatePostingActivity"
             android:exported="true" />
+<<<<<<< HEAD
         <activity
             android:name=".CreatePostingActivity2"
             android:label="@string/title_activity_create_posting2"
@@ -31,6 +32,8 @@
         <activity
             android:name=".RegisterLoginActivity"
             android:label="@string/title_activity_register_login"></activity>
+=======
+>>>>>>> KingBranch
     </application>
 
 </manifest>

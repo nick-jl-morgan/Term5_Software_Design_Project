@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.quickhire.quickhire.CreatePostingActivity">
 
+<<<<<<< HEAD
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -80,6 +81,18 @@
         </LinearLayout>
 
     </ScrollView>
+=======
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="384dp"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+>>>>>>> KingBranch
 
     <Button
         android:id="@+id/saveButton"
@@ -101,4 +114,40 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
+<<<<<<< HEAD
+=======
+    <ScrollView
+        android:layout_width="383dp"
+        android:layout_height="403dp"
+        android:layout_marginBottom="3dp"
+        app:layout_constraintBottom_toTopOf="@+id/saveButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <EditText
+                android:id="@+id/jobTitleTextbox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="Job Title" />
+
+            <EditText
+                android:id="@+id/descriptionTextBox"
+                android:layout_width="match_parent"
+                android:layout_height="87dp"
+                android:ems="10"
+                android:inputType="textMultiLine"
+                android:text="Description" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+>>>>>>> KingBranch
 </android.support.constraint.ConstraintLayout>
