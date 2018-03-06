@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class User implements java.io.Serializable{
     private int userID=9999;
     private String username;
-    private String accessToken, refreshToken;
+    private credentials creds;
 
     private static User theUser = null;
 
