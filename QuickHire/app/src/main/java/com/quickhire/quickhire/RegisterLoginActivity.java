@@ -29,9 +29,21 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
 
+=======
+import com.squareup.okhttp.Request;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.Response;
+
+>>>>>>> master
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -308,6 +320,20 @@ public class RegisterLoginActivity extends AppCompatActivity implements LoaderCa
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
+<<<<<<< HEAD
+=======
+            String username = mEmail;
+            String password = mPassword;
+            DataBaseRequest test = new DataBaseRequest();
+            String json = test.bodyJson(username,password);
+            try {
+                String response = test.doPostRequest(json);
+                System.out.println(response);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+>>>>>>> master
 
             try {
                 // Simulate network access.
@@ -350,12 +376,47 @@ public class RegisterLoginActivity extends AppCompatActivity implements LoaderCa
 
     public class DataBaseRequest implements DatabaseConnection {
 
+<<<<<<< HEAD
         @Override
         public String GetUser(String username, String password) {
             String userResponse = 
 
             return null;
         }
+=======
+        private String postUrl = "http://192.168.0.27:5000/API/registration";
+
+        public String bodyJson(String username, String password) {
+            return "{\"username\":\"" + username + "\","
+                    + "\"password\":\"" + password + "\"}";
+        }
+
+        @Override
+        public String GetUser(String username, String password) {
+            String json = bodyJson(username,password);
+            String userResponse = null;
+            try {
+                userResponse = doPostRequest(json);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return userResponse;
+        }
+
+        @Override
+        public String doPostRequest(String json) throws IOException {
+            RequestBody body = RequestBody.create(JSON, json);
+            Request request = new Request.Builder()
+                    .url(postUrl)
+                    .post(body)
+                    .build();
+            Response response = client.newCall(request).execute();
+            return response.body().string();
+        }
+
+
+
+>>>>>>> master
     }
 }
 
