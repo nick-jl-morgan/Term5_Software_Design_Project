@@ -1,5 +1,6 @@
 package com.quickhire.quickhire;
 
+
 import android.app.Application;
 
 import com.quickhire.quickhire.User;
@@ -23,5 +24,5 @@ public interface DatabaseConnection {
     //public boolean saveApplication(jobApplication Application);
 
    // public credentials loginUser(String username, String password);
-    
+
 }

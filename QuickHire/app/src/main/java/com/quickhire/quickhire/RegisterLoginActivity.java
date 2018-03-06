@@ -13,7 +13,6 @@ import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.AsyncTask;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -29,21 +28,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
 
-=======
-import com.squareup.okhttp.Request;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
-
->>>>>>> master
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -56,17 +43,17 @@ public class RegisterLoginActivity extends AppCompatActivity implements LoaderCa
      */
     private static final int REQUEST_READ_CONTACTS = 0;
 
-    /**
-     * A dummy authentication store containing known user names and passwords.
-     * TODO: remove after connecting to a real authentication system.
-     */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "foo@example.com:hello", "bar@example.com:world"
-    };
+//    /**
+//     * A dummy authentication store containing known user names and passwords.
+//     * TODO: remove after connecting to a real authentication system.
+//     */
+//    private static final String[] DUMMY_CREDENTIALS = new String[]{
+//            "foo@example.com:hello", "bar@example.com:world"
+//    };
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
-    private UserLoginTask mAuthTask = null;
+    UserLoginTask mAuthTask = new UserLoginTask(null,null);
 
     // UI references.
     private AutoCompleteTextView mEmailView;
@@ -217,7 +204,7 @@ public class RegisterLoginActivity extends AppCompatActivity implements LoaderCa
      * Shows the progress UI and hides the login form.
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
+    public void showProgress(final boolean show) {
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
@@ -304,120 +291,5 @@ public class RegisterLoginActivity extends AppCompatActivity implements LoaderCa
         int IS_PRIMARY = 1;
     }
 
-    /**
-     * Represents an asynchronous login/registration task used to authenticate
-     * the user.
-     */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
-
-        private final String mEmail;
-        private final String mPassword;
-
-        UserLoginTask(String email, String password) {
-            mEmail = email;
-            mPassword = password;
-        }
-
-        @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
-<<<<<<< HEAD
-=======
-            String username = mEmail;
-            String password = mPassword;
-            DataBaseRequest test = new DataBaseRequest();
-            String json = test.bodyJson(username,password);
-            try {
-                String response = test.doPostRequest(json);
-                System.out.println(response);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
->>>>>>> master
-
-            try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
-            }
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return true;
-        }
-
-        @Override
-        protected void onPostExecute(final Boolean success) {
-            mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                finish();
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
-            }
-        }
-
-        @Override
-        protected void onCancelled() {
-            mAuthTask = null;
-            showProgress(false);
-        }
-    }
-
-    public class DataBaseRequest implements DatabaseConnection {
-
-<<<<<<< HEAD
-        @Override
-        public String GetUser(String username, String password) {
-            String userResponse = 
-
-            return null;
-        }
-=======
-        private String postUrl = "http://192.168.0.27:5000/API/registration";
-
-        public String bodyJson(String username, String password) {
-            return "{\"username\":\"" + username + "\","
-                    + "\"password\":\"" + password + "\"}";
-        }
-
-        @Override
-        public String GetUser(String username, String password) {
-            String json = bodyJson(username,password);
-            String userResponse = null;
-            try {
-                userResponse = doPostRequest(json);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return userResponse;
-        }
-
-        @Override
-        public String doPostRequest(String json) throws IOException {
-            RequestBody body = RequestBody.create(JSON, json);
-            Request request = new Request.Builder()
-                    .url(postUrl)
-                    .post(body)
-                    .build();
-            Response response = client.newCall(request).execute();
-            return response.body().string();
-        }
-
-
-
->>>>>>> master
-    }
 }
 
