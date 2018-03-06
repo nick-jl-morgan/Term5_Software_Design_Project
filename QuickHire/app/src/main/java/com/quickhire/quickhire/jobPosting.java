@@ -4,6 +4,7 @@ package com.quickhire.quickhire;
  * Created by matth_000 on 2018-03-04.
  */
 
+import java.util.Iterator;
 import java.util.Vector;
 
 public class jobPosting {
@@ -25,6 +26,21 @@ public class jobPosting {
         this.postID=postID;
         this.ownerID=ownerID;
     }
-    
+
+    public string toJSON(){
+        String temp = "\"postID\":" + this.postID+","
+                    + "\"ownerID\":" + this.ownerID+","
+                    + "\"company\":\"" + this.company + "\","
+                    + "\"jobTitle\":\""+this.jobTitle+"\","
+                    + "\"description\":\""+this.description+"\","
+                    +"\"questions\":[";
+
+        StringBuilder builder = new StringBuilder();
+
+        Iterator iterator =
+        while(questions)
+
+
+    }
 
 }

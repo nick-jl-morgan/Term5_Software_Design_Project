@@ -18,5 +18,5 @@ public abstract class Question {
     }
 
 
-    @Override public abstract String toString(); //for display on screen.
+    public abstract String toJSON(); //for display and transport.
 }

@@ -290,7 +290,5 @@ public class RegisterLoginActivity extends AppCompatActivity implements LoaderCa
         int IS_PRIMARY = 1;
     }
 
-
-
 }
 
