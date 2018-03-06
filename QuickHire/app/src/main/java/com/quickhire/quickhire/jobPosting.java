@@ -27,7 +27,7 @@ public class jobPosting {
         this.ownerID=ownerID;
     }
 
-    public string toJSON(){
+    public String toJSON(){
         String temp = "\"postID\":" + this.postID+","
                     + "\"ownerID\":" + this.ownerID+","
                     + "\"company\":\"" + this.company + "\","
@@ -35,10 +35,16 @@ public class jobPosting {
                     + "\"description\":\""+this.description+"\","
                     +"\"questions\":[";
 
-        StringBuilder builder = new StringBuilder();
+        StringBuilder builder = new StringBuilder(temp);
 
-        Iterator iterator =
-        while(questions)
+       int size = questions.size();
+       for(int i=0; i<size; i++){
+           builder.append(questions.elementAt(i).toJSON());
+       }
+       builder.append("]}");
+
+
+       return builder.toString();
 
 
     }
