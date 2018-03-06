@@ -30,10 +30,10 @@ class UserModel(db.Model):
 
 	
 
-class ApplicationModel(db.Model):
-	__tablename__ = 'applications'
+class PostingModel(db.Model):
+	__tablename__ = 'postings'
 	id = Column(Integer, primary_key = True, nullable=False)
-	post_id = db.Column(Integer, nullable=False)
+	access_key = db.Column(Integer, nullable=False)
 	owner_id = db.Column(Integer, nullable=False)
 	description = db.Column(mysql.LONGTEXT, nullable=True)
 	title = db.Column(mysql.TEXT, nullable=False)
@@ -44,10 +44,9 @@ class ApplicationModel(db.Model):
          db.session.commit()
 
 
-
-
 class QuestionModel(db.Model):
 	__tablename__='questions'
 	id = Column(Integer, primary_key = True)
-	application_id = Column(Integer,db.ForeignKey(ApplicationModel.id),nullable=True)
+	posting_id = Column(Integer,db.ForeignKey(PostingModel.id),nullable=True)
 	description = db.Column(mysql.TEXT)
+

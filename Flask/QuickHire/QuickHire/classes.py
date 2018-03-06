@@ -1,7 +1,7 @@
-from models import UserModel, ApplicationModel
+from models import UserModel, PostingModel
 import sys
 class User:
-
+	
 	@staticmethod
 	def createUser(username,password):
 		#Check if user already exists
@@ -34,22 +34,38 @@ class User:
 		
 		 return
 
-class Application:
-	
+class Posting:
+
 	@staticmethod
-	def createApplication(owner_id,jobTitle,company,description,questions):
+	def commitPosting(owner_id,jobTitle,company,description,questions):
 		
-		Application = ApplicationModel();
-		Application.id = owner_id
-		Application.description = description
-		Application.title = jobTitle
-		Application.company_name = company
-		Application.post_id = 666
+		Posting = PostingModel();
+		Posting.id = owner_id
+		Posting.description = description
+		Posting.title = jobTitle
+		Posting.company_name = company
+		Posting.post_id = 666
+		Posting.save_to_db()
+
+		appID = Posting.id
 
 		for question in questions:
 			print >>sys.stderr, question
-		
+			try:
+				question.commitQuestion(appID)
+			except:
+				print >>sys.stderr,'commitQuestion Failure'
+				
 		return
+
+
+
+
+
+
+
+
+
 
 
 
