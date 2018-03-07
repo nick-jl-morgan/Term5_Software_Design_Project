@@ -28,11 +28,18 @@ class UserModel(db.Model):
         db.session.add(self)
         db.session.commit()
 
+    @classmethod
+    def getID(cls, username):
+    	return cls.query.filter_by(username = username).first().id
+
+
+################
+
 	
 
 class PostingModel(db.Model):
 	__tablename__ = 'postings'
-	id = Column(Integer, primary_key = True, nullable=False)
+	id = db.Column(db.Integer, primary_key = True)
 	access_key = db.Column(Integer, nullable=False)
 	owner_id = db.Column(Integer, nullable=False)
 	description = db.Column(mysql.LONGTEXT, nullable=True)
@@ -44,9 +51,30 @@ class PostingModel(db.Model):
          db.session.commit()
 
 
+
+
+################
+
 class QuestionModel(db.Model):
 	__tablename__='questions'
 	id = Column(Integer, primary_key = True)
 	posting_id = Column(Integer,db.ForeignKey(PostingModel.id),nullable=True)
 	description = db.Column(mysql.TEXT)
 
+
+###############
+
+
+class textQuestionModel(db.Model):
+	__tablename__='textQuestions'
+	id = Column(Integer, primary_key = True)
+	posting_id = Column(Integer,db.ForeignKey(PostingModel.id),nullable=True)
+	question = db.Column(mysql.TEXT)
+		
+	def save_to_db(self):
+         db.session.add(self)
+         db.session.commit()
+
+
+
+###############

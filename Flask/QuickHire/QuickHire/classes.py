@@ -1,5 +1,6 @@
-from models import UserModel, PostingModel
+from models import UserModel, PostingModel, textQuestionModel
 import sys
+from interface import Interface, implements
 class User:
 	
 	@staticmethod
@@ -34,38 +35,88 @@ class User:
 		
 		 return
 
+	@staticmethod
+	def getIdFromUsername(username):
+		return UserModel.getID(username)
+
+
+
+
+
+
+
 class Posting:
 
-	@staticmethod
-	def commitPosting(owner_id,jobTitle,company,description,questions):
+	@classmethod
+	def commitPosting(cls,owner_id,jobTitle,company,description,questions):
+		print >>sys.stderr,'One'
 		
+
 		Posting = PostingModel();
-		Posting.id = owner_id
+		Posting.owner_id = owner_id
 		Posting.description = description
 		Posting.title = jobTitle
 		Posting.company_name = company
-		Posting.post_id = 666
+		Posting.access_key = 6666
 		Posting.save_to_db()
 
 		appID = Posting.id
+		print >>sys.stderr,'Two'
 
 		for question in questions:
-			print >>sys.stderr, question
 			try:
 				question.commitQuestion(appID)
 			except:
 				print >>sys.stderr,'commitQuestion Failure'
-				
 		return
 
+class QuestionInterface(Interface):
+	
+	def commitQuestion(id):
+		 pass
+
+class TextQuestion(implements(QuestionInterface)):
+	 
+	 __model = None
+
+	 def __init__(self , question):
+	 	 self.model = textQuestionModel()
+	 	 self.model.question = question
+
+	 def commitQuestion(id):
+	 	 try:
+	 	 	 self.model.posting_id = id
+	 	 	 self.model.save_to_db;
+	 	 except :
+	 	 	raise ValueError('DataBase error on saving question with ID:' + id)
 
 
+class JsonParser:
+	
+	@staticmethod
+	def parseQuestions(questions):
 
+		objectList = []
 
+		for question in questions:
+			if question['type']==2 :
 
+				objectList.append(JsonParser.parseTextQuestion(question))
+			
+			elif question['type']==1:
+				pass
+				#objectList.append(JsonParser.parseMultipleChoiceQuestion(question))
 
+		return objectList
 
+	@staticmethod
+	def parseTextQuestion(questionJson):
+		q = TextQuestion(questionJson['question'])
+		return q
 
+	@staticmethod
+	def parseMultipleChoiceQuestion(question):
+		pass
 
 
 
