@@ -22,28 +22,13 @@ class addPosting(Resource):
         questionsJson = data['questions']
         questionsArray = JsonParser.parseQuestions(questionsJson)
 
-        current_user = get_jwt_identity()
-        curent_user_id = User.getIdFromUsername(current_user)
+        current_user_username = get_jwt_identity()
+        curent_user_id = User.getIdFromUsername(current_user_username)
         
-        Posting.commitPosting(curent_user_id, data['jobTitle'],data['company'],data['description'],questionsArray)
 
+        key = Posting.commitPosting(curent_user_id, data['jobTitle'],data['company'],data['description'],questionsArray)
 
-                        
-        
-        # try:
-        #     User.createUser(data['username'],data['password'])
-        # except ValueError as error:
-        #     return {'message': str(error)}, 500
-        # else:
-        #     access_token = create_access_token(identity = data['username'])
-        #     refresh_token = create_refresh_token(identity = data['username'])
-        #     return {
-        #         'message': 'User {} was created'.format(data['username']),
-        #         'access_token': access_token,
-        #         'refresh_token': refresh_token
-        #         }
+        message = 'Your Posting has been submitted. The access key for this posting is : ' + str(key)
 
-        return {'message': 'List of users'}
+        return {'message': message }
 
-    def delete(self):
-        return {'message': 'Delete all users'}

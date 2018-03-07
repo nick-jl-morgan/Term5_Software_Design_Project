@@ -25,7 +25,7 @@ db = SQLAlchemy(app)
 jwt = JWTManager(app)
 
 
-import controllers.loginController as loginController, applicationController, controllers.postingController as postingController
+import controllers.loginController as loginController, controllers.applicationController as applicationController, controllers.postingController as postingController
 
 #LandingPage for WebApp
 @app.route('/')

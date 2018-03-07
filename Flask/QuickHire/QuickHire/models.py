@@ -65,16 +65,30 @@ class QuestionModel(db.Model):
 ###############
 
 
-class textQuestionModel(db.Model):
+class TextQuestionModel(db.Model):
 	__tablename__='textQuestions'
 	id = Column(Integer, primary_key = True)
 	posting_id = Column(Integer,db.ForeignKey(PostingModel.id),nullable=True)
 	question = db.Column(mysql.TEXT)
-		
-	def save_to_db(self):
-         db.session.add(self)
-         db.session.commit()
+	is_multiple_choice = Column(Integer, default=0)
+	answer_type = Column(Integer, default=0)
+	answer_restriction = db.Column(mysql.BIGINT , default=0)
 
+	def save_to_db(self):
+		db.session.add(self)
+		db.session.commit()
+
+
+class MultipleChoiceOptionModel(db.Model):
+	__tablename__='multipleChoiceOptions'
+	id = Column(Integer, primary_key = True)
+	question_id = Column(Integer,db.ForeignKey(TextQuestionModel.id),nullable=True)
+	option = db.Column(mysql.TEXT)
+
+	def save_to_db(self):
+		db.session.add(self)
+		db.session.commit()
+		
 
 
 ###############

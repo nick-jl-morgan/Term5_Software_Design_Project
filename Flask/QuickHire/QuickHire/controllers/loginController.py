@@ -12,16 +12,19 @@ parser.add_argument('password', help = 'This field cannot be blank', required = 
 
 class UserRegistration(Resource):
     def post(self):
+        print >>sys.stderr, request.get_data()
+        print >>sys.stderr, request.headers
         try:
             data = request.get_json(force = True)
         except :
+            print >>sys.stderr, "JSON request not properly formatted"
             return {'message': "JSON request not properly formatted"}, 500
             
-        print >>sys.stderr, data
 
         try:
             User.createUser(data['username'],data['password'])
         except ValueError as error:
+            print >>sys.stderr, str(error)
             return {'message': str(error)}, 500
         else:
             access_token = create_access_token(identity = data['username'])
