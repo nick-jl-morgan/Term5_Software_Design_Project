@@ -9,11 +9,13 @@ from flask_jwt_extended import JWTManager
 
 app = Flask(__name__) 
 app.config.from_object(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://root:root@localhost/QuickHire'
-app.config['SECRET_KEY'] = 'secret!'
-app.config['JWT_SECRET_KEY'] = 'jwt-secret-string'
+app.config.update(
+	SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:root@localhost/QuickHire',
+	SECRET_KEY='secret!',
+	JWT_SECRET_KEY= 'jwt-secret-string',
+	SQLALCHEMY_TRACK_MODIFICATIONS= 'false'
+	)
 
-#Create Mobile API oject
 mobileAPI = Api(app)
 
 #Create DB ORM instance
@@ -23,7 +25,7 @@ db = SQLAlchemy(app)
 jwt = JWTManager(app)
 
 
-import loginController, applicationController, postingController
+import controllers.loginController as loginController, applicationController, controllers.postingController as postingController
 
 #LandingPage for WebApp
 @app.route('/')
@@ -40,4 +42,4 @@ mobileAPI.add_resource(loginController.UserLogoutAccess, '/API/logout/access')
 mobileAPI.add_resource(loginController.UserLogoutRefresh, '/API/logout/refresh')
 mobileAPI.add_resource(loginController.TokenRefresh, '/API/token/refresh')
 mobileAPI.add_resource(postingController.addPosting,'/API/AddPosting')
-app.run(host='0.0.0.0', port=5001)
+app.run(host='0.0.0.0', port=5000)
