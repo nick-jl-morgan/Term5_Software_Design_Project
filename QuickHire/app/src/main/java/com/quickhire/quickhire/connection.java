@@ -1,6 +1,7 @@
 package com.quickhire.quickhire;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -24,8 +25,9 @@ public class connection{
 
     //Constructor for default IP of server
     private connection(Context ctx){
-        this.URL="http://192.168.0.10:5000/API/registration";
+        this.URL="http://192.168.0.10:5000/API/";
         this.appcontext=ctx;
+        this.queue = Volley.newRequestQueue(ctx);
     }
 
     //Con
@@ -64,21 +66,27 @@ public class connection{
 
     private void generic(String JSON,Response.Listener<JSONObject> responseListener){
         JsonObjectRequest request=null;
-        String url = "http://192.168.0.10:5000/API/registration";
+        String url = "http://99.253.59.150/API/registration";
 
-        JSONObject jsonObj=null;
+        JSONObject jsonObj;
         try{
             jsonObj = new JSONObject(JSON);
+            request = new JsonObjectRequest(Request.Method.POST, url, jsonObj,responseListener, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    System.out.print(error.getMessage());
+                }
+            });
         }catch(Exception e){
             e.printStackTrace();
         }
-            request = new JsonObjectRequest(Request.Method.POST, this.URL, jsonObj,responseListener, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.print(error.getMessage());
-            }
-        });
+        if(request != null){
             queue.add(request);
+        } else {
+            Log.d("ERROR", "Request NULL");
+            return;
+        }
+
 
     }
 }

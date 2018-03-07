@@ -140,13 +140,18 @@ public class RegisterLoginActivity extends AppCompatActivity{
             focusView.requestFocus();
         }
         else{
-
-           final RegisterLoginActivity a = this;
            connection.getConnection().registerUser(email, password, new Response.Listener<JSONObject>() {
 
                        @Override
                        public void onResponse(JSONObject response) {
-                           myActivity.finish();
+                           mTxtDisplay.setText("Response: " + response.toString());
+//
+//                           try {
+//                               wait(15000);
+//                           }catch(Exception e){
+//                               e.printStackTrace();
+//                           }
+//                           myActivity.finish();
                        }
                    } );
         }
