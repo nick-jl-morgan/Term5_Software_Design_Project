@@ -32,20 +32,22 @@ public class multipleChoiceQuestion extends Question {
     }
 
 
-    @Override public String toJSON(){
-        String string =  "{\"type\":"+ this.numericQuestionType+",\"question\":\""+this.questionText+"\",\"options\":[";
+    @Override public String toJSON() {
+        String string = "{\"type\":" + this.numericQuestionType + ",\"question\":\"" + this.questionText + "\",\"options\":[";
 
-        Iterator iterator = choices.iterator();
-        char Alpha ='A';
+        Iterator<String> iterator = choices.iterator();
+        //char Alpha = 'A';
 
         StringBuilder builder = new StringBuilder();
         builder.append(string);
-        while(iterator.hasNext()){
-            builder.append(("{\""+Alpha+"\":'"+iterator.next()+"\"}"));
-            Alpha++;
+        while (iterator.hasNext()) {
+            //builder.append(("{\"" + Alpha + "\":\"" + iterator.next() + "\"}"));
+           // Alpha++;
+            builder.append("\""+iterator.next()+"\"");
+            if (iterator.hasNext())
+                builder.append(",");
         }
         builder.append("]}");
         return builder.toString();
     }
-
 }

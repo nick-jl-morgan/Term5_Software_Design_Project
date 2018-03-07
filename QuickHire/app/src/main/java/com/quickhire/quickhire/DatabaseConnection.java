@@ -19,7 +19,7 @@ import java.io.IOException;
 
 public interface DatabaseConnection {
 
-    public credentials registerUser(String username, String password);
+    public void registerUser(String username, String password);
     //public jobPosting getJobPosting(String postID);
     //public boolean saveApplication(jobApplication Application);
 

@@ -14,6 +14,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         configureCreatePostButton();
         configureRegisterButton();
+
+        //Don't touch this line
+        connection.createinitialConnection(this.getApplicationContext()); //I'm an important line.
+        //Please don't touch that line
+
     }
     private void configureCreatePostButton() {
         Button postButton = (Button) findViewById(R.id.createJobPostingButton);
