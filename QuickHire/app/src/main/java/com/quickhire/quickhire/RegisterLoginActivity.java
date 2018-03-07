@@ -95,7 +95,7 @@ public class RegisterLoginActivity extends AppCompatActivity{
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-//        mTxtDisplay = (TextView) findViewById(R.id.textView2);
+        mTxtDisplay = (TextView) findViewById(R.id.editText4);
     }
 
 
@@ -140,6 +140,7 @@ public class RegisterLoginActivity extends AppCompatActivity{
             focusView.requestFocus();
         }
         else{
+
            final RegisterLoginActivity a = this;
            connection.getConnection().registerUser(email, password, new Response.Listener<JSONObject>() {
 
@@ -148,7 +149,6 @@ public class RegisterLoginActivity extends AppCompatActivity{
                            myActivity.finish();
                        }
                    } );
-
         }
 
     }

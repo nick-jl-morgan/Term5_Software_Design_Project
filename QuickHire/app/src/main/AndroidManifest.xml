@@ -26,6 +26,7 @@
             android:name=".CreatePostingActivity"
             android:exported="true" />
         <activity
+            android:windowSoftInputMode="stateVisible|adjustResize"
             android:name=".CreatePostingActivity2"
             android:label="@string/title_activity_create_posting2"
             android:theme="@style/AppTheme.NoActionBar" />
