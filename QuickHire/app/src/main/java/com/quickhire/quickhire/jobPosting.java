@@ -27,7 +27,7 @@ public class jobPosting {
         this.ownerID=ownerID;
     }
 
-    public string toJSON(){
+    public String toJSON(){
         String temp = "\"postID\":" + this.postID+","
                     + "\"ownerID\":" + this.ownerID+","
                     + "\"company\":\"" + this.company + "\","
@@ -37,10 +37,10 @@ public class jobPosting {
 
         StringBuilder builder = new StringBuilder();
 
-        Iterator iterator =
-        while(questions)
+//        Iterator iterator =
+//        while(questions);
 
-
+        return temp;
     }
 
 }
