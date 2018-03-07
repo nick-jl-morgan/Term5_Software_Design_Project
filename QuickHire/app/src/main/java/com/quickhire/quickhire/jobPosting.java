@@ -37,6 +37,7 @@ public class jobPosting {
 
         StringBuilder builder = new StringBuilder(temp);
 
+<<<<<<< HEAD
        int size = questions.size();
        for(int i=0; i<size; i++){
            builder.append(questions.elementAt(i).toJSON());
@@ -46,7 +47,12 @@ public class jobPosting {
 
        return builder.toString();
 
+=======
+//        Iterator iterator =
+//        while(questions);
+>>>>>>> master
 
+        return temp;
     }
 
 }
