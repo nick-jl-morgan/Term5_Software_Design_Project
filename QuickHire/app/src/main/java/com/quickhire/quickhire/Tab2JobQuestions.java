@@ -12,27 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 public class Tab2JobQuestions extends Fragment{
-
-    String[] nameArray = {"Octopus","Pig","Sheep","Rabbit","Snake","Spider" };
-
-    String[] infoArray = {
-            "8 tentacled monster",
-            "Delicious in rolls",
-            "Great for jumpers",
-            "Nice in a stew",
-            "Great for shoes",
-            "Scary."
-    };
-
-    Integer[] imageArray = {R.drawable.ic_media_play,
-            R.drawable.ic_media_play,
-            R.drawable.ic_media_play,
-            R.drawable.ic_media_play,
-            R.drawable.ic_media_play,
-            R.drawable.ic_media_play};
-
-    ListView listView;
-
+    
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

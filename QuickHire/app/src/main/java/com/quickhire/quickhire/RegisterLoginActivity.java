@@ -89,7 +89,7 @@ public class RegisterLoginActivity extends AppCompatActivity{
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-//        mTxtDisplay = (TextView) findViewById(R.id.textView2);
+        mTxtDisplay = (TextView) findViewById(R.id.editText4);
     }
 
 
@@ -143,7 +143,7 @@ public class RegisterLoginActivity extends AppCompatActivity{
                 jsObjRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObj, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-//                        mTxtDisplay.setText("Response: " + response.toString());
+                        mTxtDisplay.setText("Response: " + response.toString());
                     }
                 }, new Response.ErrorListener() {
                     @Override
