@@ -20,6 +20,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+
+import org.json.JSONObject;
+
 import java.security.Key;
 
 public class Tab1JobDescription extends Fragment{
@@ -51,11 +55,19 @@ public class Tab1JobDescription extends Fragment{
         SaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(JobTitle.getText().toString().trim().length() == 0 && Company.getText().toString().trim().length() == 0 && Description.getText().toString().trim().length() == 0){
+                if(JobTitle.getText().toString().trim().length() != 0 && Company.getText().toString().trim().length() != 0 && Description.getText().toString().trim().length() != 0){
                     final Snackbar mySnackbar = Snackbar.make(view, "All Text okay", Snackbar.LENGTH_SHORT);
                     mySnackbar.show();
 
                     post = new jobPosting(Company.getText().toString(), JobTitle.getText().toString(), Description.getText().toString());
+                    connection.getConnection().saveJobPosting(post, new Response.Listener<JSONObject>() {
+
+                        @Override
+                        public void onResponse(JSONObject response) {
+                          //Do something
+                        }
+                    });
+
                 } else {
                     final Snackbar mySnackbar = Snackbar.make(view, "Texts boxes are not full", Snackbar.LENGTH_SHORT);
                     mySnackbar.show();
