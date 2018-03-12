@@ -14,9 +14,7 @@ import java.io.Serializable;
 public class User implements java.io.Serializable{
     private int userID=9999;
     private String username;
-    private credentials creds;
-    public static String access_token;
-    public String refresh_token;
+    private credentials creds = new credentials();
 
     private static User theUser = null;
 
@@ -34,6 +32,10 @@ public class User implements java.io.Serializable{
         return theUser;         //may return null.
     }
 
+    public static void createUser(String username){
+        theUser = new User(username);
+    }
+
 /*
     public boolean registerUser(String username, String password){
         //hit the server, get the tokens, save the tokens, save the user.
@@ -46,7 +48,7 @@ public class User implements java.io.Serializable{
     }
 
     public String getCredentials(){
-        return creds.getAccessToken();
+        return this.creds.getAccessToken();
     }
 
     public void saveUser(){

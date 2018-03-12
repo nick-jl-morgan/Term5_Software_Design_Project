@@ -56,8 +56,7 @@ public class Tab1JobDescription extends Fragment{
             @Override
             public void onClick(View view) {
                 if(JobTitle.getText().toString().trim().length() != 0 && Company.getText().toString().trim().length() != 0 && Description.getText().toString().trim().length() != 0){
-                    final Snackbar mySnackbar = Snackbar.make(view, "All Text okay", Snackbar.LENGTH_SHORT);
-                    mySnackbar.show();
+                    final Snackbar mySnackbar = Snackbar.make(view, "Post Sent", Snackbar.LENGTH_SHORT);
 
                     post = new jobPosting(Company.getText().toString(), JobTitle.getText().toString(), Description.getText().toString());
                     connection.getConnection().saveJobPosting(post, new Response.Listener<JSONObject>() {
@@ -65,6 +64,7 @@ public class Tab1JobDescription extends Fragment{
                         @Override
                         public void onResponse(JSONObject response) {
                           //Do something
+                            mySnackbar.show();
                         }
                     });
 

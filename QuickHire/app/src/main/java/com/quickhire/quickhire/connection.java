@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -13,6 +14,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -82,9 +84,11 @@ public class connection{
                 }
             }){
                 @Override public Map<String, String> getHeaders() throws AuthFailureError{
-                    Map<String, String> headers = super.getHeaders();
-                    if(User.access_token != null) {
-                        headers.put("Authorization", User.access_token);
+                    Map<String, String> headers = new HashMap<String, String>();
+//                    Map<String, String> headers = super.getHeaders();
+                    if(User.getUser() != null) {
+                        String credentials = User.getUser().getCredentials();
+                        headers.put("Authorization", credentials);
                     }
                     return headers;
                 }
@@ -94,6 +98,7 @@ public class connection{
         }
 
         if(request != null){
+            request.setRetryPolicy(new DefaultRetryPolicy(20*1000, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             queue.add(request);
         } else {
             Log.d("ERROR", "Request NULL");

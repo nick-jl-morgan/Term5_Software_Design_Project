@@ -146,9 +146,13 @@ public class RegisterLoginActivity extends AppCompatActivity{
                        @Override
                        public void onResponse(JSONObject response) {
                            mTxtDisplay.setText("Response: " + response.toString());
-                           Gson g = new Gson();
-                           credentials creds = g.fromJson(response.toString(), credentials.class);
-                           User.getUser().setCreds(creds);
+                           if(response != null){
+                               Gson g = new Gson();
+                               User.createUser(email);
+                               credentials creds = g.fromJson(response.toString(), credentials.class);
+                               User.getUser().setCreds(creds);
+                           }
+
 //                            String AccessToken = response.getJSONObject("access_token").getString("access_token");
 //                           User.getUser().setCreds();
 //                           try {
