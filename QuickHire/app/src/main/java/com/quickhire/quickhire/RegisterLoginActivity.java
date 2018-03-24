@@ -140,7 +140,7 @@ public class RegisterLoginActivity extends AppCompatActivity{
             focusView.requestFocus();
         }
         else{
-           final RegisterLoginActivity a = this;
+
            connection.getConnection().registerUser(email, password, new Response.Listener<JSONObject>() {
 
                        @Override

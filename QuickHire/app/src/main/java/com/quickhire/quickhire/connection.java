@@ -26,6 +26,7 @@ public class connection{
     private connection(Context ctx){
         this.URL="http://192.168.0.10:5000/API/registration";
         this.appcontext=ctx;
+        this.queue = Volley.newRequestQueue(ctx);
     }
 
     //Con
@@ -53,18 +54,20 @@ public class connection{
 
         String JSON="{\"username\":\"" + username + "\","
                 + "\"password\":\"" + password + "\"}";
+        String extension = "registration";
 
-        generic(JSON, responseListener);
+        generic(JSON, extension, responseListener);
     }
 
     protected void saveJobPosting(jobPosting posting, Response.Listener<JSONObject> responseListener){
         String JSON = posting.toJSON();
-        generic(JSON, responseListener);
+        String extension = "AddPosting";
+        generic(JSON, extension, responseListener);
     }
 
-    private void generic(String JSON,Response.Listener<JSONObject> responseListener){
+    private void generic(String JSON, String urlattachent, Response.Listener<JSONObject> responseListener){
         JsonObjectRequest request=null;
-        String url = "http://192.168.0.10:5000/API/registration";
+
 
         JSONObject jsonObj=null;
         try{
@@ -72,7 +75,7 @@ public class connection{
         }catch(Exception e){
             e.printStackTrace();
         }
-            request = new JsonObjectRequest(Request.Method.POST, this.URL, jsonObj,responseListener, new Response.ErrorListener() {
+            request = new JsonObjectRequest(Request.Method.POST, this.URL+urlattachent, jsonObj,responseListener, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 System.out.print(error.getMessage());
