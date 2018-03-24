@@ -24,15 +24,17 @@
         </activity>
         <activity
             android:name=".CreatePostingActivity"
-            android:exported="true" />
-        <activity
-            android:windowSoftInputMode="stateVisible|adjustResize"
-            android:name=".CreatePostingActivity2"
-            android:label="@string/title_activity_create_posting2"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:label="@string/title_activity_create_posting"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
             android:name=".RegisterLoginActivity"
             android:label="@string/title_activity_register_login" />
+        <activity
+            android:name=".questionList"
+            android:label="@string/title_activity_question_list"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".CreateJobPosting2"></activity>
     </application>
 
 </manifest>

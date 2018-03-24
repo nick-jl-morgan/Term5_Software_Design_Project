@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              startActivity(new Intent(MainActivity.this, CreatePostingActivity2.class));
+              startActivity(new Intent(MainActivity.this, CreateJobPosting2.class));
             }
         });
     }
