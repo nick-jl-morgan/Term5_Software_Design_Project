@@ -141,13 +141,15 @@ public class RegisterLoginActivity extends AppCompatActivity{
         }
         else{
 
-           connection.getConnection().registerUser(email, password, new Response.Listener<JSONObject>() {
+            Authenticator.attemptRegistration(email,password);
 
-                       @Override
-                       public void onResponse(JSONObject response) {
-                           myActivity.finish();
-                       }
-                   } );
+//           connection.getConnection().registerUser(email, password, new Response.Listener<JSONObject>() {
+//
+//                       @Override
+//                       public void onResponse(JSONObject response) {
+//                           myActivity.finish();
+//                       }
+//                   } );
 
         }
 

@@ -59,6 +59,25 @@ public class connection{
         generic(JSON, extension, responseListener);
     }
 
+    protected void loginUser(String username, String password, final Response.Listener<JSONObject> responseListener) {
+
+        String JSON="{\"username\":\"" + username + "\","
+                + "\"password\":\"" + password + "\"}";
+        String extension = "login";
+
+        //In order to add additional onResponse functionality if desired.
+        Response.Listener<JSONObject> r =new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                responseListener.onResponse(response);
+                //DoStuff
+            }
+        };
+
+        generic(JSON, extension, r);
+    }
+
     protected void saveJobPosting(jobPosting posting, Response.Listener<JSONObject> responseListener){
         String JSON = posting.toJSON();
         String extension = "AddPosting";
