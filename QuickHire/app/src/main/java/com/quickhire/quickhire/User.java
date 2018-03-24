@@ -14,16 +14,26 @@ import java.io.Serializable;
 public class User implements java.io.Serializable{
     private int userID=9999;
     private String username;
-    private credentials creds;
+    private credentials creds = new credentials();
 
     private static User theUser = null;
+
+    private User(){
+    }
 
     private User(String username){
         this.username = username;
     }
 
-    public User getUser(){
+    public static User getUser(){
+        if(theUser == null){
+            theUser = new User();
+        }
         return theUser;         //may return null.
+    }
+
+    public static void createUser(String username){
+        theUser = new User(username);
     }
 
 /*
@@ -32,6 +42,14 @@ public class User implements java.io.Serializable{
         ret
     }
 */
+
+    public void setCreds(credentials creds){
+        this.creds=creds;
+    }
+
+    public String getCredentials(){
+        return this.creds.getAccessToken();
+    }
 
     public void saveUser(){
         try {

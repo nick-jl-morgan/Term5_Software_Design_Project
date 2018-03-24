@@ -37,6 +37,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -95,7 +96,7 @@ public class RegisterLoginActivity extends AppCompatActivity{
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
-//        mTxtDisplay = (TextView) findViewById(R.id.textView2);
+        mTxtDisplay = (TextView) findViewById(R.id.editText4);
     }
 
 
@@ -151,6 +152,29 @@ public class RegisterLoginActivity extends AppCompatActivity{
 //                       }
 //                   } );
 
+
+//           connection.getConnection().registerUser(email, password, new Response.Listener<JSONObject>() {
+//
+//                       @Override
+//                       public void onResponse(JSONObject response) {
+//                           mTxtDisplay.setText("Response: " + response.toString());
+//                           if(response != null){
+//                               Gson g = new Gson();
+//                               User.createUser(email);
+//                               credentials creds = g.fromJson(response.toString(), credentials.class);
+//                               User.getUser().setCreds(creds);
+//                           }
+
+//                            String AccessToken = response.getJSONObject("access_token").getString("access_token");
+//                           User.getUser().setCreds();
+//                           try {
+//                               wait(15000);
+//                           }catch(Exception e){
+//                               e.printStackTrace();
+//                           }
+//                           myActivity.finish();
+//                       }
+//                   } );
         }
 
     }
