@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
@@ -63,8 +64,17 @@ public class Tab1JobDescription extends Fragment{
 
                         @Override
                         public void onResponse(JSONObject response) {
-                          //Do something
+
+                            //Do something
+                            mySnackbar.setText(response.toString());
                             mySnackbar.show();
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            mySnackbar.setText(error.getMessage());
+                            mySnackbar.show();
+
                         }
                     });
 

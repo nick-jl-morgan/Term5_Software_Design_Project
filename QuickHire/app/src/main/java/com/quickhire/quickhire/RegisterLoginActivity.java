@@ -86,13 +86,24 @@ public class RegisterLoginActivity extends AppCompatActivity{
             }
         });
 
-        Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
-        mEmailSignInButton.setOnClickListener(new OnClickListener() {
+        Button registerButton = (Button) findViewById(R.id.email_sign_in_button);
+        registerButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attemptRegister();
+            }
+        });
+
+        Button loginButton = (Button) findViewById(R.id.sign_in_button);
+        loginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 attemptLogin();
+                mTxtDisplay.setText("Test");
             }
         });
+
+
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
@@ -105,7 +116,7 @@ public class RegisterLoginActivity extends AppCompatActivity{
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptLogin() {
+    private void attemptRegister() {
 
         // Reset errors.
         mEmailView.setError(null);
@@ -142,7 +153,30 @@ public class RegisterLoginActivity extends AppCompatActivity{
         }
         else{
 
-            Authenticator.attemptRegistration(email,password);
+            Response.Listener<JSONObject> r =new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject response) {
+                    mTxtDisplay.setText("Registration Succesfull!");
+                    try {
+                        wait(2000);
+                        myActivity.finish();
+                    }
+                    catch(java.lang.InterruptedException e){
+                        myActivity.finish();
+                    }
+                }
+            };
+            Response.ErrorListener err =new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    String message = error.getMessage();
+                    mTxtDisplay.setText(message);
+                    //TODO error response handling for specfic error messages!
+                    //if(message == "500")
+                }
+            };
+            Authenticator.attemptRegistration(email,password, r, err);
 
 //           connection.getConnection().registerUser(email, password, new Response.Listener<JSONObject>() {
 //
@@ -175,6 +209,70 @@ public class RegisterLoginActivity extends AppCompatActivity{
 //                           myActivity.finish();
 //                       }
 //                   } );
+        }
+
+    }
+    private void attemptLogin() {
+
+        // Reset errors.
+        mEmailView.setError(null);
+        mPasswordView.setError(null);
+
+        // Store values at the time of the login attempt.
+        final String email = mEmailView.getText().toString();
+        final String password = mPasswordView.getText().toString();
+        boolean cancel = false;
+        View focusView = null;
+
+        // Check for a valid password, if the user entered one.
+        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+            mPasswordView.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordView;
+            cancel = true;
+        }
+
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(email)) {
+            mEmailView.setError(getString(R.string.error_field_required));
+            focusView = mEmailView;
+            cancel = true;
+        } else if (!isEmailValid(email)) {
+            mEmailView.setError(getString(R.string.error_invalid_email));
+            focusView = mEmailView;
+            cancel = true;
+        }
+
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        }
+        else{
+            Response.Listener<JSONObject> r =new Response.Listener<JSONObject>() {
+
+                @Override
+                public void onResponse(JSONObject response) {
+                    mTxtDisplay.setText("Login Successfull!");
+                    try {
+                        wait(2000);
+                        myActivity.finish();
+                    }
+                    catch(java.lang.InterruptedException e){
+                        myActivity.finish();
+                    }
+                }
+            };
+            Response.ErrorListener err =new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    String message = error.getMessage();
+                    mTxtDisplay.setText(message);
+                    //TODO error response handling for specfic error messages!
+                    //if(message == "500")
+                }
+            };
+            Authenticator.attemptLogin(email,password, r, err);
+
         }
 
     }

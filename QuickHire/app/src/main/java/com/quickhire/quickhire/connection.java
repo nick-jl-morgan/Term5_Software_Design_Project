@@ -56,16 +56,16 @@ public class connection{
     }
 
 
-    protected void registerUser(String username, String password, Response.Listener<JSONObject> responseListener) {
+    protected void registerUser(String username, String password, Response.Listener<JSONObject> responseListener, Response.ErrorListener err) {
 
         String JSON="{\"username\":\"" + username + "\","
                 + "\"password\":\"" + password + "\"}";
         String extension = "registration";
 
-        generic(JSON, extension, responseListener);
+        generic(JSON, extension, responseListener, err);
     }
 
-    protected void loginUser(String username, String password, final Response.Listener<JSONObject> responseListener) {
+    protected void loginUser(String username, String password, final Response.Listener<JSONObject> responseListener, Response.ErrorListener err) {
 
         String JSON="{\"username\":\"" + username + "\","
                 + "\"password\":\"" + password + "\"}";
@@ -81,29 +81,25 @@ public class connection{
             }
         };
 
-        generic(JSON, extension, r);
+        generic(JSON, extension, r, err);
     }
 
-    protected void saveJobPosting(jobPosting posting, Response.Listener<JSONObject> responseListener){
+    protected void saveJobPosting(jobPosting posting, Response.Listener<JSONObject> responseListener, Response.ErrorListener err){
         String JSON = posting.toJSON();
         String extension = "AddPosting";
-        generic(JSON, extension, responseListener);
+        generic(JSON, extension, responseListener, err);
     }
 
 
-    private void generic(String JSON, String urlattachment, Response.Listener<JSONObject> responseListener){
+    private void generic(String JSON, String urlattachment, Response.Listener<JSONObject> responseListener, Response.ErrorListener err){
         JsonObjectRequest request=null;
         //String url = "http://99.253.59.150/API/registration";
+        final Response.ErrorListener nextLayerError=err;
 
         JSONObject jsonObj = null;
         try{
             jsonObj = new JSONObject(JSON);
-            request = new JsonObjectRequest(Request.Method.POST, this.URL + urlattachment, jsonObj,responseListener, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    System.out.print(error.getMessage());
-                }
-            }){
+            request = new JsonObjectRequest(Request.Method.POST, this.URL + urlattachment, jsonObj,responseListener,err){
                 @Override public Map<String, String> getHeaders() throws AuthFailureError{
                     Map<String, String> headers = new HashMap<String, String>();
 //                    Map<String, String> headers = super.getHeaders();
