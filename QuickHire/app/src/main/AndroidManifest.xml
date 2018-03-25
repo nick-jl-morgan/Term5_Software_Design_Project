@@ -26,13 +26,22 @@
             android:name=".CreatePostingActivity"
             android:exported="true" />
         <activity
-            android:windowSoftInputMode="stateVisible|adjustResize"
             android:name=".CreatePostingActivity2"
             android:label="@string/title_activity_create_posting2"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity
             android:name=".RegisterLoginActivity"
             android:label="@string/title_activity_register_login" />
+        <activity
+            android:name=".homeActivity"
+            android:label="@string/title_activity_home"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.quickhire.quickhire.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

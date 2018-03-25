@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         //configureCreatePostButton();
-        //configureRegisterButton();
+        configureRegisterButton();
 
         //Don't touch this line
         connection.createinitialConnection(this.getApplicationContext()); //I'm an important line.
@@ -23,32 +23,26 @@ public class MainActivity extends AppCompatActivity {
 
         startActivity(new Intent(MainActivity.this, RegisterLoginActivity.class));
 
-//        SharedPreferences prefs = this.getSharedPreferences(
-//                "com.quickhire.quickhire", Context.MODE_PRIVATE);
-//        if(prefs.contains("refreshToken")) {
-//
-//        }
-
     }
 
-    private void configureCreatePostButton() {
-        Button postButton = (Button) findViewById(R.id.createJobPostingButton);
-        postButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-              startActivity(new Intent(MainActivity.this, CreatePostingActivity2.class));
-            }
-        });
-    }
-
-//    private void configureRegisterButton() {
-//        Button postButton = (Button) findViewById(R.id.registerLoginButton);
+//    private void configureCreatePostButton() {
+//        Button postButton = (Button) findViewById(R.id.createJobPostingButton);
 //        postButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
-//                startActivity(new Intent(MainActivity.this, RegisterLoginActivity.class));
+//              startActivity(new Intent(MainActivity.this, CreatePostingActivity2.class));
 //            }
 //        });
 //    }
+
+    private void configureRegisterButton() {
+        Button postButton = (Button) findViewById(R.id.loginRegister);
+        postButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, RegisterLoginActivity.class));
+            }
+        });
+    }
 }
 

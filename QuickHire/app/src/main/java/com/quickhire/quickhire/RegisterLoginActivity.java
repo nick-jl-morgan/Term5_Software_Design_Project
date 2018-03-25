@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -99,7 +100,7 @@ public class RegisterLoginActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 attemptLogin();
-                mTxtDisplay.setText("Test");
+                mTxtDisplay.setText("Attempting Login");
             }
         });
 
@@ -158,57 +159,19 @@ public class RegisterLoginActivity extends AppCompatActivity{
                 @Override
                 public void onResponse(JSONObject response) {
                     mTxtDisplay.setText("Registration Succesfull!");
-                    try {
-                        wait(2000);
-                        myActivity.finish();
-                    }
-                    catch(java.lang.InterruptedException e){
-                        myActivity.finish();
-                    }
+                    startActivity(new Intent(RegisterLoginActivity.this, homeActivity.class));
                 }
             };
             Response.ErrorListener err =new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     String message = error.getMessage();
-                    mTxtDisplay.setText(message);
+                    mTxtDisplay.setText("Registration Failed!");
                     //TODO error response handling for specfic error messages!
                     //if(message == "500")
                 }
             };
             Authenticator.attemptRegistration(email,password, r, err);
-
-//           connection.getConnection().registerUser(email, password, new Response.Listener<JSONObject>() {
-//
-//                       @Override
-//                       public void onResponse(JSONObject response) {
-//                           myActivity.finish();
-//                       }
-//                   } );
-
-
-//           connection.getConnection().registerUser(email, password, new Response.Listener<JSONObject>() {
-//
-//                       @Override
-//                       public void onResponse(JSONObject response) {
-//                           mTxtDisplay.setText("Response: " + response.toString());
-//                           if(response != null){
-//                               Gson g = new Gson();
-//                               User.createUser(email);
-//                               credentials creds = g.fromJson(response.toString(), credentials.class);
-//                               User.getUser().setCreds(creds);
-//                           }
-
-//                            String AccessToken = response.getJSONObject("access_token").getString("access_token");
-//                           User.getUser().setCreds();
-//                           try {
-//                               wait(15000);
-//                           }catch(Exception e){
-//                               e.printStackTrace();
-//                           }
-//                           myActivity.finish();
-//                       }
-//                   } );
         }
 
     }
@@ -253,20 +216,14 @@ public class RegisterLoginActivity extends AppCompatActivity{
                 @Override
                 public void onResponse(JSONObject response) {
                     mTxtDisplay.setText("Login Successfull!");
-                    try {
-                        wait(2000);
-                        myActivity.finish();
-                    }
-                    catch(java.lang.InterruptedException e){
-                        myActivity.finish();
-                    }
+                    startActivity(new Intent(RegisterLoginActivity.this, homeActivity.class));
                 }
             };
             Response.ErrorListener err =new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     String message = error.getMessage();
-                    mTxtDisplay.setText(message);
+                    mTxtDisplay.setText("Login Failed!");
                     //TODO error response handling for specfic error messages!
                     //if(message == "500")
                 }

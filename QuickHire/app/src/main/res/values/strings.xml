@@ -19,4 +19,5 @@
         completions."
     </string>
     <string name="title_activity_temp_login">Sign in</string>
+    <string name="title_activity_home">homeActivity</string>
 </resources>
