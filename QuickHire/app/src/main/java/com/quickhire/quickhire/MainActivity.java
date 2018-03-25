@@ -14,7 +14,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //configureCreatePostButton();
         configureRegisterButton();
 
         //Don't touch this line
@@ -23,17 +22,10 @@ public class MainActivity extends AppCompatActivity {
 
         startActivity(new Intent(MainActivity.this, RegisterLoginActivity.class));
 
+
+
     }
 
-//    private void configureCreatePostButton() {
-//        Button postButton = (Button) findViewById(R.id.createJobPostingButton);
-//        postButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//              startActivity(new Intent(MainActivity.this, CreatePostingActivity2.class));
-//            }
-//        });
-//    }
 
     private void configureRegisterButton() {
         Button postButton = (Button) findViewById(R.id.loginRegister);

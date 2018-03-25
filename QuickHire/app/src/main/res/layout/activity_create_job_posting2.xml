@@ -4,7 +4,7 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.quickhire.quickhire.CreatePostingActivity">
+    tools:context="com.quickhire.quickhire.CreateJobPosting2">
 
     <ScrollView
         android:id="@+id/scrollView3"
