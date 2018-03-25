@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 
 import org.json.JSONObject;
 
@@ -61,6 +62,11 @@ public class CreateJobPosting2 extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
                             //Do something
                             mySnackbar.show();
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
                         }
                     });
 
