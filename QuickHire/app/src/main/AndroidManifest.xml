@@ -22,18 +22,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".CreatePostingActivity"
-<<<<<<< HEAD
-            android:exported="true" />
-        <activity
-            android:name=".CreatePostingActivity2"
-            android:label="@string/title_activity_create_posting2"
-=======
-            android:label="@string/title_activity_create_posting"
->>>>>>> master
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
+
         <activity
             android:name=".RegisterLoginActivity"
             android:label="@string/title_activity_register_login" />
