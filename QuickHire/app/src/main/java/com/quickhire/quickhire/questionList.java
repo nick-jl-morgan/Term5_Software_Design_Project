@@ -235,17 +235,17 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
     public void onMessageRowClicked(int position) {
         // verify whether action mode is enabled or not
         // if enabled, change the row state to activated
-        if (mAdapter.getSelectedItemCount() > 0) {
-            enableActionMode(position);
-        } else {
-            // read the message which removes bold from the row
-            Message message = messages.get(position);
-            message.setRead(true);
-            messages.set(position, message);
-            mAdapter.notifyDataSetChanged();
-
-            Toast.makeText(getApplicationContext(), "Read: " + message.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+//        if (mAdapter.getSelectedItemCount() > 0) {
+//            enableActionMode(position);
+//        } else {
+//            // read the message which removes bold from the row
+//            Message message = messages.get(position);
+//            message.setRead(true);
+//            messages.set(position, message);
+//            mAdapter.notifyDataSetChanged();
+//
+//            Toast.makeText(getApplicationContext(), "Read: " + message.getMessage(), Toast.LENGTH_SHORT).show();
+//        }
     }
 
     @Override
