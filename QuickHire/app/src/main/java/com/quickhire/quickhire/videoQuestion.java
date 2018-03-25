@@ -17,5 +17,10 @@ public class videoQuestion extends Question {
         return string;
     }
 
+    @Override
+    public int getPicture() {
+        return 0;
+    }
+
     @Override public String getType(){return "Video";}
 }

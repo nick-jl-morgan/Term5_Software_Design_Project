@@ -28,7 +28,7 @@ import java.util.List;
 
 public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyViewHolder> {
     private Context mContext;
-    private List<Message> messages;
+    private List<Question> questions;
     private MessageAdapterListener listener;
     private SparseBooleanArray selectedItems;
 
@@ -41,23 +41,23 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
     private static int currentSelectedIndex = -1;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener {
-        public TextView from, subject, message, iconText, timestamp;
+        public TextView title, type, message, iconText;
         public ImageView iconImp, imgProfile;
-        public LinearLayout messageContainer;
+        public LinearLayout questionContainer;
         public RelativeLayout iconContainer, iconBack, iconFront;
 
         public MyViewHolder(View view) {
             super(view);
-            from = (TextView) view.findViewById(R.id.from);
-            subject = (TextView) view.findViewById(R.id.txt_primary);
+            title = (TextView) view.findViewById(R.id.from);
+            type = (TextView) view.findViewById(R.id.txt_primary);
             message = (TextView) view.findViewById(R.id.txt_secondary);
             iconText = (TextView) view.findViewById(R.id.icon_text);
-            timestamp = (TextView) view.findViewById(R.id.timestamp);
+//            timestamp = (TextView) view.findViewById(R.id.timestamp);
             iconBack = (RelativeLayout) view.findViewById(R.id.icon_back);
             iconFront = (RelativeLayout) view.findViewById(R.id.icon_front);
             iconImp = (ImageView) view.findViewById(R.id.icon_star);
             imgProfile = (ImageView) view.findViewById(R.id.icon_profile);
-            messageContainer = (LinearLayout) view.findViewById(R.id.message_container);
+            questionContainer = (LinearLayout) view.findViewById(R.id.message_container);
             iconContainer = (RelativeLayout) view.findViewById(R.id.icon_container);
             view.setOnLongClickListener(this);
         }
@@ -71,9 +71,9 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
     }
 
 
-    public MessagesAdapter(Context mContext, List<Message> messages, MessageAdapterListener listener) {
+    public MessagesAdapter(Context mContext, List<Question> questions, MessageAdapterListener listener) {
         this.mContext = mContext;
-        this.messages = messages;
+        this.questions = questions;
         this.listener = listener;
         selectedItems = new SparseBooleanArray();
         animationItemsIndex = new SparseBooleanArray();
@@ -89,16 +89,16 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
-        Message message = messages.get(position);
+        Question question = questions.get(position);
 
         // displaying text view data
-        holder.from.setText(message.getFrom());
-        holder.subject.setText(message.getSubject());
+        holder.title.setText(question.getQuestionText());
+        holder.type.setText(question.getType());
 //        holder.message.setText(message.getMessage());
 //        holder.timestamp.setText(message.getTimestamp());
 
         // displaying the first letter of From in icon text
-        holder.iconText.setText(message.getFrom().substring(0, 1));
+//        holder.iconText.setText(question.getType().substring(0, 1));
 
         // change the row state to activated
         holder.itemView.setActivated(selectedItems.get(position, false));
@@ -113,7 +113,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
         applyIconAnimation(holder, position);
 
         // display profile image
-        applyProfilePicture(holder, message);
+        applyProfilePicture(holder, question);
 
         // apply click events
         applyClickEvents(holder, position);
@@ -134,14 +134,14 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
             }
         });
 
-        holder.messageContainer.setOnClickListener(new View.OnClickListener() {
+        holder.questionContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 listener.onMessageRowClicked(position);
             }
         });
 
-        holder.messageContainer.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.questionContainer.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
                 listener.onRowLongClicked(position);
@@ -151,9 +151,10 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
         });
     }
 
-    private void applyProfilePicture(MyViewHolder holder, Message message) {
-        if (!TextUtils.isEmpty(message.getPicture())) {
-            Glide.with(mContext).load(message.getPicture())
+    private void applyProfilePicture(MyViewHolder holder, Question question) {
+
+        if (!TextUtils.isEmpty(Integer.toString(question.getPicture()))) {
+            Glide.with(mContext).load(question.getPicture())
                     .thumbnail(0.5f)
                     .crossFade()
                     .transform(new CircleTransform(mContext))
@@ -163,7 +164,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
             holder.iconText.setVisibility(View.GONE);
         } else {
             holder.imgProfile.setImageResource(R.drawable.bg_circle);
-            holder.imgProfile.setColorFilter(message.getColor());
+//            holder.imgProfile.setColorFilter(message.getColor());
             holder.iconText.setVisibility(View.VISIBLE);
         }
     }
@@ -206,7 +207,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
 
     @Override
     public long getItemId(int position) {
-        return messages.get(position).getId();
+        return questions.get(position).getPosition();
     }
 
 //    private void applyImportant(MyViewHolder holder, Message message) {
@@ -219,23 +220,23 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
 //        }
 //    }
 
-    private void applyReadStatus(MyViewHolder holder, Message message) {
-        if (message.isRead()) {
-            holder.from.setTypeface(null, Typeface.NORMAL);
-            holder.subject.setTypeface(null, Typeface.NORMAL);
-            holder.from.setTextColor(ContextCompat.getColor(mContext, R.color.subject));
-            holder.subject.setTextColor(ContextCompat.getColor(mContext, R.color.message));
-        } else {
-            holder.from.setTypeface(null, Typeface.BOLD);
-            holder.subject.setTypeface(null, Typeface.BOLD);
-            holder.from.setTextColor(ContextCompat.getColor(mContext, R.color.from));
-            holder.subject.setTextColor(ContextCompat.getColor(mContext, R.color.subject));
-        }
-    }
+//    private void applyReadStatus(MyViewHolder holder, Message message) {
+//        if (message.isRead()) {
+//            holder.from.setTypeface(null, Typeface.NORMAL);
+//            holder.subject.setTypeface(null, Typeface.NORMAL);
+//            holder.from.setTextColor(ContextCompat.getColor(mContext, R.color.subject));
+//            holder.subject.setTextColor(ContextCompat.getColor(mContext, R.color.message));
+//        } else {
+//            holder.from.setTypeface(null, Typeface.BOLD);
+//            holder.subject.setTypeface(null, Typeface.BOLD);
+//            holder.from.setTextColor(ContextCompat.getColor(mContext, R.color.from));
+//            holder.subject.setTextColor(ContextCompat.getColor(mContext, R.color.subject));
+//        }
+//    }
 
     @Override
     public int getItemCount() {
-        return messages.size();
+        return questions.size();
     }
 
     public void toggleSelection(int pos) {
@@ -270,7 +271,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
     }
 
     public void removeData(int position) {
-        messages.remove(position);
+        questions.remove(position);
         resetCurrentIndex();
     }
 

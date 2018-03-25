@@ -51,5 +51,10 @@ public class multipleChoiceQuestion extends Question {
         return builder.toString();
     }
 
+    @Override
+    public int getPicture() {
+        return 0;
+    }
+
     @Override public String getType(){return "Multiple Choice";}
 }

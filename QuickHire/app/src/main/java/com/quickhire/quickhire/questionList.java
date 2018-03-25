@@ -26,7 +26,7 @@ import retrofit2.Response;
 
 
 public class questionList extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, MessagesAdapter.MessageAdapterListener {
-    private List<Message> messages = new ArrayList<>();
+    private List<Question> questions = new ArrayList<>();
     private RecyclerView recyclerView;
     private MessagesAdapter mAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -44,8 +44,9 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                addQuestion();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
             }
         });
 
@@ -53,7 +54,7 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        mAdapter = new MessagesAdapter(this, messages, this);
+        mAdapter = new MessagesAdapter(this, questions, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -67,51 +68,58 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
                 new Runnable() {
                     @Override
                     public void run() {
-                        getInbox();
+//                        getInbox();
                     }
                 }
         );
+    }
+
+    private void addQuestion() {
+        String test = "testy";
+        Question question = new essayQuestion(test);
+        questions.add(question);
+        mAdapter.notifyDataSetChanged();
     }
 
     /**
      * Fetches mail messages by making HTTP request
      * url: http://api.androidhive.info/json/inbox.json
      */
-    private void getInbox() {
-        swipeRefreshLayout.setRefreshing(true);
-
-        ApiInterface apiService =
-                ApiClient.getClient().create(ApiInterface.class);
-
-        Call<List<Message>> call = apiService.getInbox();
-        call.enqueue(new Callback<List<Message>>() {
-            @Override
-            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
-                // clear the inbox
-                messages.clear();
-
-                // add all the messages
-                // messages.addAll(response.body());
-
-                // TODO - avoid looping
-                // the loop was performed to add colors to each message
-                for (Message message : response.body()) {
-                    // generate a random color
-                    message.setColor(getRandomMaterialColor("400"));
-                    messages.add(message);
-                }
-
-                mAdapter.notifyDataSetChanged();
-                swipeRefreshLayout.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(Call<List<Message>> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Unable to fetch json: " + t.getMessage(), Toast.LENGTH_LONG).show();
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        });
-    }
+//    private void getInbox() {
+//        swipeRefreshLayout.setRefreshing(true);
+//
+//        ApiInterface apiService =
+//                ApiClient.getClient().create(ApiInterface.class);
+//
+//        Call<List<Message>> call = apiService.getInbox();
+//        call.enqueue(new Callback<List<Message>>() {
+//            @Override
+//            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+//                // clear the inbox
+//                messages.clear();
+//
+//                // add all the messages
+//                // messages.addAll(response.body());
+//
+//                // TODO - avoid looping
+//                // the loop was performed to add colors to each message
+//                for (Message message : response.body()) {
+//                    // generate a random color
+//                    message.setColor(getRandomMaterialColor("400"));
+//                    messages.add(message);
+//                }
+//
+//                mAdapter.notifyDataSetChanged();
+//                swipeRefreshLayout.setRefreshing(false);
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Message>> call, Throwable t) {
+//                Toast.makeText(getApplicationContext(), "Unable to fetch json: " + t.getMessage(), Toast.LENGTH_LONG).show();
+//                swipeRefreshLayout.setRefreshing(false);
+//            }
+//        });
+//    }
 
     /**
      * chooses a random color from array.xml
@@ -155,7 +163,7 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     public void onRefresh() {
         // swipe refresh is performed, fetch the messages again
-        getInbox();
+//        getInbox();
     }
 
     @Override
@@ -169,29 +177,34 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
 
     @Override
     public void onIconImportantClicked(int position) {
-        // Star icon is clicked,
-        // mark the message as important
-        Message message = messages.get(position);
-        message.setImportant(!message.isImportant());
-        messages.set(position, message);
-        mAdapter.notifyDataSetChanged();
+
     }
+
+//    @Override
+//    public void onIconImportantClicked(int position) {
+//        // Star icon is clicked,
+//        // mark the message as important
+//        Message message = messages.get(position);
+//        message.setImportant(!message.isImportant());
+//        messages.set(position, message);
+//        mAdapter.notifyDataSetChanged();
+//    }
 
     @Override
     public void onMessageRowClicked(int position) {
         // verify whether action mode is enabled or not
         // if enabled, change the row state to activated
-        if (mAdapter.getSelectedItemCount() > 0) {
-            enableActionMode(position);
-        } else {
-            // read the message which removes bold from the row
-            Message message = messages.get(position);
-            message.setRead(true);
-            messages.set(position, message);
-            mAdapter.notifyDataSetChanged();
-
-            Toast.makeText(getApplicationContext(), "Read: " + message.getMessage(), Toast.LENGTH_SHORT).show();
-        }
+//        if (mAdapter.getSelectedItemCount() > 0) {
+//            enableActionMode(position);
+//        } else {
+//            // read the message which removes bold from the row
+//            Message message = messages.get(position);
+//            message.setRead(true);
+//            messages.set(position, message);
+//            mAdapter.notifyDataSetChanged();
+//
+//            Toast.makeText(getApplicationContext(), "Read: " + message.getMessage(), Toast.LENGTH_SHORT).show();
+//        }
     }
 
     @Override
