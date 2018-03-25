@@ -17,5 +17,10 @@ public class essayQuestion extends Question {
         return string;
     }
 
+    @Override
+    public int getPicture() {
+        return R.drawable.icon_essay;
+    }
+
     @Override public String getType(){return "Essay";}
 }
