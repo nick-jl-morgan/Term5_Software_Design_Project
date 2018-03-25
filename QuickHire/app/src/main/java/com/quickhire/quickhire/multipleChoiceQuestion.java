@@ -50,4 +50,6 @@ public class multipleChoiceQuestion extends Question {
         builder.append("]}");
         return builder.toString();
     }
+
+    @Override public String getType(){return "Multiple Choice";}
 }

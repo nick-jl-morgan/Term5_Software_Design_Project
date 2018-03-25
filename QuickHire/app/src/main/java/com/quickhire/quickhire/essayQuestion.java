@@ -16,4 +16,6 @@ public class essayQuestion extends Question {
         String string = "{\"type\":"+ this.numericQuestionType+",\"question\":\""+this.questionText+"\"}"; //i.e 'type:2, question: What makes you the best candidate for this position?'
         return string;
     }
+
+    @Override public String getType(){return "Essay";}
 }

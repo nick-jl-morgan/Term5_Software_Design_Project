@@ -19,4 +19,6 @@ public abstract class Question {
 
 
     public abstract String toJSON(); //for display and transport.
+
+    public abstract String getType();
 }

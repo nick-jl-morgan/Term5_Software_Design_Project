@@ -16,4 +16,6 @@ public class videoQuestion extends Question {
         String string ="{'type':"+this.numericQuestionType+",'length':"+this.length+",'question':"+this.questionText+"'}"; //i.e 'type':0,length:60,question:Why do you want this position?'
         return string;
     }
+
+    @Override public String getType(){return "Video";}
 }
