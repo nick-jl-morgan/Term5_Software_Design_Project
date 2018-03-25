@@ -105,7 +105,7 @@ public class connection{
 //                    Map<String, String> headers = super.getHeaders();
                     if(User.getUser() != null) {
                         String credentials = User.getUser().getCredentials();
-                        headers.put("Authorization", credentials);
+                        headers.put("Authorization", ("Bearer " + credentials));
                     }
                     return headers;
                 }
