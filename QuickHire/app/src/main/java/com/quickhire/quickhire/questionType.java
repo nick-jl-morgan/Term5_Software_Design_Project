@@ -6,8 +6,9 @@ package com.quickhire.quickhire;
 
 public enum questionType {
     VIDEO(0),
-    M_CHOICE(1),
-    ESSAY(2);
+    ESSAY(1),
+    M_CHOICE(2);
+
 
     private int numVal;
 

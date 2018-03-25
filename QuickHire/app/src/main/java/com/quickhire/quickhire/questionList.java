@@ -30,7 +30,7 @@ import retrofit2.Response;
 
 
 public class questionList extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, MessagesAdapter.MessageAdapterListener {
-    private List<Question> questions = new ArrayList<>();
+    private List<Question> questions = CreateJobPosting2.questionsList;
     private RecyclerView recyclerView;
     private MessagesAdapter mAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -327,6 +327,11 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
             mAdapter.removeData(selectedItemPositions.get(i));
         }
         mAdapter.notifyDataSetChanged();
+    }
+
+    @Override protected void onDestroy(){
+        CreateJobPosting2.questionsList=questions;
+        super.onDestroy();
     }
 }
 
