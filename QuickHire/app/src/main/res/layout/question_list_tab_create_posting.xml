@@ -4,10 +4,6 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.quickhire.quickhire.CreatePostingActivity2$PlaceholderFragment">
+    tools:context="com.quickhire.quickhire.CreatePostingActivity$PlaceholderFragment">
 
-    <ListView
-        android:id="@+id/questionList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 </android.support.constraint.ConstraintLayout>
