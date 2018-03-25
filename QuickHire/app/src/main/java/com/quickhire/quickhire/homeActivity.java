@@ -28,7 +28,7 @@ public class homeActivity extends AppCompatActivity {
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              startActivity(new Intent(homeActivity.this, CreatePostingActivity2.class));
+              startActivity(new Intent(homeActivity.this, CreateJobPosting2.class));
             }
         });
         }

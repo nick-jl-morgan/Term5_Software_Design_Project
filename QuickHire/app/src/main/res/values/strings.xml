@@ -19,11 +19,8 @@
         completions."
     </string>
     <string name="title_activity_temp_login">Sign in</string>
-<<<<<<< HEAD
     <string name="title_activity_home">homeActivity</string>
-=======
     <string name="title_activity_question_list">Questions</string>
     <string name="action_search">Search</string>
     <string name="action_delete">Delete</string>
->>>>>>> master
 </resources>
