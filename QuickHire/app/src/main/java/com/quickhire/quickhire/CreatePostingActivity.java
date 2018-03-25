@@ -38,7 +38,7 @@ public class CreatePostingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_posting);
 
-        configureCreatePostButton();
+//        configureCreatePostButton();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -57,15 +57,15 @@ public class CreatePostingActivity extends AppCompatActivity {
 
     }
 
-    private void configureCreatePostButton() {
-        Button postButton = (Button) findViewById(R.id.createJobPostingButton);
-        postButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(CreatePostingActivity.this, questionList.class));
-            }
-        });
-    }
+//    private void configureCreatePostButton() {
+//        Button postButton = (Button) findViewById(R.id.createJobPostingButton);
+//        postButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(CreatePostingActivity.this, questionList.class));
+//            }
+//        });
+//    }
 
 
     @Override

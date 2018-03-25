@@ -19,5 +19,7 @@
         completions."
     </string>
     <string name="title_activity_temp_login">Sign in</string>
-    <string name="title_activity_question_list">questionList</string>
+    <string name="title_activity_question_list">Questions</string>
+    <string name="action_search">Search</string>
+    <string name="action_delete">Delete</string>
 </resources>
