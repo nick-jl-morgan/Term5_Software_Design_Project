@@ -14,8 +14,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        configureCreatePostButton();
-        //configureRegisterButton();
+
+        configureRegisterButton();
 
         //Don't touch this line
         connection.createinitialConnection(this.getApplicationContext()); //I'm an important line.
@@ -23,32 +23,19 @@ public class MainActivity extends AppCompatActivity {
 
         startActivity(new Intent(MainActivity.this, RegisterLoginActivity.class));
 
-//        SharedPreferences prefs = this.getSharedPreferences(
-//                "com.quickhire.quickhire", Context.MODE_PRIVATE);
-//        if(prefs.contains("refreshToken")) {
-//
-//        }
+
 
     }
 
-    private void configureCreatePostButton() {
-        Button postButton = (Button) findViewById(R.id.createJobPostingButton);
+
+    private void configureRegisterButton() {
+        Button postButton = (Button) findViewById(R.id.loginRegister);
         postButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-              startActivity(new Intent(MainActivity.this, CreateJobPosting2.class));
+                startActivity(new Intent(MainActivity.this, RegisterLoginActivity.class));
             }
         });
     }
-
-//    private void configureRegisterButton() {
-//        Button postButton = (Button) findViewById(R.id.registerLoginButton);
-//        postButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(MainActivity.this, RegisterLoginActivity.class));
-//            }
-//        });
-//    }
 }
 

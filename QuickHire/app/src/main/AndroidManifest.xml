@@ -22,15 +22,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".CreatePostingActivity"
-            android:label="@string/title_activity_create_posting"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
+
         <activity
             android:name=".RegisterLoginActivity"
             android:label="@string/title_activity_register_login" />
         <activity
+
+            android:name=".homeActivity"
+            android:label="@string/title_activity_home"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.quickhire.quickhire.MainActivity" />
+        </activity>
             android:name=".questionList"
             android:label="@string/title_activity_question_list"
             android:theme="@style/AppTheme" />
