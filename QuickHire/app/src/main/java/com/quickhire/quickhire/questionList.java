@@ -3,7 +3,7 @@ package com.quickhire.quickhire;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+//import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+
+import com.github.clans.fab.FloatingActionMenu;
+import com.github.clans.fab.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +36,8 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
     private SwipeRefreshLayout swipeRefreshLayout;
     private ActionModeCallback actionModeCallback;
     private ActionMode actionMode;
+    private FloatingActionButton fabEssay, fabVideo, fabMC;
+    private FloatingActionMenu fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +46,35 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        fab = (FloatingActionMenu) findViewById(R.id.fab);
+        fabEssay = (FloatingActionButton) findViewById(R.id.fab2);
+        fabVideo = (FloatingActionButton) findViewById(R.id.fab3);
+        fabMC = (FloatingActionButton) findViewById(R.id.fab1);
+
+        fab.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
             @Override
-            public void onClick(View view) {
-                addQuestion();
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
+            public void onMenuToggle(boolean opened) {
+//                if (opened) {
+//                    showToast("Menu is opened");
+//                } else {
+//                    showToast("Menu is closed");
+//                }
             }
         });
+
+        fabEssay.setOnClickListener(onButtonClick());
+        fabVideo.setOnClickListener(onButtonClick());
+        fabMC.setOnClickListener(onButtonClick());
+
+
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                addQuestion();
+////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+////                        .setAction("Action", null).show();
+//            }
+//        });
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
@@ -64,21 +90,36 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
         actionModeCallback = new ActionModeCallback();
 
         // show loader and fetch messages
-        swipeRefreshLayout.post(
-                new Runnable() {
-                    @Override
-                    public void run() {
-//                        getInbox();
-                    }
-                }
-        );
+//        swipeRefreshLayout.post(
+//                new Runnable() {
+//                    @Override
+//                    public void run() {
+////                        getInbox();
+//                    }
+//                }
+//        );
     }
 
-    private void addQuestion() {
-        String test = "testy";
-        Question question = new essayQuestion(test);
-        questions.add(question);
-        mAdapter.notifyDataSetChanged();
+    private View.OnClickListener onButtonClick() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (view == fabMC) {
+                    Question question = new multipleChoiceQuestion(" ");
+                    questions.add(question);
+                    mAdapter.notifyDataSetChanged();
+                } else if (view == fabVideo) {
+                    Question question = new videoQuestion(" ", 0);
+                    questions.add(question);
+                    mAdapter.notifyDataSetChanged();
+                } else {
+                    Question question = new essayQuestion(" ");
+                    questions.add(question);
+                    mAdapter.notifyDataSetChanged();
+                }
+                fab.close(true);
+            }
+        };
     }
 
     /**
@@ -194,17 +235,17 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
     public void onMessageRowClicked(int position) {
         // verify whether action mode is enabled or not
         // if enabled, change the row state to activated
-//        if (mAdapter.getSelectedItemCount() > 0) {
-//            enableActionMode(position);
-//        } else {
-//            // read the message which removes bold from the row
-//            Message message = messages.get(position);
-//            message.setRead(true);
-//            messages.set(position, message);
-//            mAdapter.notifyDataSetChanged();
-//
-//            Toast.makeText(getApplicationContext(), "Read: " + message.getMessage(), Toast.LENGTH_SHORT).show();
-//        }
+        if (mAdapter.getSelectedItemCount() > 0) {
+            enableActionMode(position);
+        } else {
+            // read the message which removes bold from the row
+            Message message = messages.get(position);
+            message.setRead(true);
+            messages.set(position, message);
+            mAdapter.notifyDataSetChanged();
+
+            Toast.makeText(getApplicationContext(), "Read: " + message.getMessage(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

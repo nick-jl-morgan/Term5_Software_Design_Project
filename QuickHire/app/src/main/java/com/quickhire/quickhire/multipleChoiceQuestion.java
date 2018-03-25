@@ -53,7 +53,7 @@ public class multipleChoiceQuestion extends Question {
 
     @Override
     public int getPicture() {
-        return 0;
+        return R.drawable.icon_multiple_choice;
     }
 
     @Override public String getType(){return "Multiple Choice";}

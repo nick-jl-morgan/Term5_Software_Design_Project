@@ -19,7 +19,7 @@ public class videoQuestion extends Question {
 
     @Override
     public int getPicture() {
-        return 0;
+        return R.drawable.icon_video;
     }
 
     @Override public String getType(){return "Video";}
