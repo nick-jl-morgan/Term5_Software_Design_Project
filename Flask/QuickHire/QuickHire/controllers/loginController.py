@@ -18,8 +18,7 @@ class UserRegistration(Resource):
             data = request.get_json(force = True)
         except :
             print >>sys.stderr, "JSON request not properly formatted"
-            return {'message': "JSON request not properly formatted"}, 500
-            
+            return {'message': "JSON request not properly formatted"}, 500          
 
         try:
             User.createUser(data['username'],data['password'])
@@ -38,14 +37,30 @@ class UserRegistration(Resource):
 
 class UserLogin(Resource):
     def post(self):
-        data = parser.parse_args()
+        #See User Login in Server Terminal
+        print >>sys.stderr, request.get_data()
+        print >>sys.stderr, request.headers
+        
+        #Try to Parse Request Data
+        try:
+            data = request.get_json(force = True)
+        except :
+            print >>sys.stderr, "JSON request not properly formatted"
+            return {'message': "JSON request not properly formatted"}, 500
+        
+        #Try to login the user in
         try:
             User.loginUser(data['username'],data['password'])
         except ValueError as error:
             return {'message': str(error)}, 500
         else:
+            #If success, create tokens
             access_token = create_access_token(identity = data['username'])
             refresh_token = create_refresh_token(identity = data['username'])
+            
+
+            print >>sys.stderr, "Access Toke : " + access_token
+            print >>sys.stderr, "Refresh Token : " + refresh_token
             return{
                 'message': 'Logged in as {}'.format(data['username']),
                 'access_token': access_token,

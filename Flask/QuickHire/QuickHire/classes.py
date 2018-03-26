@@ -1,6 +1,10 @@
 from models import *
-import sys
 from interface import Interface, implements
+from objdict import ObjDict
+import json , sys , random 
+
+
+
 class User:
 	@staticmethod
 	def createUser(username,password):
@@ -45,27 +49,98 @@ class User:
 
 
 class Posting:
-
-	@classmethod
-	def commitPosting(cls,owner_id,jobTitle,company,description,questions):
-		
-		Posting = PostingModel();
-		Posting.owner_id = owner_id
-		Posting.description = description
-		Posting.title = jobTitle
-		Posting.company_name = company
-		Posting.access_key = 6666
-		Posting.save_to_db()
-
-		appID = Posting.id
+	__model = PostingModel();
+	__questions = []
 	
-		for question in questions:
-			try:
-				 question.commitQuestion(appID)	
-			except Exception , error:
-				print >>sys.stderr, str(error)
-		return Posting.access_key
 
+	def createAccessKey(self):
+		done = False
+		key = random.randint(100000,999999)
+		while (done==False) :
+			if self.__model.keyExists( key ) :
+				key = random.randint(100000,999999)
+			else : 
+				done = True
+
+		return key
+
+
+	def __init__(self,owner_id=None,jobTitle=None,company=None,description=None,questions=[]):
+		self.__questions = questions
+		self.__model.owner_id = owner_id
+		self.__model.description = description
+		self.__model.title = jobTitle
+		self.__model.company_name = company
+		self.__model.access_key = self.createAccessKey()
+		
+		return	
+	'''
+	Comit Posting is used to save the given Posting object to the database.
+	This then propogates saveing all of its associated classes to the database as well. Such as 
+	its questions.
+	'''
+	def commitPosting(self):
+		self.__model.save_to_db()
+		appID = self.__model.id
+		if self.__questions :
+			for question in self.__questions:
+				try:
+					 question.commitQuestion(appID)	
+				except Exception , error:
+					print >>sys.stderr, str(error)
+		return
+
+	def getAccessKey(self):
+		key = self.__model.access_key
+		if key :
+		 	return key
+		else :
+		 	return 0
+
+	
+	def getPostingFromAccessCode(self,code):
+		self.__model = self.__model.getPostingFromAccessCode(code)
+		self.loadQuestions()
+		
+		pass
+
+	def loadQuestions(self):
+
+		posting_id = self.__model.id
+		textQuestionsModel = TextQuestionModel() 
+		
+		#Get all the text question models associated with the posting ID
+		questions = textQuestionsModel.getTextQuestionsFromPostId(posting_id)
+		
+		#Convert Models into Classes for questions[] list
+		for question in questions:
+			if(question.is_multiple_choice == 1):
+			
+				multipleChoice = multipleChoiceQuestion()
+				multipleChoice.getFromModel(question)
+				self.__questions.append(multipleChoice) 
+			
+			elif(question.is_multiple_choice == 0):
+				textQuestion = TextQuestion(question.question)
+				self.__questions.append(textQuestion)
+			else :
+				pass
+	def getQuestions(self):
+		return self.__questions
+
+	def getInfo(self):
+		info = {}
+		info['postID'] = self.__model.id
+		info['ownerID'] = self.__model.owner_id
+		info['description']= self.__model.description
+		info['title'] = self.__model.title
+		info['company'] = self.__model.company_name
+		info['accessKey'] = self.__model.access_key
+		info['questions']=[]
+		for question in self.__questions:
+			info['questions'].append(question.getInfo())		
+		return info
+		
 
 
 '''
@@ -79,7 +154,9 @@ all questions have this method.
 '''
 class QuestionInterface(Interface):	
 	def commitQuestion(self,post_id):
-		 pass
+		pass
+	def getInfo(self):
+		pass
 
 
 
@@ -88,20 +165,29 @@ Text Questions are questions that are text and expect a text response.
 '''
 class TextQuestion(implements(QuestionInterface)):
 	 
-	 __model = None
+	__model = None
 
-	 def __init__(self , question):
-	 	 self.model = TextQuestionModel()
-	 	 self.model.question = question
-	 	 self.model.answer_type = 0
-	 	 self.type.answer_restriction = 1000
+	def __init__(self , question):
+		self.__model = TextQuestionModel()
+	 	self.__model.question = question
+	 	self.__model.answer_type = 0
+	 	self.__model.answer_restriction = 1000
 
-	 def commitQuestion(self,post_id):
-	 	 try:
-	 	 	 self.model.posting_id = post_id
-	 	 	 self.model.save_to_db
-	 	 except Exception, e:
+	def commitQuestion(self,post_id):
+	 	try:
+	 	 	self.__model.posting_id = post_id
+	 	 	self.__model.save_to_db
+	 	except Exception, e:
 	 	 	raise ValueError('DataBase error on saving question :' + self.model.question + ' Error : ' + str(e))
+	 	pass
+
+	def getInfo(self):
+	 	info = {}
+	 	info['type'] = '1'
+	 	info['question'] = self.__model.question
+	 	info['id']= self.__model.id
+	 	return info	 	 
+
 
 '''
 Multiple Choice Question class implements the Question Interface insuring that it has a commit question
@@ -112,44 +198,89 @@ that we use different classes associated with the same models.
 '''
 class multipleChoiceQuestion(implements(QuestionInterface)):
 	 
-	 __model = None
-	 __options = []
-	 
-	 def __init__(self , question, optionslist):
-	 	 self.__options = optionslist
-	 	 self.model = TextQuestionModel()
-	 	 self.model.question = question
-	 	 self.model.is_multiple_choice = 1
+	__model = None
 
-	 def commitQuestion(self,post_id):
-	 	 try:
-	 	 	 self.model.posting_id = post_id
-	 		 self.model.save_to_db()
-	 	 	 for option in self.__options :
-	 	 	 	option.commitOption(self.model.id)
-	 	 except Exception, error :
+	 #List of Option Classes
+	__options = []
+	 
+	def __init__(self , question=None, optionslist=[]):
+	 	self.__options = optionslist
+	 	self.__model = TextQuestionModel()
+	 	self.__model.question = question
+	 	self.__model.is_multiple_choice = 1
+
+	def commitQuestion(self,post_id):
+	 	try:
+	 	 	self.__model.posting_id = post_id
+	 		self.__model.save_to_db()
+	 	 	for option in self.__options :
+	 	 	 	option.commitOption(self.__model.id)
+	 	except Exception, error :
 	 	 	raise error
-	 	 pass
+	 	pass
+
+	def getFromModel(self, textModel):
+	 	#Assign given text question Model to class object
+	 	self.__model = textModel
+	 	self.__options = multipleChoiceOption.getOptionsFromId(self.__model.id)
+	 	pass
+
+	def getInfo(self):
+	 	info = {}
+	 	info['type']=2
+	 	info['id']= self.__model.id
+	 	info['question'] = self.__model.question
+	 	info['options'] = []
+	 	for option in self.__options:
+	 	 	info['options'].append(option.getOption())
+
+	 	return info
+
+
+	 	 
+	 	
+
+
 
 '''
 The multiple choice questions contain an array of multiple choice option instances. These instances can be used to 
 save each option to the data base. The multiple choice option class is only accessible through its parent question class.
 '''
 class multipleChoiceOption():
-	 __model = None
-
-	 def __init__(self , option):
-	 	 self.model = MultipleChoiceOptionModel()
-	 	 self.model.option = option
+	__model = None
+	 
+	def __init__(self , option):
+	 	self.__model = MultipleChoiceOptionModel()
+	 	self.__model.option = option
+	 
 	 	 
 
-	 def commitOption(self,question_id):
-	 	 try:
-	 	 	 self.model.question_id = question_id
-	 	 	 self.model.save_to_db()
-	 	 except :
+	def commitOption(self,question_id):
+	 	try:
+	 	 	self.__model.question_id = question_id
+	 	 	self.__model.save_to_db()
+	 	except :
 	 	 	raise ValueError('DataBase error on saving multipleChoiceOption :' + self.model.option + ' Error : ' + str(error))
+	 	 	pass
+	 
 
+	def getOption(self):
+	 	if(self.__model.option != None):
+	 		return self.__model.option
+	 	else :
+	 		return None
+
+
+	@staticmethod
+	def getOptionsFromId(id):
+	 	optionslist = []
+
+	 	model = MultipleChoiceOptionModel()
+	 	options = model.getOptionsFromId(id)
+	 	
+	 	for option in options:
+	 	 	optionslist.append(multipleChoiceOption(option.option))
+	 	return optionslist
 
 
 
@@ -162,22 +293,17 @@ JSON parser class contains static methods that take JSON dicts and return either
 objects. These objects/lists then get passed to other functions via the controller.
 
 '''
-
 class JsonParser:
 	
 	@staticmethod
 	def parseQuestions(questions):
 
-		objectList = []
+	 	objectList = []
 		for question in questions:
 			if question['type']==1 :
-
 				objectList.append(JsonParser.parseTextQuestion(question))
-			
-			elif question['type']==2:
-				
+			elif question['type']==2:	
 				objectList.append(JsonParser.parseMultipleChoiceQuestion(question))
-
 		return objectList
 
 	@staticmethod
@@ -192,11 +318,14 @@ class JsonParser:
 		optionslist = []
 		for option in optionsdict: 
 			optionslist.append(multipleChoiceOption(option))
-
 		question = multipleChoiceQuestion(multipleChoicequestionJson['question'], optionslist)
-
 		return question
 
-
-
-
+	@staticmethod
+	def postingToJSON(posting):
+		dictinfo = {}
+		jsonInfo = posting.getInfo()
+		print >>sys.stderr, jsonInfo
+		return jsonInfo
+     	
+ 

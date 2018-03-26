@@ -47,8 +47,14 @@ class PostingModel(db.Model):
 	company_name = db.Column(mysql.VARCHAR(100))
 
 	def save_to_db(self):
-         db.session.add(self)
-         db.session.commit()
+		db.session.add(self)
+		db.session.commit()
+
+	def getPostingFromAccessCode(self,code):
+	    return self.query.filter_by(access_key = code).first()
+
+	def keyExists(self , key):
+		return self.query.filter_by(access_key = key).first()
 
 
 
@@ -78,6 +84,11 @@ class TextQuestionModel(db.Model):
 		db.session.add(self)
 		db.session.commit()
 
+	
+	def getTextQuestionsFromPostId(self,postID):
+		return self.query.filter_by(posting_id = postID).all()
+		
+
 
 class MultipleChoiceOptionModel(db.Model):
 	__tablename__='multipleChoiceOptions'
@@ -88,6 +99,9 @@ class MultipleChoiceOptionModel(db.Model):
 	def save_to_db(self):
 		db.session.add(self)
 		db.session.commit()
+
+	def getOptionsFromId(self,id):
+		return self.query.filter_by(question_id=id).all()
 		
 
 

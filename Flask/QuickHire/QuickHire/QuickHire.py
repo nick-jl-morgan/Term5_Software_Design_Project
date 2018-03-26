@@ -5,6 +5,7 @@ from flask import Flask, request, session, g, redirect, url_for, abort, \
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
+from werkzeug.utils import secure_filename
 
 
 app = Flask(__name__) 
@@ -25,6 +26,19 @@ db = SQLAlchemy(app)
 jwt = JWTManager(app)
 
 
+
+
+UPLOAD_FOLDER = '/home/liam/Developement/Flask/JrDesign/Term5_Software_Design_Project/Flask/QuickHire/QuickHire/uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
+
+
+
+
+
+
+
 import controllers.loginController as loginController, controllers.applicationController as applicationController, controllers.postingController as postingController
 
 #LandingPage for WebApp
@@ -42,4 +56,8 @@ mobileAPI.add_resource(loginController.UserLogoutAccess, '/API/logout/access')
 mobileAPI.add_resource(loginController.UserLogoutRefresh, '/API/logout/refresh')
 mobileAPI.add_resource(loginController.TokenRefresh, '/API/token/refresh')
 mobileAPI.add_resource(postingController.addPosting,'/API/AddPosting')
+mobileAPI.add_resource(postingController.getPostingFromAccessCode,'/API/getPostingFromAccessCode')
+mobileAPI.add_resource(postingController.UploadVideo,'/API/UploadVideo')
+
+
 app.run(host='0.0.0.0', port=5000)
