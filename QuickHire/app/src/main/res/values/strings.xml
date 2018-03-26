@@ -23,4 +23,6 @@
     <string name="title_activity_question_list">Questions</string>
     <string name="action_search">Search</string>
     <string name="action_delete">Delete</string>
+    <string name="title_activity_essay_question">essayQuestionActivity</string>
+    <string name="essay_question">Question</string>
 </resources>

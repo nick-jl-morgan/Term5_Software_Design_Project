@@ -28,4 +28,9 @@ public abstract class Question {
     public String getQuestionText(){return questionText; }
 
     public int getPosition() {return position;}
+
+    public void setPosition(int newPosition){position = newPosition;}
+
+    public void setText(String text){ questionText = text; }
+
 }

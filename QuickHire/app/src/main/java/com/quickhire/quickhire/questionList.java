@@ -1,5 +1,6 @@
 package com.quickhire.quickhire;
 
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -32,12 +33,17 @@ import retrofit2.Response;
 public class questionList extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, MessagesAdapter.MessageAdapterListener {
     private List<Question> questions = CreateJobPosting2.questionsList;
     private RecyclerView recyclerView;
-    private MessagesAdapter mAdapter;
+    public static MessagesAdapter mAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ActionModeCallback actionModeCallback;
     private ActionMode actionMode;
     private FloatingActionButton fabEssay, fabVideo, fabMC;
     private FloatingActionMenu fab;
+
+    private Integer questionPosition;
+    public static String questionText;
+
+    public static Question selectedQuestion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +71,10 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
         fabEssay.setOnClickListener(onButtonClick());
         fabVideo.setOnClickListener(onButtonClick());
         fabMC.setOnClickListener(onButtonClick());
+
+        if(selectedQuestion != null){
+            Toast.makeText(getApplicationContext(), "Update", Toast.LENGTH_SHORT).show();
+        }
 
 
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -235,17 +245,32 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
     public void onMessageRowClicked(int position) {
         // verify whether action mode is enabled or not
         // if enabled, change the row state to activated
-//        if (mAdapter.getSelectedItemCount() > 0) {
-//            enableActionMode(position);
-//        } else {
-//            // read the message which removes bold from the row
-//            Message message = messages.get(position);
-//            message.setRead(true);
-//            messages.set(position, message);
-//            mAdapter.notifyDataSetChanged();
-//
-//            Toast.makeText(getApplicationContext(), "Read: " + message.getMessage(), Toast.LENGTH_SHORT).show();
-//        }
+        if (mAdapter.getSelectedItemCount() > 0) {
+            enableActionMode(position);
+        } else {
+            // read the message which removes bold from the row
+            Question question = questions.get(position);
+            questionPosition = position;
+            questionText = question.getQuestionText();
+            if(question.getType() == "Essay") {
+                startActivityForResult(new Intent(questionList.this,essayQuestionActivity.class),1);
+            }
+            Toast.makeText(getApplicationContext(), "Read: " + question.getType(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if ( requestCode == 1 && resultCode == RESULT_OK ){
+            String result = data.getStringExtra("question");
+            Question question = questions.get(questionPosition);
+            question.setText(result);
+            mAdapter.removeData(questionPosition);
+            questions.add(question);
+            mAdapter.notifyDataSetChanged();
+            Toast.makeText(getApplicationContext(), "updated", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
