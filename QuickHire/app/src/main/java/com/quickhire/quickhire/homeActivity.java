@@ -1,6 +1,8 @@
 package com.quickhire.quickhire;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
@@ -9,9 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.VideoView;
+
+import java.io.File;
 
 public class homeActivity extends AppCompatActivity {
-
+    private VideoView videoV;
+    File test;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,6 +29,7 @@ public class homeActivity extends AppCompatActivity {
 
         configureCreatePostButton();
         configureTestVideoButton();
+        videoV = (VideoView) findViewById(R.id.videoView);
     }
 
         private void configureCreatePostButton(){
@@ -41,9 +48,23 @@ public class homeActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view){
                     Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+                    takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT,60);
+                    takeVideoIntent.putExtra(MediaStore.)
                     startActivityForResult(takeVideoIntent, 1);
                 }
             });
+        }
+        @Override
+        public void onActivityResult(int requestCode, int resultCode, Intent data){
+            super.onActivityResult(requestCode, resultCode, data);
+            if(requestCode == 1){
+                if(resultCode == Activity.RESULT_OK){
+                    Uri video = data.getData();
+                    videoV.setVideoURI(video);
+                    videoV.start();
+                    test = new File(video.getPath());
+                }
+            }
         }
 
 }

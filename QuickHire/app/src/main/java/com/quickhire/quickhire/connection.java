@@ -14,6 +14,7 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -122,6 +123,10 @@ public class connection{
             return;
         }
 
+
+    }
+    private void uploadVideo(File f){
+        Request<File>
 
     }
 }
