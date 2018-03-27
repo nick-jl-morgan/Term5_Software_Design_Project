@@ -1,6 +1,7 @@
 package com.quickhire.quickhire;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -25,7 +26,7 @@ public class ApplyActivity extends AppCompatActivity {
     private TextView jobTitle;
     private TextView jobCompany;
     private TextView jobDescription;
-    public static jobPosting posting = homeActivity.posting;
+    public static jobPosting posting = null;
     public static Activity activity = null;
 
     @Override
@@ -36,7 +37,7 @@ public class ApplyActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         activity=this;
-
+        posting = homeActivity.posting;
         jobTitle = (TextView)findViewById(R.id.applyJobTitleText);
         jobCompany = (TextView)findViewById(R.id.applyCompanyText);
         jobDescription = (TextView)findViewById(R.id.applyDescriptionText);
@@ -55,7 +56,7 @@ public class ApplyActivity extends AppCompatActivity {
                Application apply = posting.toapplication();
                String error = null;
                for(Answer a : apply.answers){
-                   if(a.getAnswer() == ""){
+                   if(a.getAnswer() == null){
                        error = "Please answer all questions";
                    }
                }
@@ -65,8 +66,16 @@ public class ApplyActivity extends AppCompatActivity {
                        @Override
                        public void onResponse(JSONObject response) {
                            //Do something
-                           ApplyActivity.display(response.toString());
-                           activity.finish();
+                           AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                           builder.setMessage(response.toString())
+                                   .setCancelable(false)
+                                   .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                       public void onClick(DialogInterface dialog, int id) {
+                                           activity.finish();
+                                       }
+                                   });
+                           AlertDialog alert = builder.create();
+                           alert.show();
                        }
                    }, new Response.ErrorListener() {
                        @Override
@@ -93,14 +102,14 @@ public class ApplyActivity extends AppCompatActivity {
 
     public static void display(String message){
         new AlertDialog.Builder(ApplyActivity.activity)
-                .setTitle("Server Respose")
+                .setTitle("Success")
                 .setMessage(message)
                 .setCancelable(true)
                 .show();
     }
 
     @Override protected void onDestroy(){
-        ApplyActivity.activity=null;
+        this.activity=null;
         super.onDestroy();
     }
 }

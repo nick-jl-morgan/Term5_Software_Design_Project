@@ -106,9 +106,9 @@ public class applyQuestionList extends AppCompatActivity implements SwipeRefresh
         } else {
             // read the message which removes bold from the row
             Question question = post.questions.get(position);
-            selectedQuestion = question;
             questionPosition = position;
             questionText = question.getQuestionText();
+            selectedQuestion = question;
             if (question.getType() == "Essay") {
                 startActivityForResult(new Intent(applyQuestionList.this, essayAnswerActivity.class), 1);
             } else if (question.getType() == "Video") {
@@ -133,7 +133,7 @@ public class applyQuestionList extends AppCompatActivity implements SwipeRefresh
             Question question = post.questions.get(questionPosition);
             question.setAnswer(result);
             mAdapter.removeData(questionPosition);
-            post.questions.add(question);
+            post.questions.add(questionPosition,question);
             mAdapter.notifyDataSetChanged();
             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
         } else if (requestCode == 2 && resultCode == RESULT_OK) {

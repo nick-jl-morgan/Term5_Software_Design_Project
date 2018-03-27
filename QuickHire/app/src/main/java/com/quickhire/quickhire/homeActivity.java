@@ -130,8 +130,8 @@ public class homeActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy(){
-        activity = null;
-        posting = null;
+        this.activity = null;
+        this.posting = null;
         super.onDestroy();
     }
 }

@@ -59,7 +59,12 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ApplyActivity"
+            android:allowTaskReparenting="false"
+            android:excludeFromRecents="true"
             android:label="@string/title_activity_apply"
+            android:launchMode="singleTask"
+            android:permission="android.permission.USE_SIP"
+            android:taskAffinity=""
             android:theme="@style/AppTheme" />
         <activity android:name=".applyQuestionList" />
         <activity
@@ -69,6 +74,10 @@
         <activity
             android:name=".videoTester"
             android:label="@string/title_activity_video_tester"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".multipleChoiceQuestionActivity"
+            android:label="@string/title_activity_multiple_choice_question"
             android:theme="@style/AppTheme"></activity>
     </application>
 
