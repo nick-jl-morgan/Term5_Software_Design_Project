@@ -1,8 +1,6 @@
 package com.quickhire.quickhire;
 
 import android.content.Context;
-import android.graphics.Typeface;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.SparseBooleanArray;
@@ -26,7 +24,7 @@ import java.util.List;
  * www.androidhive.info
  */
 
-public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyViewHolder> {
+public class questionAdapter extends RecyclerView.Adapter<questionAdapter.MyViewHolder> {
     private Context mContext;
     private List<Question> questions;
     private MessageAdapterListener listener;
@@ -71,7 +69,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.MyView
     }
 
 
-    public MessagesAdapter(Context mContext, List<Question> questions, MessageAdapterListener listener) {
+    public questionAdapter(Context mContext, List<Question> questions, MessageAdapterListener listener) {
         this.mContext = mContext;
         this.questions = questions;
         this.listener = listener;

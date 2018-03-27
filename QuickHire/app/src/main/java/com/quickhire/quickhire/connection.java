@@ -84,6 +84,16 @@ public class connection{
         generic(JSON, extension, responseListener, err);
     }
 
+    protected void searchJobPosting(String id, Response.Listener<JSONObject> responseListener, Response.ErrorListener err) {
+
+        String JSON="{\"AccessCode\":\"" + id + "\"}";
+        String extension = "getPostingFromAccessCode";
+
+        //In order to add additional onResponse functionality if desired.
+
+        generic(JSON, extension, responseListener, err);
+    }
+
     protected void loginUser(String username, String password, final Response.Listener<JSONObject> responseListener, Response.ErrorListener err) {
 
         String JSON="{\"username\":\"" + username + "\","
@@ -165,17 +175,19 @@ public class connection{
             generic(JSON, urlattachment, responseListener, err);
         }
     }
-    private class videoStreamer extends AsyncTask<Uri, Void, Void>{
+    private class videoStreamer extends AsyncTask<Uri, Void, Void> {
         String extension = "UploadVideo";
 
         @Override
         protected Void doInBackground(Uri... uris) {
             int n_vids = uris.length;
-            for(int i=0; i < n_vids; i++){
-                byte[] b=new byte[1024];
+            for (int i = 0; i < n_vids; i++) {
+                byte[] b = new byte[1024];
 
             }
             return null;
         }
+
+    }
 }
 

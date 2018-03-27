@@ -30,11 +30,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CreatePostingActivity"
-            android:label="@string/title_activity_create_posting"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateVisible|adjustResize" />
-        <activity
             android:name=".RegisterLoginActivity"
             android:label="@string/title_activity_register_login" />
         <activity
@@ -53,7 +48,27 @@
         <activity android:name=".CreateJobPosting2" />
         <activity
             android:name=".cameraActivity"
-            android:label="@string/title_activity_camera"
+            android:label="@string/title_activity_camera" />
+        <activity
+            android:name=".essayQuestionActivity"
+            android:label="@string/title_activity_essay_question"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".videoQuestionActivity"
+            android:label="@string/title_activity_video_question"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".ApplyActivity"
+            android:label="@string/title_activity_apply"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".applyQuestionList" />
+        <activity
+            android:name=".essayAnswerActivity"
+            android:label="@string/title_activity_essay_answer"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".videoTester"
+            android:label="@string/title_activity_video_tester"
             android:theme="@style/AppTheme"></activity>
     </application>
 
