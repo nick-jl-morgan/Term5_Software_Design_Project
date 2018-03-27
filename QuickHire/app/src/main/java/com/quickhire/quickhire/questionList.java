@@ -1,11 +1,7 @@
 package com.quickhire.quickhire;
 
 import android.content.Intent;
-import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.os.Bundle;
-//import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
@@ -17,32 +13,23 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
-
 import com.github.clans.fab.FloatingActionMenu;
 import com.github.clans.fab.FloatingActionButton;
-
-import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-
-public class questionList extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, MessagesAdapter.MessageAdapterListener {
+public class questionList extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, questionAdapter.MessageAdapterListener {
     private List<Question> questions = CreateJobPosting2.questionsList;
     private RecyclerView recyclerView;
-    public static MessagesAdapter mAdapter;
+    private questionAdapter mAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ActionModeCallback actionModeCallback;
     private ActionMode actionMode;
     private FloatingActionButton fabEssay, fabVideo, fabMC;
     private FloatingActionMenu fab;
-
     private Integer questionPosition;
     public static String questionText;
-
+    public static int videoTime;
     public static Question selectedQuestion;
 
     @Override
@@ -51,22 +38,12 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
         setContentView(R.layout.activity_question_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         fab = (FloatingActionMenu) findViewById(R.id.fab);
         fabEssay = (FloatingActionButton) findViewById(R.id.fab2);
         fabVideo = (FloatingActionButton) findViewById(R.id.fab3);
         fabMC = (FloatingActionButton) findViewById(R.id.fab1);
-
-        fab.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
-            @Override
-            public void onMenuToggle(boolean opened) {
-//                if (opened) {
-//                    showToast("Menu is opened");
-//                } else {
-//                    showToast("Menu is closed");
-//                }
-            }
-        });
 
         fabEssay.setOnClickListener(onButtonClick());
         fabVideo.setOnClickListener(onButtonClick());
@@ -76,21 +53,11 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
             Toast.makeText(getApplicationContext(), "Update", Toast.LENGTH_SHORT).show();
         }
 
-
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                addQuestion();
-////                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-////                        .setAction("Action", null).show();
-//            }
-//        });
-
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
 
-        mAdapter = new MessagesAdapter(this, questions, this);
+        mAdapter = new questionAdapter(this, questions, this);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -100,14 +67,15 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
         actionModeCallback = new ActionModeCallback();
 
         // show loader and fetch messages
-//        swipeRefreshLayout.post(
-//                new Runnable() {
-//                    @Override
-//                    public void run() {
-////                        getInbox();
-//                    }
-//                }
-//        );
+        swipeRefreshLayout.post(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        mAdapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                }
+        );
     }
 
     private View.OnClickListener onButtonClick() {
@@ -130,62 +98,6 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
                 fab.close(true);
             }
         };
-    }
-
-    /**
-     * Fetches mail messages by making HTTP request
-     * url: http://api.androidhive.info/json/inbox.json
-     */
-//    private void getInbox() {
-//        swipeRefreshLayout.setRefreshing(true);
-//
-//        ApiInterface apiService =
-//                ApiClient.getClient().create(ApiInterface.class);
-//
-//        Call<List<Message>> call = apiService.getInbox();
-//        call.enqueue(new Callback<List<Message>>() {
-//            @Override
-//            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
-//                // clear the inbox
-//                messages.clear();
-//
-//                // add all the messages
-//                // messages.addAll(response.body());
-//
-//                // TODO - avoid looping
-//                // the loop was performed to add colors to each message
-//                for (Message message : response.body()) {
-//                    // generate a random color
-//                    message.setColor(getRandomMaterialColor("400"));
-//                    messages.add(message);
-//                }
-//
-//                mAdapter.notifyDataSetChanged();
-//                swipeRefreshLayout.setRefreshing(false);
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Message>> call, Throwable t) {
-//                Toast.makeText(getApplicationContext(), "Unable to fetch json: " + t.getMessage(), Toast.LENGTH_LONG).show();
-//                swipeRefreshLayout.setRefreshing(false);
-//            }
-//        });
-//    }
-
-    /**
-     * chooses a random color from array.xml
-     */
-    private int getRandomMaterialColor(String typeColor) {
-        int returnColor = Color.GRAY;
-        int arrayId = getResources().getIdentifier("mdcolor_" + typeColor, "array", getPackageName());
-
-        if (arrayId != 0) {
-            TypedArray colors = getResources().obtainTypedArray(arrayId);
-            int index = (int) (Math.random() * colors.length());
-            returnColor = colors.getColor(index, Color.GRAY);
-            colors.recycle();
-        }
-        return returnColor;
     }
 
     @Override
@@ -231,16 +143,6 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
 
     }
 
-//    @Override
-//    public void onIconImportantClicked(int position) {
-//        // Star icon is clicked,
-//        // mark the message as important
-//        Message message = messages.get(position);
-//        message.setImportant(!message.isImportant());
-//        messages.set(position, message);
-//        mAdapter.notifyDataSetChanged();
-//    }
-
     @Override
     public void onMessageRowClicked(int position) {
         // verify whether action mode is enabled or not
@@ -254,6 +156,10 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
             questionText = question.getQuestionText();
             if(question.getType() == "Essay") {
                 startActivityForResult(new Intent(questionList.this,essayQuestionActivity.class),1);
+            }
+            else if(question.getType() == "Video") {
+                videoTime = ((videoQuestion)question).getTime();
+                startActivityForResult(new Intent(questionList.this,videoQuestionActivity.class),2);
             }
             Toast.makeText(getApplicationContext(), "Read: " + question.getType(), Toast.LENGTH_SHORT).show();
         }
@@ -270,6 +176,16 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
             questions.add(question);
             mAdapter.notifyDataSetChanged();
             Toast.makeText(getApplicationContext(), "updated", Toast.LENGTH_SHORT).show();
+        }
+        else if ( requestCode == 2 && resultCode == RESULT_OK ){
+            String result = data.getStringExtra("question");
+            String timeString = data.getStringExtra("time");
+            int time = Integer.parseInt(timeString);
+            Question videoQ = new videoQuestion(result, time);
+            mAdapter.removeData(questionPosition);
+            questions.add(videoQ);
+            mAdapter.notifyDataSetChanged();
+            Toast.makeText(getApplicationContext(), timeString, Toast.LENGTH_SHORT).show();
         }
     }
 

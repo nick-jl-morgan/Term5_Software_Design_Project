@@ -65,6 +65,16 @@ public class connection{
         generic(JSON, extension, responseListener, err);
     }
 
+    protected void searchJobPosting(String id, Response.Listener<JSONObject> responseListener, Response.ErrorListener err) {
+
+        String JSON="{\"AccessCode\":\"" + id + "\"}";
+        String extension = "getPostingFromAccessCode";
+
+        //In order to add additional onResponse functionality if desired.
+
+        generic(JSON, extension, responseListener, err);
+    }
+
     protected void loginUser(String username, String password, final Response.Listener<JSONObject> responseListener, Response.ErrorListener err) {
 
         String JSON="{\"username\":\"" + username + "\","

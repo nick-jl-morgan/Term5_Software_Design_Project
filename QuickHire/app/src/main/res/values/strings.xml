@@ -19,10 +19,15 @@
         completions."
     </string>
     <string name="title_activity_temp_login">Sign in</string>
-    <string name="title_activity_home">homeActivity</string>
+    <string name="title_activity_home">Home</string>
     <string name="title_activity_question_list">Questions</string>
     <string name="action_search">Search</string>
     <string name="action_delete">Delete</string>
-    <string name="title_activity_essay_question">essayQuestionActivity</string>
+    <string name="title_activity_essay_question">Edit Essay Question</string>
     <string name="essay_question">Question</string>
+    <string name="title_activity_video_question">Edit Video Question</string>
+    <string name="video_question">Question</string>
+    <string name="title_activity_search_posting">searchPostingActivity</string>
+    <string name="title_activity_apply">ApplyActivity</string>
+    <string name="title_activity_essay_answer">essayAnswerActivity</string>
 </resources>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="video_time_array">
+        <item>30 Seconds</item>
+        <item>60 Seconds</item>
+        <item>90 Seconds</item>
+    </string-array>
+</resources>

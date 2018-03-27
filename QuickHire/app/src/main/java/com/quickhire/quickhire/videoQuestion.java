@@ -17,6 +17,10 @@ public class videoQuestion extends Question {
         return string;
     }
 
+    public void setTime(int time){length = time;}
+
+    public int getTime(){return length;}
+
     @Override
     public int getPicture() {
         return R.drawable.icon_video;

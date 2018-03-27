@@ -8,18 +8,18 @@ import java.util.Iterator;
 import java.util.Vector;
 
 public class jobPosting {
-    public String company, jobTitle, description;
-    private int postID, ownerID;
+    public String company, jobTitle, description, postID, ownerID, title;
+    private String accessKey;
 
-    private Vector<Question> questions = new Vector<Question>();
+    public Vector<Question> questions = new Vector<Question>();
 
-    public jobPosting(String Company, String jobTitle, String description){
+    public jobPosting(String company, String jobTitle, String description){
         this.company=company;
         this.jobTitle=jobTitle;
         this.description = description;
     }
 
-    public jobPosting(String Company, String jobTitle, String description, int postID, int ownerID){
+    public jobPosting(String company, String jobTitle, String description, String postID, String ownerID){
         this.company=company;
         this.jobTitle=jobTitle;
         this.description = description;

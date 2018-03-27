@@ -1,5 +1,7 @@
 package com.quickhire.quickhire;
 
+import java.util.Vector;
+
 /**
  * Created by matth_000 on 2018-03-04.
  */
@@ -8,7 +10,9 @@ package com.quickhire.quickhire;
 
 public abstract class Question {
     protected String questionText;
+    private String answer;
     private questionType qType;
+    private String id;
     protected int position;
     protected int numericQuestionType; //useful incase of changes to enumeration and also database interactions
 
@@ -24,6 +28,10 @@ public abstract class Question {
     public abstract int getPicture();
 
     public abstract String getType();
+
+    public void setAnswer(String value){answer = value; }
+
+    public void setId(String value){id = value;}
 
     public String getQuestionText(){return questionText; }
 
