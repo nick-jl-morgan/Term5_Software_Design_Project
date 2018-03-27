@@ -68,7 +68,7 @@ public class homeActivity extends AppCompatActivity {
             videoButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
-                    startActivity(new Intent(homeActivity.this, ApplyActivity.class));
+                    startActivity(new Intent(homeActivity.this, videoTester.class));
 //                    Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 //                    takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT,60);
 //                    startActivityForResult(takeVideoIntent, 1);
@@ -84,7 +84,7 @@ public class homeActivity extends AppCompatActivity {
                     videoV.setVideoURI(video);
                     videoV.start();
                     File test = new File(video.getPath());
-                    new videoStreamer().execute(video);
+                    //new videoStreamer().execute(video);
                 }
             }
         }

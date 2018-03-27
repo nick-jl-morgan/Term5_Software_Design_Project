@@ -45,7 +45,7 @@ public class connection{
     private String URL;
     private RequestQueue queue = null;
     private static connection singleConnection = null;
-    boolean external = false;
+    private boolean external = false;
 
     //Constructor for default IP of server
     private connection(Context ctx){
@@ -153,41 +153,16 @@ public class connection{
 
 
     }
-    public void uploadVideo(Uri f){
-       File file = new File(f.getPath());
-        InputStream inputStream=null;
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        final byte[] b=new byte[8];
-        try {
-            ContentResolver cr =appcontext.getContentResolver();
-            inputStream = cr.openInputStream(f);
-//            while( (inputStream.read(b)) != -1){
-//                buffer.write(b);
-//            }
-        }catch(Exception e){
-            Log.d("Error!", e.getMessage());
-            Log.d("Fuuu", "ck");
-        }
-
-    }
-    protected void generico(String JSON, String urlattachment, Response.Listener<JSONObject> responseListener, Response.ErrorListener err){
-        if(external){
-            generic(JSON, urlattachment, responseListener, err);
+    protected void publicgeneric(String JSON, String urlattachment, Response.Listener<JSONObject> responseListener, Response.ErrorListener err){
+        if(this.external){
+            generic(JSON,urlattachment,responseListener,err);
         }
     }
-    private class videoStreamer extends AsyncTask<Uri, Void, Void> {
-        String extension = "UploadVideo";
+    public void disableExternal(){this.external=false;}
 
-        @Override
-        protected Void doInBackground(Uri... uris) {
-            int n_vids = uris.length;
-            for (int i = 0; i < n_vids; i++) {
-                byte[] b = new byte[1024];
-
-            }
-            return null;
-        }
-
+    public void uploadVideo(videoAnswer answer){
+        external=true;
+        new videoStreamer().execute(answer);
     }
 }
 
