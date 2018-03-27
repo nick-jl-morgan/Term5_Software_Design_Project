@@ -57,4 +57,9 @@ public class multipleChoiceQuestion extends Question {
     }
 
     @Override public String getType(){return "Multiple Choice";}
+
+    @Override
+    public Integer intType() {
+        return 2;
+    }
 }

@@ -100,6 +100,12 @@ public class connection{
         generic(JSON, extension, responseListener, err);
     }
 
+    protected void saveApplication(Application application, Response.Listener<JSONObject> responseListener, Response.ErrorListener err){
+        String JSON = application.toJSON();
+        String extension = "submitApplication";
+        generic(JSON, extension, responseListener, err);
+    }
+
 
     private void generic(String JSON, String urlattachment, Response.Listener<JSONObject> responseListener, Response.ErrorListener err){
         JsonObjectRequest request=null;

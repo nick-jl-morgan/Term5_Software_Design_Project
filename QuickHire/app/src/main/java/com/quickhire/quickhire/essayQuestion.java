@@ -23,4 +23,9 @@ public class essayQuestion extends Question {
     }
 
     @Override public String getType(){return "Essay";}
+
+    @Override
+    public Integer intType() {
+        return 1;
+    }
 }

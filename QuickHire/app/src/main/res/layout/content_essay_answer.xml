@@ -10,22 +10,28 @@
 
     <TextView
         android:id="@+id/essayQuestionText"
-        android:layout_width="408dp"
-        android:layout_height="94dp"
+        android:layout_width="416dp"
+        android:layout_height="77dp"
         android:layout_marginEnd="3dp"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/essayAnswerText"
         android:layout_width="407dp"
-        android:layout_height="195dp"
+        android:layout_height="298dp"
         android:layout_marginEnd="4dp"
+        android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="Answer"
         android:inputType="textMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/essayQuestionText" />
 
@@ -33,11 +39,21 @@
         android:id="@+id/saveEssayAnswerButton"
         android:layout_width="408dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="266dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginEnd="3dp"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="265dp"
+        android:layout_height="32dp"
+        android:text="Please place answer below:"
+        android:textColor="@color/colorAccent"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@+id/essayQuestionText" />
 
 </android.support.constraint.ConstraintLayout>

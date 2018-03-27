@@ -7,7 +7,8 @@ import java.util.Vector;
  */
 
 public class questionResponse {
-    public String id, question;
+    public String question;
+    public Integer id;
     public String[] options;
     public int type;
 }

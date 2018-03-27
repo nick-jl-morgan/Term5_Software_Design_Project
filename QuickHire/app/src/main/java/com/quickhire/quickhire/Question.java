@@ -12,7 +12,7 @@ public abstract class Question {
     protected String questionText;
     private String answer;
     private questionType qType;
-    private String id;
+    private Integer id;
     protected int position;
     protected int numericQuestionType; //useful incase of changes to enumeration and also database interactions
 
@@ -29,9 +29,15 @@ public abstract class Question {
 
     public abstract String getType();
 
+    public abstract Integer intType();
+
     public void setAnswer(String value){answer = value; }
 
-    public void setId(String value){id = value;}
+    public Integer getId(){return id;}
+
+    public String getAnswer(){return answer;}
+
+    public void setId(Integer value){id = value;}
 
     public String getQuestionText(){return questionText; }
 

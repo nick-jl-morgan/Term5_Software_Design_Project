@@ -22,7 +22,7 @@ public class homeActivity extends AppCompatActivity {
 
     private EditText searchPostingText;
     public static Activity activity = null;
-    public static jobPosting posting;
+    public static jobPosting posting = null;
     public postingResponse postResponse;
 
     @Override
@@ -86,6 +86,13 @@ public class homeActivity extends AppCompatActivity {
                 .setMessage(message)
                 .setCancelable(true)
                 .show();
+    }
+
+    @Override
+    protected void onDestroy(){
+        activity = null;
+        posting = null;
+        super.onDestroy();
     }
 }
 

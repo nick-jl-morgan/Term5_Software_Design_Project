@@ -7,11 +7,12 @@ import java.util.Vector;
  */
 
 public class postingResponse {
-    public String accessKey, company, description, ownerID, postID, title;
+    public String accessKey, company, description, title;
+    public Integer postID, ownerID;
     public Vector<questionResponse> questions = new Vector<questionResponse>();
 
     public jobPosting convert(){
-        jobPosting posting = new jobPosting(company, title, description);
+        jobPosting posting = new jobPosting(company, title, description,postID, ownerID);
         for(questionResponse q : questions){
             if (q.type == 2) {
                 Question question = new multipleChoiceQuestion(q.question);
