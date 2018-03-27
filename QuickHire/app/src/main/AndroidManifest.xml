@@ -78,6 +78,10 @@
         <activity
             android:name=".multipleChoiceQuestionActivity"
             android:label="@string/title_activity_multiple_choice_question"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".videoAnswerActivity"
+            android:label="@string/title_activity_video_answer"
             android:theme="@style/AppTheme"></activity>
     </application>
 

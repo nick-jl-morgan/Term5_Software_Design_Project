@@ -34,6 +34,8 @@ public class videoTester extends AppCompatActivity {
             public void onClick(View view) {
                 Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                 takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 60);
+                takeVideoIntent.putExtra(MediaStore.EXTRA_FINISH_ON_COMPLETION,true);
+
                 startActivityForResult(takeVideoIntent, 1);
             }
         });

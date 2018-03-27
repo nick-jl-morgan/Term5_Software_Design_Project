@@ -68,7 +68,8 @@ public class homeActivity extends AppCompatActivity {
             videoButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
-                    startActivity(new Intent(homeActivity.this, videoTester.class));
+                    //startActivity(new Intent(homeActivity.this, videoTester.class));
+                    startActivity(new Intent(homeActivity.this, videoAnswerActivity.class));
 //                    Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
 //                    takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT,60);
 //                    startActivityForResult(takeVideoIntent, 1);

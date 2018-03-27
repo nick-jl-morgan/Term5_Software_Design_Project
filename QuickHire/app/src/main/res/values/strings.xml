@@ -33,4 +33,5 @@
     <string name="title_activity_essay_answer">essayAnswerActivity</string>
     <string name="title_activity_video_tester">videoTester</string>
     <string name="title_activity_multiple_choice_question">multipleChoiceQuestionActivity</string>
+    <string name="title_activity_video_answer">Video Response</string>
 </resources>
