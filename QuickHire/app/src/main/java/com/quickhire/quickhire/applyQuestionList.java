@@ -106,6 +106,7 @@ public class applyQuestionList extends AppCompatActivity implements SwipeRefresh
         } else {
             // read the message which removes bold from the row
             Question question = post.questions.get(position);
+            selectedQuestion = question;
             questionPosition = position;
             questionText = question.getQuestionText();
             if (question.getType() == "Essay") {
@@ -134,7 +135,7 @@ public class applyQuestionList extends AppCompatActivity implements SwipeRefresh
             mAdapter.removeData(questionPosition);
             post.questions.add(question);
             mAdapter.notifyDataSetChanged();
-            Toast.makeText(getApplicationContext(), "updated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
         } else if (requestCode == 2 && resultCode == RESULT_OK) {
 //            String result = data.getStringExtra("question");
 //            String timeString = data.getStringExtra("time");

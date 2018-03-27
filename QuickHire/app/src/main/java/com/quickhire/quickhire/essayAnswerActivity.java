@@ -16,6 +16,8 @@ public class essayAnswerActivity extends AppCompatActivity {
     private TextView essayQuestionText;
     private Button saveEssayAnswer;
     private EditText essayAnswer;
+    private String question = applyQuestionList.questionText;
+    private Question selected = applyQuestionList.selectedQuestion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +27,11 @@ public class essayAnswerActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         essayQuestionText = (TextView) findViewById(R.id.essayQuestionText);
+        essayQuestionText.setText(question);
         essayAnswer = (EditText) findViewById(R.id.essayAnswerText);
+        if(selected.getAnswer() != null){
+            essayAnswer.append(selected.getAnswer());
+        }
         configureSaveEssayButton();
     }
 

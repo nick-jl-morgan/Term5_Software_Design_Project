@@ -27,4 +27,9 @@ public class videoQuestion extends Question {
     }
 
     @Override public String getType(){return "Video";}
+
+    @Override
+    public Integer intType() {
+        return 0;
+    }
 }
