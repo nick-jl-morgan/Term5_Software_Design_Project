@@ -5,6 +5,7 @@ package com.quickhire.quickhire;
  */
 
 public class Answer {
+    private Integer applicationID;
     private String Answer;
     private Integer questionID, type;
 
@@ -20,4 +21,11 @@ public class Answer {
     }
 
     public String getAnswer(){return Answer;}
+    public int getQuestionID(){return this.questionID;}
+    public int getApplicationID(){return this.applicationID;}
+    public void setApplicationID(int id){this.applicationID=id;}
+
+    protected void beginTransmitting() {
+        //nothing
+    }
 }

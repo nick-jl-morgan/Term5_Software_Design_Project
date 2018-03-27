@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ public class ApplyActivity extends AppCompatActivity {
     private TextView jobTitle;
     private TextView jobCompany;
     private TextView jobDescription;
+
     public static jobPosting posting = null;
     public static Activity activity = null;
 
@@ -38,6 +40,7 @@ public class ApplyActivity extends AppCompatActivity {
 
         activity=this;
         posting = homeActivity.posting;
+
         jobTitle = (TextView)findViewById(R.id.applyJobTitleText);
         jobCompany = (TextView)findViewById(R.id.applyCompanyText);
         jobDescription = (TextView)findViewById(R.id.applyDescriptionText);
@@ -53,7 +56,7 @@ public class ApplyActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               Application apply = posting.toapplication();
+               final Application apply = posting.toapplication();
                String error = null;
                for(Answer a : apply.answers){
                    if(a.getAnswer() == null){
@@ -62,9 +65,10 @@ public class ApplyActivity extends AppCompatActivity {
                }
                if(error == null){
                    connection.getConnection().saveApplication(apply, new Response.Listener<JSONObject>() {
-
+                       Application application=apply;
                        @Override
                        public void onResponse(JSONObject response) {
+
                            //Do something
                            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                            builder.setMessage(response.toString())
@@ -76,6 +80,17 @@ public class ApplyActivity extends AppCompatActivity {
                                    });
                            AlertDialog alert = builder.create();
                            alert.show();
+
+                           //get the application ID
+                           int id = -1;
+                           try {
+                                id = response.getInt("id");
+                           }catch(Exception e){
+                               Log.d("Cannot find Post ID", e.getMessage());
+                           }
+                           application.setApplicationID(id);
+                           application.postResponse();
+                           activity.finish();
                        }
                    }, new Response.ErrorListener() {
                        @Override

@@ -2,6 +2,7 @@ package com.quickhire.quickhire;
 
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.util.Base64;
 import android.util.Log;
 
 import com.android.volley.Response;
@@ -61,9 +62,10 @@ public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
 
                     }
                 };
-                String JSON = "{\"questionID\":"+f[0].qID+","
-                        +"\"packetNum\":"+this.index+","
-                        +"\"data\":"+Arrays.toString(buffer)+"}";
+                String JSON = "{\"applicationID\":"+f[0].getApplicationID()+","
+                            +"\"questionID\":"+f[0].getQuestionID()+","
+                            +"\"packetNum\":"+this.index+","
+                            +"\"data\":\""+ Base64.encodeToString(buffer,Base64.URL_SAFE)+"\"}";
                 connection.publicgeneric(JSON,urlString,listener,errorListener);
                 //Logic for next request generation
                 bytesAvailable = fileInputStream.available();
@@ -85,9 +87,10 @@ public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
 
                 }
             };
-            String JSON = "{\"questionID\":"+f[0].qID+","
+            String JSON = "{\"applicationID\":"+f[0].getApplicationID()+","
+                    +"\"questionID\":"+f[0].getQuestionID()+","
                     +"\"packetNum\":"+this.index+","
-                    +"\"data\":\"Final Packet n="+this.index+"\"}";
+                    +"\"data\":\"done\"}";
             connection.publicgeneric(JSON,urlString,listener,errorListener);
 
             fileInputStream.close();
@@ -98,6 +101,7 @@ public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
         catch (IOException ioe){
             Log.e("Debug", "error: " + ioe.getMessage(), ioe);
         }
+        connection.disableExternal();
         return null;
     }
 
