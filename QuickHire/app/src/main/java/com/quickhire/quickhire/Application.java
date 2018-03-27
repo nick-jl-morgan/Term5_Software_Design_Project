@@ -7,6 +7,7 @@ import java.util.Vector;
  */
 
 public class Application {
+    private Integer applicationID;
     private Integer postID;
     private Integer hasVideo = 0;
     public Vector<Answer> answers = new Vector<Answer>();
@@ -38,6 +39,18 @@ public class Application {
         }
         builder.append("]}");
         return builder.toString();
+    }
+
+    public void setApplicationID(int id){
+        this.applicationID=id;
+        for(Answer a: answers){
+            a.setApplicationID(id);
+        }
+    }
+    public void postResponse(){
+        for(Answer a: answers){
+            a.beginTransmitting();
+        }
 
     }
 

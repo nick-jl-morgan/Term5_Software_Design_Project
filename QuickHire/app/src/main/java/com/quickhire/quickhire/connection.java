@@ -164,7 +164,7 @@ public class connection{
             generic(JSON,urlattachment,responseListener,err);
         }
     }
-    public void disableExternal(){this.external=false;}
+    protected void disableExternal(){this.external=false;}
 
     public void uploadVideo(videoAnswer answer){
         external=true;

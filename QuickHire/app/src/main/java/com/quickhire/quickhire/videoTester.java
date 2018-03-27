@@ -46,7 +46,10 @@ public class videoTester extends AppCompatActivity {
                 videoV.setVideoURI(video);
                 videoV.start();
 
-                new videoAnswer(video,999).toJSON();
+
+                videoAnswer a=new videoAnswer(video,999);
+                a.setApplicationID(101);
+                a.toJSON();
             }
         }
     }
