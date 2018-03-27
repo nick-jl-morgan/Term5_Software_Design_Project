@@ -2,7 +2,7 @@ from models import *
 from interface import Interface, implements
 from objdict import ObjDict
 import json , sys , random 
-
+import os
 
 
 class User:
@@ -40,7 +40,8 @@ class User:
 
 	@staticmethod
 	def getIdFromUsername(username):
-		return UserModel.getID(username)
+		model = UserModel()
+		return model.getID(username)
 
 
 
@@ -49,10 +50,6 @@ class User:
 
 
 class Posting:
-	__model = PostingModel();
-	__questions = []
-	
-
 	def createAccessKey(self):
 		done = False
 		key = random.randint(100000,999999)
@@ -65,14 +62,17 @@ class Posting:
 		return key
 
 
-	def __init__(self,owner_id=None,jobTitle=None,company=None,description=None,questions=[]):
-		self.__questions = questions
+	def __init__(self,owner_id=None,jobTitle=None,company=None,description=None,questions=None):
+		self.__model = PostingModel()
+		if questions == None :
+			self.__questions = []
+		else : 
+			self.__questions = questions
 		self.__model.owner_id = owner_id
 		self.__model.description = description
 		self.__model.title = jobTitle
 		self.__model.company_name = company
 		self.__model.access_key = self.createAccessKey()
-		
 		return	
 	'''
 	Comit Posting is used to save the given Posting object to the database.
@@ -80,12 +80,11 @@ class Posting:
 	its questions.
 	'''
 	def commitPosting(self):
-		self.__model.save_to_db()
-		appID = self.__model.id
+		postID = self.__model.save_to_db() 
 		if self.__questions :
 			for question in self.__questions:
 				try:
-					 question.commitQuestion(appID)	
+					 question.commitQuestion(postID)	
 				except Exception , error:
 					print >>sys.stderr, str(error)
 		return
@@ -100,18 +99,22 @@ class Posting:
 	
 	def getPostingFromAccessCode(self,code):
 		self.__model = self.__model.getPostingFromAccessCode(code)
-		self.loadQuestions()
+		#self.__questions[:]=[]
+		if self.__model == None :
+			print >>sys.stderr, "No Posting Found"
+			raise ValueError('No Posting Found')
+		else:
+			self.loadQuestions()
 		
 		pass
 
 	def loadQuestions(self):
-
 		posting_id = self.__model.id
 		textQuestionsModel = TextQuestionModel() 
 		
 		#Get all the text question models associated with the posting ID
 		questions = textQuestionsModel.getTextQuestionsFromPostId(posting_id)
-		
+
 		#Convert Models into Classes for questions[] list
 		for question in questions:
 			if(question.is_multiple_choice == 1):
@@ -121,10 +124,14 @@ class Posting:
 				self.__questions.append(multipleChoice) 
 			
 			elif(question.is_multiple_choice == 0):
-				textQuestion = TextQuestion(question.question)
+				textQuestion = TextQuestion()
+				textQuestion.getFromModel(question)
+
 				self.__questions.append(textQuestion)
 			else :
 				pass
+
+
 	def getQuestions(self):
 		return self.__questions
 
@@ -137,6 +144,7 @@ class Posting:
 		info['company'] = self.__model.company_name
 		info['accessKey'] = self.__model.access_key
 		info['questions']=[]
+
 		for question in self.__questions:
 			info['questions'].append(question.getInfo())		
 		return info
@@ -164,10 +172,7 @@ class QuestionInterface(Interface):
 Text Questions are questions that are text and expect a text response. 
 '''
 class TextQuestion(implements(QuestionInterface)):
-	 
-	__model = None
-
-	def __init__(self , question):
+	def __init__(self , question=None):
 		self.__model = TextQuestionModel()
 	 	self.__model.question = question
 	 	self.__model.answer_type = 0
@@ -176,9 +181,9 @@ class TextQuestion(implements(QuestionInterface)):
 	def commitQuestion(self,post_id):
 	 	try:
 	 	 	self.__model.posting_id = post_id
-	 	 	self.__model.save_to_db
+	 	 	self.__model.save_to_db()
 	 	except Exception, e:
-	 	 	raise ValueError('DataBase error on saving question :' + self.model.question + ' Error : ' + str(e))
+	 	 	print >>sys.stderr, "Failed To save Text Question To DataBase"
 	 	pass
 
 	def getInfo(self):
@@ -186,7 +191,12 @@ class TextQuestion(implements(QuestionInterface)):
 	 	info['type'] = '1'
 	 	info['question'] = self.__model.question
 	 	info['id']= self.__model.id
-	 	return info	 	 
+	 	return info
+
+	def getFromModel(self, textModel):
+	 	#Assign given text question Model to class object
+	 	self.__model = textModel
+	 	pass 	 
 
 
 '''
@@ -198,13 +208,11 @@ that we use different classes associated with the same models.
 '''
 class multipleChoiceQuestion(implements(QuestionInterface)):
 	 
-	__model = None
-
-	 #List of Option Classes
-	__options = []
-	 
-	def __init__(self , question=None, optionslist=[]):
-	 	self.__options = optionslist
+	def __init__(self , question=None, optionslist=None):
+	 	if optionslist == None :
+	 		self.__options = []
+	 	else : 
+	 		self.__options = optionslist
 	 	self.__model = TextQuestionModel()
 	 	self.__model.question = question
 	 	self.__model.is_multiple_choice = 1
@@ -285,6 +293,71 @@ class multipleChoiceOption():
 
 
 
+
+
+class Application:
+
+	def __init__( self , owner_id=None , post_id=None , answersArray=[]):
+		self.__model = ApplicationModel()
+		self.__model.posting_id = post_id
+		self.__answers = answersArray
+		self.__model.owner_id = owner_id
+		
+
+	def commitApplication(self):
+		appID = self.__model.save_to_db() 
+		if self.__answers :
+			for answer in self.__answers:
+				try:
+					 answer.commitAnswer(appID)	
+				except Exception , error:
+					print >>sys.stderr, str(error)
+		return appID
+
+
+
+
+
+
+class textAnswer:
+	
+	def __init__(self, application_ID=None,question_id=None, answer=None ):
+		self.__model = TextAnswerModel()
+		self.__model.answer = answer
+		self.__model.application_id = application_ID 
+		self.__model.question_id = question_id
+
+	def commitAnswer(self,appID):
+		self.__model.application_id = appID
+		self.__model.save_to_db()
+
+
+
+
+
+
+class videoAnswer:
+	
+	uploadsFolder = "/home/liam/Developement/Flask/JrDesign/Term5_Software_Design_Project/Flask/QuickHire/QuickHire/uploads/"
+
+	def __init__(self , binaryFile=None , questionID=None , applicationID=None , userID=None ):
+		self.__model = VideoAnswerModel()
+		self.__model.application_id =  applicationID
+		self.__model.question_id = questionID
+		newVideoName = self.uploadsFolder + str(applicationID) + "-" + str(questionID) + ".mp4" 
+		oldVideoName = self.uploadsFolder + binaryFile
+		
+		print >> sys.stderr ,"Old Video : " +oldVideoName
+		print >> sys.stderr ,"New Video : " +newVideoName
+
+		os.rename(oldVideoName, newVideoName)
+		self.__model.location = newVideoName
+		print >> sys.stderr ,"Old Video : " +oldVideoName
+		print >> sys.stderr ,"New Video : " +newVideoName
+	def commitAnswer(self):
+		self.__model.save_to_db()
+		
+
 '''
 A common function is taking submitted JSON and converting it to python objects that can then 
 be worked on.
@@ -304,6 +377,7 @@ class JsonParser:
 				objectList.append(JsonParser.parseTextQuestion(question))
 			elif question['type']==2:	
 				objectList.append(JsonParser.parseMultipleChoiceQuestion(question))
+
 		return objectList
 
 	@staticmethod
@@ -325,7 +399,25 @@ class JsonParser:
 	def postingToJSON(posting):
 		dictinfo = {}
 		jsonInfo = posting.getInfo()
-		print >>sys.stderr, jsonInfo
 		return jsonInfo
-     	
- 
+
+	@staticmethod
+	def parseAnswers(AnswersJson = None ):
+	 	objectList = []
+	 	if AnswersJson == None:
+	 		print >> sys.stderr , "No answersArray provided"
+	 	
+
+		for answer in AnswersJson:
+			if answer['type']==0 :
+				objectList.append(JsonParser.parseVideoAnswer(answer))
+			elif answer['type']==1:	
+				objectList.append(JsonParser.parseTextAnswer(answer))
+			elif answer['type']==2:
+				objectList.append(JsonParser.parseMultipleChoiceAnswer(answer))
+		return objectList
+
+	@staticmethod
+	def parseTextAnswer(answer):
+		   return textAnswer(None,answer['questionID'],answer['answer'])
+		

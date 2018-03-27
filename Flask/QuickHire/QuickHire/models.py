@@ -28,20 +28,20 @@ class UserModel(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    @classmethod
-    def getID(cls, username):
-    	return cls.query.filter_by(username = username).first().id
+    def getID( cls , username ):
+    	return cls.query.filter_by( username = username ).first().id
 
 
-################
+
 
 	
+
 
 class PostingModel(db.Model):
 	__tablename__ = 'postings'
 	id = db.Column(db.Integer, primary_key = True)
 	access_key = db.Column(Integer, nullable=False)
-	owner_id = db.Column(Integer, nullable=False)
+	owner_id = db.Column(Integer, db.ForeignKey(UserModel.id),  nullable=False)
 	description = db.Column(mysql.LONGTEXT, nullable=True)
 	title = db.Column(mysql.TEXT, nullable=False)
 	company_name = db.Column(mysql.VARCHAR(100))
@@ -49,7 +49,10 @@ class PostingModel(db.Model):
 	def save_to_db(self):
 		db.session.add(self)
 		db.session.commit()
-
+		idToUse= self.id
+		db.session.close()
+		return idToUse
+		
 	def getPostingFromAccessCode(self,code):
 	    return self.query.filter_by(access_key = code).first()
 
@@ -59,7 +62,8 @@ class PostingModel(db.Model):
 
 
 
-################
+
+
 
 class QuestionModel(db.Model):
 	__tablename__='questions'
@@ -68,7 +72,9 @@ class QuestionModel(db.Model):
 	description = db.Column(mysql.TEXT)
 
 
-###############
+
+
+
 
 
 class TextQuestionModel(db.Model):
@@ -86,8 +92,14 @@ class TextQuestionModel(db.Model):
 
 	
 	def getTextQuestionsFromPostId(self,postID):
-		return self.query.filter_by(posting_id = postID).all()
-		
+		db.session.flush()
+		results =  self.query.filter_by(posting_id = postID).all()
+		return results
+
+
+
+
+
 
 
 class MultipleChoiceOptionModel(db.Model):
@@ -105,4 +117,55 @@ class MultipleChoiceOptionModel(db.Model):
 		
 
 
-###############
+
+
+
+
+class ApplicationModel(db.Model):
+	__tablename__ = 'applications'
+
+	id = Column(Integer,primary_key = True)
+	posting_id = Column(Integer,db.ForeignKey(PostingModel.id), nullable=True )
+	owner_id = db.Column(Integer, db.ForeignKey(UserModel.id),  nullable=False )
+
+	def save_to_db(self):
+		db.session.add(self)
+		db.session.commit()
+		idToUse= self.id
+		db.session.close()
+		return idToUse	
+
+
+
+
+
+
+
+
+class TextAnswerModel(db.Model):
+	__tablename__ = 'textAnswers'
+	id = Column(Integer,primary_key = True)
+	application_id = Column(Integer,db.ForeignKey(ApplicationModel.id), nullable=True )
+	answer = db.Column(mysql.TEXT)
+
+	def save_to_db(self):
+		db.session.add(self)
+		db.session.commit()
+
+
+
+
+
+
+class VideoAnswerModel(db.Model):
+	__tablename__ = 'videoAnswers'
+	id = Column(Integer,primary_key = True)
+	application_id = Column(Integer,db.ForeignKey(ApplicationModel.id), nullable=True )
+	location = db.Column(mysql.TEXT)
+	question_id = db.Column(Integer, db.ForeignKey(TextQuestionModel.id),  nullable=False )
+
+
+	def save_to_db(self):
+		db.session.add(self)
+		db.session.commit()
+

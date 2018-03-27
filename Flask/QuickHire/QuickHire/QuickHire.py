@@ -5,7 +5,11 @@ from flask import Flask, request, session, g, redirect, url_for, abort, \
 from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
-from werkzeug.utils import secure_filename
+import sys
+
+
+
+
 
 
 app = Flask(__name__) 
@@ -40,12 +44,30 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 import controllers.loginController as loginController, controllers.applicationController as applicationController, controllers.postingController as postingController
-
+from classes import *
 #LandingPage for WebApp
 @app.route('/')
 def landingController():
-	return render_template('landingPage.html')
+	return render_template('loginPage.html')
 
+@app.route('/login',methods = ['POST'])
+def login():
+	result = request.form.to_dict()
+
+	username = result['username']
+	password = result['password']
+	mynewstring = username.encode('utf-8')
+
+	print >> sys.stderr , type(mynewstring) 
+	#Try to login the user in
+	try:
+		User.loginUser(username,password)
+	
+	except ValueError as error:
+		return {'message': str(error)}, 500
+	
+	else:
+		return render_template('homePage.html')
 
 
 
@@ -57,7 +79,8 @@ mobileAPI.add_resource(loginController.UserLogoutRefresh, '/API/logout/refresh')
 mobileAPI.add_resource(loginController.TokenRefresh, '/API/token/refresh')
 mobileAPI.add_resource(postingController.addPosting,'/API/AddPosting')
 mobileAPI.add_resource(postingController.getPostingFromAccessCode,'/API/getPostingFromAccessCode')
-mobileAPI.add_resource(postingController.UploadVideo,'/API/UploadVideo')
+mobileAPI.add_resource(applicationController.submitApplicationVideo,'/API/UploadVideo')
+mobileAPI.add_resource(applicationController.submitApplication,'/API/submitApplication')
 
 
 app.run(host='0.0.0.0', port=5000)

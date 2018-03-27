@@ -9,23 +9,6 @@ import os
 parser = reqparse.RequestParser()
 
 
-class UploadVideo(Resource):
-
-    @jwt_required
-    def post(self):
-        files = request.files
-        for file in files:
-            vid = request.files[file]
-            filename = secure_filename(file)
-            vid.save(os.path.join('/home/liam/Developement/Flask/JrDesign/Term5_Software_Design_Project/Flask/QuickHire/QuickHire/uploads/', file))
-        
-        return{'message': 'goteem'}
-
-
-
-
-
-
 
 
 class addPosting(Resource):
@@ -46,9 +29,9 @@ class addPosting(Resource):
         questionsArray = JsonParser.parseQuestions(questionsJson)
         
         #Get User ID for Posting
-        #current_user_username = get_jwt_identity()
-        #curent_user_id = User.getIdFromUsername(current_user_username)
-        curent_user_id = 3
+        curent_user_id = User.getIdFromUsername(get_jwt_identity())
+        
+
         #Commit The posting and get the access key for it
         posting = Posting(curent_user_id, data['jobTitle'],data['company'],data['description'],questionsArray)
         posting.commitPosting()
@@ -62,6 +45,7 @@ class getPostingFromAccessCode(Resource):
     
     @jwt_required
     def post(self):
+        print >>sys.stderr, request.get_data()
         try:
             data = request.get_json()
         except :
@@ -69,7 +53,9 @@ class getPostingFromAccessCode(Resource):
             return {'message': "JSON request not properly formatted"}, 500   
         
         code = data['AccessCode']
+        
         posting = Posting()
+
         posting.getPostingFromAccessCode(code)
         postingJSON = JsonParser.postingToJSON(posting)
         
@@ -79,4 +65,3 @@ class getPostingFromAccessCode(Resource):
         return jsonify(postingJSON)
 
 
-        
