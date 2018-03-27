@@ -86,10 +86,10 @@ public class CreateJobPosting2 extends AppCompatActivity {
                             CreateJobPosting2.display(response.toString());
                         }
                     }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
 
-                        }
+                            }
                     });
 
                 } else {

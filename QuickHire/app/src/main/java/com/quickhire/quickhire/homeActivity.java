@@ -14,6 +14,8 @@ import android.widget.Button;
 import android.widget.VideoView;
 
 import java.io.File;
+import java.net.URI;
+import java.io.InputStream;
 
 public class homeActivity extends AppCompatActivity {
     private VideoView videoV;
@@ -49,7 +51,6 @@ public class homeActivity extends AppCompatActivity {
                 public void onClick(View view){
                     Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
                     takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT,60);
-                    takeVideoIntent.putExtra(MediaStore.)
                     startActivityForResult(takeVideoIntent, 1);
                 }
             });
@@ -62,7 +63,8 @@ public class homeActivity extends AppCompatActivity {
                     Uri video = data.getData();
                     videoV.setVideoURI(video);
                     videoV.start();
-                    test = new File(video.getPath());
+//                    test = new File(video.getPath());
+                   connection.getConnection().uploadVideo(video);
                 }
             }
         }

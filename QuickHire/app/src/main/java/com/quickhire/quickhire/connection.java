@@ -1,6 +1,11 @@
 package com.quickhire.quickhire;
 
+import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
+import android.net.Uri;
+import android.os.AsyncTask;
+import android.util.Base64;
 import android.util.Log;
 
 import com.android.volley.AuthFailureError;
@@ -14,9 +19,21 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
+
+import okhttp3.MediaType;
+
 
 /**
  * Created by matth_000 on 2018-03-07.
@@ -24,10 +41,11 @@ import java.util.Map;
 
 public class connection{
 
-    private Context appcontext;
+    public static Context appcontext;
     private String URL;
     private RequestQueue queue = null;
     private static connection singleConnection = null;
+    boolean external = false;
 
     //Constructor for default IP of server
     private connection(Context ctx){
@@ -125,9 +143,39 @@ public class connection{
 
 
     }
-    private void uploadVideo(File f){
-        Request<File>
+    public void uploadVideo(Uri f){
+       File file = new File(f.getPath());
+        InputStream inputStream=null;
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        final byte[] b=new byte[8];
+        try {
+            ContentResolver cr =appcontext.getContentResolver();
+            inputStream = cr.openInputStream(f);
+//            while( (inputStream.read(b)) != -1){
+//                buffer.write(b);
+//            }
+        }catch(Exception e){
+            Log.d("Error!", e.getMessage());
+            Log.d("Fuuu", "ck");
+        }
 
     }
+    protected void generico(String JSON, String urlattachment, Response.Listener<JSONObject> responseListener, Response.ErrorListener err){
+        if(external){
+            generic(JSON, urlattachment, responseListener, err);
+        }
+    }
+    private class videoStreamer extends AsyncTask<Uri, Void, Void>{
+        String extension = "UploadVideo";
+
+        @Override
+        protected Void doInBackground(Uri... uris) {
+            int n_vids = uris.length;
+            for(int i=0; i < n_vids; i++){
+                byte[] b=new byte[1024];
+
+            }
+            return null;
+        }
 }
 
