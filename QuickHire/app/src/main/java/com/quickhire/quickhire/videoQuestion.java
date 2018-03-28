@@ -39,7 +39,7 @@ public class videoQuestion extends Question {
     }
     @Override
     public Answer toAnswer(){
-        return new videoAnswer(this.video,this.intType());
+        return new videoAnswer(this.video,this.getId());
     }
 
 }

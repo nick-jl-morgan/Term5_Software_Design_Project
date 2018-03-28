@@ -41,8 +41,8 @@ public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
         String urlString = "UploadVideo";
         this.index=0;
         try{
-            //------------------ CLIENT REQUEST
-            InputStream fileInputStream = connection.getConnection().appcontext.getContentResolver().openInputStream(f[0].getUri());
+
+            InputStream fileInputStream = connection.getConnection().appcontext.getContentResolver().openInputStream(f[0].vid);
 
             bytesAvailable = fileInputStream.available();
             bufferSize = Math.min(bytesAvailable, maxBufferSize);
@@ -101,6 +101,9 @@ public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
         }
         catch (IOException ioe){
             Log.e("Debug", "error: " + ioe.getMessage(), ioe);
+        }
+        catch (Exception fnoe){
+            Log.e("Broke", fnoe.getMessage());
         }
         c.disableExternal();
         return null;
