@@ -21,6 +21,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 public class ApplyActivity extends AppCompatActivity {
 
@@ -67,12 +68,22 @@ public class ApplyActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               final Application apply = posting.toapplication();
+                Application a = null;
+                try {
+                    a = posting.toapplication();
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+                final Application apply = a;
                String error = null;
-               for(Answer a : apply.answers){
-                   if(a.getAnswer() == null){
-                       error = "Please answer all questions";
+               if(a!=null) {
+                   for (Answer an : apply.answers) {
+                       if (an.getAnswer() == null) {
+                           error = "Please answer all questions";
+                       }
                    }
+               }else{
+                   error = "Something went wrong.";
                }
                if(error == null){
                    connection.getConnection().saveApplication(apply, new Response.Listener<JSONObject>() {

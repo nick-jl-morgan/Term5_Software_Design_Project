@@ -7,6 +7,8 @@ import java.util.Vector;
  */
 
 public class Application {
+
+
     private Integer applicationID;
     private Integer postID;
     private Integer hasVideo = 0;
@@ -51,7 +53,9 @@ public class Application {
         for(Answer a: answers){
             a.beginTransmitting();
         }
-
+    }
+    public Integer getApplicationID() {
+        return applicationID;
     }
 
 }

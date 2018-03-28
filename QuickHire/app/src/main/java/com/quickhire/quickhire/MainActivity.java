@@ -1,8 +1,10 @@
 package com.quickhire.quickhire;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         //Don't touch this line
         connection.createinitialConnection(this.getApplicationContext()); //I'm an important line.
         //Please don't touch that line
+
 
         startActivity(new Intent(MainActivity.this, RegisterLoginActivity.class));  //User will never see this activity unless manually navigated to.
 

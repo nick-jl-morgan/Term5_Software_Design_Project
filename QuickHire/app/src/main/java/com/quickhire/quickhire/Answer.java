@@ -7,16 +7,16 @@ package com.quickhire.quickhire;
 public class Answer {
     private Integer applicationID;
     private String Answer;
-    private Integer questionID, type;
+    private int questionID, type;
 
-    public Answer(Integer id, String value, Integer t){
+    public Answer(int id, String value, int t){
         this.questionID = id;
         this.Answer = value;
         this.type = t;
     }
 
     public String toJSON() {
-        String string = "{\"questionID\":"+ this.questionID+",\"Answer\":\""+this.Answer+"\",\"type\":\"" + this.type + "\"}";
+        String string = "{\"questionID\":"+ this.questionID+",\"answer\":\""+this.Answer+"\",\"type\":\"" + this.type + "\"}";
         return string;
     }
 

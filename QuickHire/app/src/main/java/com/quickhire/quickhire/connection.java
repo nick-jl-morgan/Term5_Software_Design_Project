@@ -166,7 +166,6 @@ public class connection{
             return;
         }
 
-
     }
     //An intermediary function which allows other classes to bypass the intermediary functions if and only if the feature has been enabled.
     protected void publicgeneric(String JSON, String urlattachment, Response.Listener<JSONObject> responseListener, Response.ErrorListener err){

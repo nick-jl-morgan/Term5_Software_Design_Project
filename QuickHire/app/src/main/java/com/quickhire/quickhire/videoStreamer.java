@@ -1,5 +1,6 @@
 package com.quickhire.quickhire;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Base64;
@@ -32,8 +33,7 @@ public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
 
     @Override
     protected Void doInBackground(videoAnswer... f) {
-        // TODO Auto-generated method stub
-        int q=5;
+
         connection c = connection.getConnection();
         int bytesRead, bytesAvailable, bufferSize;
         byte[] buffer;
@@ -41,8 +41,12 @@ public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
         String urlString = "UploadVideo";
         this.index=0;
         try{
-            //------------------ CLIENT REQUEST
-            InputStream fileInputStream = connection.getConnection().appcontext.getContentResolver().openInputStream(f[0].getUri());
+
+            Uri video = f[0].getUri();
+//            File file = new File(video.getPath());
+//            FileInputStream fileInputStream=new FileInputStream(file);
+
+            InputStream fileInputStream = connection.getConnection().appcontext.getContentResolver().openInputStream(video);//.openfile(new File(video.getPath()));
 
             bytesAvailable = fileInputStream.available();
             bufferSize = Math.min(bytesAvailable, maxBufferSize);
@@ -101,6 +105,10 @@ public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
         }
         catch (IOException ioe){
             Log.e("Debug", "error: " + ioe.getMessage(), ioe);
+        }
+        catch (Exception fnoe){
+            fnoe.printStackTrace();
+            Log.e("Broke", fnoe.getMessage());
         }
         c.disableExternal();
         return null;
