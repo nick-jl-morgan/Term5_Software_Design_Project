@@ -67,7 +67,7 @@ public class ApplyActivity extends AppCompatActivity {
                        public void onResponse(JSONObject response) {
                            //Do something
                            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                           builder.setMessage(response.toString())
+                           builder.setMessage("Your application has been submitted.")
                                    .setCancelable(false)
                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                        public void onClick(DialogInterface dialog, int id) {

@@ -17,9 +17,11 @@
     <ListView
         android:id="@+id/listViewMultipleChoice"
         android:layout_width="410dp"
-        android:layout_height="412dp"
+        android:layout_height="322dp"
         android:layout_marginEnd="1dp"
+        android:layout_marginTop="56dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionText" />
 
@@ -27,25 +29,41 @@
         android:id="@+id/saveMultipleChoiceQuestion"
         android:layout_width="381dp"
         android:layout_height="54dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="119dp"
         android:layout_marginEnd="15dp"
         android:layout_marginStart="15dp"
+        android:layout_marginTop="6dp"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/listViewMultipleChoice" />
 
     <Button
         android:id="@+id/addButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="39dp"
-        android:layout_marginEnd="162dp"
-        android:layout_marginStart="161dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/saveMultipleChoiceQuestion"
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="4dp"
+        android:text="Add"
+        app:layout_constraintBottom_toTopOf="@+id/listViewMultipleChoice"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/optionsText"
+        app:layout_constraintTop_toBottomOf="@+id/questionText" />
+
+    <EditText
+        android:id="@+id/optionsText"
+        android:layout_width="319dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="11dp"
+        android:layout_marginEnd="4dp"
+        android:ems="10"
+        android:hint="Options"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/listViewMultipleChoice"
+        app:layout_constraintEnd_toStartOf="@+id/addButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/listView" />
+        app:layout_constraintTop_toBottomOf="@+id/questionText" />
 
 </android.support.constraint.ConstraintLayout>
