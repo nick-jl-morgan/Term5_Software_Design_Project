@@ -18,6 +18,11 @@ public class essayQuestion extends Question {
     }
 
     @Override
+    public Answer toAnswer(){
+       return new Answer(this.getId(), this.getAnswer(), this.intType());
+    }
+
+    @Override
     public int getPicture() {
         return R.drawable.icon_essay;
     }

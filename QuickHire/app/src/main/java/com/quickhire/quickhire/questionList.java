@@ -158,8 +158,8 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
                 startActivityForResult(new Intent(questionList.this,essayQuestionActivity.class),1);
             }
             else if(question.getType() == "Video") {
-//                videoTime = ((videoQuestion)question).getTime();
-//                startActivityForResult(new Intent(questionList.this,videoQuestionActivity.class),2);
+                videoTime = ((videoQuestion)question).getTime();
+                startActivityForResult(new Intent(questionList.this,videoQuestionActivity.class),2);
             } else {
                 startActivityForResult(new Intent(questionList.this,multipleChoiceQuestionActivity.class),2);
             }

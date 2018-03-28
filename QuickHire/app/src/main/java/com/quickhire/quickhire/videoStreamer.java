@@ -33,7 +33,8 @@ public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
     @Override
     protected Void doInBackground(videoAnswer... f) {
         // TODO Auto-generated method stub
-        connection connection= com.quickhire.quickhire.connection.getConnection();
+        int q=5;
+        connection c = connection.getConnection();
         int bytesRead, bytesAvailable, bufferSize;
         byte[] buffer;
         int maxBufferSize = 1*1024*1024;
@@ -66,7 +67,7 @@ public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
                             +"\"questionID\":"+f[0].getQuestionID()+","
                             +"\"packetNum\":"+this.index+","
                             +"\"data\":\""+ Base64.encodeToString(buffer,Base64.URL_SAFE)+"\"}";
-                connection.publicgeneric(JSON,urlString,listener,errorListener);
+                c.publicgeneric(JSON,urlString,listener,errorListener);
                 //Logic for next request generation
                 bytesAvailable = fileInputStream.available();
                 bufferSize = Math.min(bytesAvailable, maxBufferSize);
@@ -91,7 +92,7 @@ public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
                     +"\"questionID\":"+f[0].getQuestionID()+","
                     +"\"packetNum\":"+this.index+","
                     +"\"data\":\"done\"}";
-            connection.publicgeneric(JSON,urlString,listener,errorListener);
+            c.publicgeneric(JSON,urlString,listener,errorListener);
 
             fileInputStream.close();
         }
@@ -101,7 +102,7 @@ public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
         catch (IOException ioe){
             Log.e("Debug", "error: " + ioe.getMessage(), ioe);
         }
-        connection.disableExternal();
+        c.disableExternal();
         return null;
     }
 

@@ -66,4 +66,9 @@ public class multipleChoiceQuestion extends Question {
     public Integer intType() {
         return 2;
     }
+
+    @Override
+    public Answer toAnswer() {
+        return null;
+    }
 }

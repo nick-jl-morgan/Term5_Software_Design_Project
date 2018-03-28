@@ -86,8 +86,18 @@ public class CreateJobPosting2 extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             //Do something
-                            mySnackbar.show();
-                            CreateJobPosting2.display(response.toString());
+                            AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+                            builder.setMessage(response.toString())
+                                    .setCancelable(false)
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            activity.finish();
+                                        }
+                                    });
+                            AlertDialog alert = builder.create();
+                            alert.show();
+//                            mySnackbar.show();
+//                            CreateJobPosting2.display(response.toString());
                         }
                     }, new Response.ErrorListener() {
                             @Override

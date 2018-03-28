@@ -47,9 +47,11 @@ public class videoAnswerActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view){
                     if(valid) {
-                        Intent returnIntent = new Intent();
-                        returnIntent.putExtra("video", video );
-                        setResult(RESULT_OK, returnIntent);
+//                        Intent returnIntent = new Intent();
+//                        returnIntent.putExtra("video", video );
+//                        setResult(RESULT_OK, returnIntent);
+                       videoQuestion q = (videoQuestion) applyQuestionList.selectedQuestion;
+                       q.setvideo(video);
                     }
                     finish();
                 }

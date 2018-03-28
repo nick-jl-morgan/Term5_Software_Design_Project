@@ -31,6 +31,8 @@ public abstract class Question {
 
     public abstract Integer intType();
 
+    public abstract Answer toAnswer();
+
     public void setAnswer(String value){answer = value; }
 
     public Integer getId(){return id;}

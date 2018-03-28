@@ -18,17 +18,17 @@ public class videoAnswer extends Answer{
 
     public String toJSON(){
         String JSON="{\"questionID\":"+qID+","
-                    +"\"Answer\",\"videoTransmitting\","
-                    +"\"type\""+type+"}";
+                    +"\"Answer\":\"videoTransmitting\","
+                    +"\"type\":"+type+"}";
         //connection.getConnection().uploadVideo(this);
         return JSON;
     }
 
-//    @Override
-//    protected void beginTransmitting(){
-//        new videoStreamer().execute(this);
-//    }
-//
+    @Override
+    protected void beginTransmitting(){
+        new videoStreamer().execute(this);
+    }
+
     protected Uri getUri(){return this.vid;}
 
 }

@@ -1,6 +1,7 @@
 package com.quickhire.quickhire;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -112,8 +113,8 @@ public class applyQuestionList extends AppCompatActivity implements SwipeRefresh
             if (question.getType() == "Essay") {
                 startActivityForResult(new Intent(applyQuestionList.this, essayAnswerActivity.class), 1);
             } else if (question.getType() == "Video") {
-//                videoTime = ((videoQuestion) question).getTime();
-//                startActivityForResult(new Intent(applyQuestionList.this, videoQuestionActivity.class), 2);
+                videoTime = ((videoQuestion) question).getTime();
+                startActivityForResult(new Intent(applyQuestionList.this, videoAnswerActivity.class), 2);
             }
             Toast.makeText(getApplicationContext(), "Read: " + question.getType(), Toast.LENGTH_SHORT).show();
         }
@@ -137,14 +138,9 @@ public class applyQuestionList extends AppCompatActivity implements SwipeRefresh
             mAdapter.notifyDataSetChanged();
             Toast.makeText(getApplicationContext(), result, Toast.LENGTH_SHORT).show();
         } else if (requestCode == 2 && resultCode == RESULT_OK) {
-//            String result = data.getStringExtra("question");
-//            String timeString = data.getStringExtra("time");
-//            int time = Integer.parseInt(timeString);
-//            Question videoQ = new videoQuestion(result, time);
-//            mAdapter.removeData(questionPosition);
-//            questions.add(videoQ);
-//            mAdapter.notifyDataSetChanged();
-//            Toast.makeText(getApplicationContext(), timeString, Toast.LENGTH_SHORT).show();
+//            Uri result = (Uri) data.getExtras().getSerializable("video");
+//            Question question = post.questions.get(questionPosition);
+//            ((videoQuestion)question).setvideo(result);
         }
     }
 }

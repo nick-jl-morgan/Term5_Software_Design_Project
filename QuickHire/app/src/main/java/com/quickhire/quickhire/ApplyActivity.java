@@ -70,27 +70,25 @@ public class ApplyActivity extends AppCompatActivity {
                        public void onResponse(JSONObject response) {
 
                            //Do something
-                           AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                           builder.setMessage("Your application has been submitted.")
-                                   .setCancelable(false)
-                                   .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                       public void onClick(DialogInterface dialog, int id) {
-                                           activity.finish();
-                                       }
-                                   });
-                           AlertDialog alert = builder.create();
-                           alert.show();
-
+//                           AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+//                           builder.setMessage("Your application has been submitted.")
+//                                   .setCancelable(false)
+//                                   .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                       public void onClick(DialogInterface dialog, int id) {
+//                                           activity.finish();
+//                                       }
+//                                   });
+//                           AlertDialog alert = builder.create();
                            //get the application ID
                            int id = -1;
                            try {
-                                id = response.getInt("id");
+                               id = response.getInt("id");
                            }catch(Exception e){
                                Log.d("Cannot find Post ID", e.getMessage());
                            }
                            application.setApplicationID(id);
                            application.postResponse();
-                           activity.finish();
+//                           alert.show();
                        }
                    }, new Response.ErrorListener() {
                        @Override

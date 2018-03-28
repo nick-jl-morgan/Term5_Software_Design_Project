@@ -17,7 +17,7 @@ public class Application {
             if(q.intType() == 0){
                 this.hasVideo = 1;
             }
-            Answer a = new Answer(q.getId(), q.getAnswer(), q.intType());
+            Answer a = q.toAnswer();
             this.answers.add(a);
         }
         this.postID = id;
