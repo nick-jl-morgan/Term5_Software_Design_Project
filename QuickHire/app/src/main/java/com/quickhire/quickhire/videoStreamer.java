@@ -1,5 +1,6 @@
 package com.quickhire.quickhire;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Base64;
@@ -42,7 +43,11 @@ public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
         this.index=0;
         try{
 
-            InputStream fileInputStream = connection.getConnection().appcontext.getContentResolver().openInputStream(f[0].vid);
+            Uri video = f[0].vid;
+            File file = new File(video.getPath());
+            FileInputStream fileInputStream=new FileInputStream(file);
+
+            //InputStream fileInputStream = connection.getConnection().appcontext.getContentResolver().openfile(new File(video.getPath()));
 
             bytesAvailable = fileInputStream.available();
             bufferSize = Math.min(bytesAvailable, maxBufferSize);
