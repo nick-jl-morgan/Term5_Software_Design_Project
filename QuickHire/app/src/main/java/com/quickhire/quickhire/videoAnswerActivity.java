@@ -32,6 +32,9 @@ public class videoAnswerActivity extends AppCompatActivity {
 
             valid =false;
 
+            configureCaptureButton();
+            configureSaveButton();
+            
             textView = (TextView) findViewById(R.id.questionText);
             textView.setText("Question text will appear after hitting the 'Record' button.");
             auxTextView=(TextView) findViewById(R.id.auxText);

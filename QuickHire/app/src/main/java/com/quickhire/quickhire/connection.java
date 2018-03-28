@@ -41,10 +41,10 @@ import okhttp3.MediaType;
 
 public class connection{
 
-    public static Context appcontext;
+    public static Context appcontext;       //Lifespan = lifepan of app.
     private String URL;
     private RequestQueue queue = null;
-    private static connection singleConnection = null;
+    private static connection singleConnection = null;  //This is a singleton class
     private boolean external = false;
 
     //Constructor for default IP of server
@@ -126,6 +126,14 @@ public class connection{
     }
 
 
+    /**
+     * This method is the main workhorse of the connection class. From here, all HTTP requests are finalized and added to the request queue.
+     *
+     * @param JSON the body of the HTTP request.
+     * @param urlattachment which API is being hit
+     * @param responseListener defines the bahaviour to be undertaken when a response is recieved.
+     * @param err defines the behaviour to be undertaken when an erronious reponse is recieved.
+     */
     private void generic(String JSON, String urlattachment, Response.Listener<JSONObject> responseListener, Response.ErrorListener err){
         JsonObjectRequest request=null;
         //String url = "http://99.253.59.150/API/registration";
@@ -159,13 +167,15 @@ public class connection{
 
 
     }
+    //An intermediary function which allows other classes to bypass the intermediary functions if and only if the feature has been enabled.
     protected void publicgeneric(String JSON, String urlattachment, Response.Listener<JSONObject> responseListener, Response.ErrorListener err){
-        if(this.external){
+        if(this.external){  //Security feature
             generic(JSON,urlattachment,responseListener,err);
         }
     }
     protected void disableExternal(){this.external=false;}
 
+    //Enabled third party upload and creates a new thread which handles video streaming to server.
     public void uploadVideo(videoAnswer answer){
         external=true;
         new videoStreamer().execute(answer);

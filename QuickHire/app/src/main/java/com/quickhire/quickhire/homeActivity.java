@@ -26,8 +26,13 @@ import java.net.URI;
 import java.io.InputStream;
 
 
+/**
+ * This should be the most frequently visited activity.
+ * From here, the user creates post, searches for posts, and may check that their camera is compatable
+ *
+ */
+
 public class homeActivity extends AppCompatActivity {
-    private VideoView videoV;
     File test;
     private EditText searchPostingText;
     public static Activity activity = null;
@@ -42,12 +47,10 @@ public class homeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         searchPostingText = (EditText) findViewById(R.id.searchJobPostingText);
 
-//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        activity=this;
+        activity=this;      //Allows the activity to be referenced from the outside.
         configureCreatePostButton();
 
         configureTestVideoButton();
-       // videoV = (VideoView) findViewById(R.id.videoView);
         configureSearchPostButton();
 
     }
@@ -68,26 +71,9 @@ public class homeActivity extends AppCompatActivity {
             videoButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
-                    //startActivity(new Intent(homeActivity.this, videoTester.class));
                     startActivity(new Intent(homeActivity.this, videoAnswerActivity.class));
-//                    Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-//                    takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT,60);
-//                    startActivityForResult(takeVideoIntent, 1);
                 }
             });
-        }
-        @Override
-        public void onActivityResult(int requestCode, int resultCode, Intent data){
-            super.onActivityResult(requestCode, resultCode, data);
-            if(requestCode == 1){
-                if(resultCode == Activity.RESULT_OK){
-                    Uri video = data.getData();
-                    videoV.setVideoURI(video);
-                    videoV.start();
-                    File test = new File(video.getPath());
-                    //new videoStreamer().execute(video);
-                }
-            }
         }
 
         private void configureSearchPostButton(){
@@ -129,6 +115,7 @@ public class homeActivity extends AppCompatActivity {
                 .show();
     }
 
+    //Prevent memory leaks
     @Override
     protected void onDestroy(){
         this.activity = null;

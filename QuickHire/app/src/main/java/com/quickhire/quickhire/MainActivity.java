@@ -21,9 +21,7 @@ public class MainActivity extends AppCompatActivity {
         connection.createinitialConnection(this.getApplicationContext()); //I'm an important line.
         //Please don't touch that line
 
-        startActivity(new Intent(MainActivity.this, RegisterLoginActivity.class));
-
-
+        startActivity(new Intent(MainActivity.this, RegisterLoginActivity.class));  //User will never see this activity unless manually navigated to.
 
     }
 
