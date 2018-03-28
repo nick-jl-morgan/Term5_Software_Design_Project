@@ -53,9 +53,9 @@ class submitApplicationVideo (Resource):
 			
 			binaryString = ""
 			decoded_string = pybase64.urlsafe_b64decode(data['data'])
-			f = '/home/liam/Developement/Flask/JrDesign/Term5_Software_Design_Project/Flask/QuickHire/QuickHire/uploads/binary.txt'
+			f = '/home/liam/Developement/Flask/JrDesign/Term5_Software_Design_Project/Flask/QuickHire/QuickHire/static/binary.txt'
 			
-			with open('/home/liam/Developement/Flask/JrDesign/Term5_Software_Design_Project/Flask/QuickHire/QuickHire/uploads/binary.txt', 'ab+') as wfile:
+			with open('/home/liam/Developement/Flask/JrDesign/Term5_Software_Design_Project/Flask/QuickHire/QuickHire/static/binary.txt', 'ab+') as wfile:
 				wfile.write(decoded_string)
 			wfile.close()
 		

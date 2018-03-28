@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="accessToken" content={{accessToken}}>
 
     <title>SB Admin 2 - Bootstrap Admin Theme</title>
 
@@ -30,6 +31,9 @@
 
 <link rel=stylesheet type=text/css href="{{ url_for('static', filename='homePage.css') }}">
 
+
+
+
 </head>
 
 <body>
@@ -39,29 +43,37 @@
     <div class="jumbotron">
       <div class="container">
         <h1 class="title">QuickHire</h1>
-        <p>Below is a list of all your current job postings. Select a posing to see a list of all submitted applications</p>
+        <p class="title-text">Below is a list of all your current job postings. Select a posing to see a list of all submitted applications</p>
       </div>
+      <hr>
     </div>
 
     <div class="container">
         <!-- Tile For Each Job Posting -->
-        <div class="row">
-            <div class="col-md-4">
-                <h2>Heading</h2>
+        <div class="row postings-row">
+<!--             
+            Template For Dynamic Content
+            <div class="col-md-4 job-posting-card">
+                <h2 class="job-posting-card-title" >Job One</h2>
+                <h4 class="job-posting-access-code">Access Code : <span class="job-posting-access-code-digits">3334454 </span></h3>
                 <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
                 <p><a class="btn btn-secondary" href="#" role="button">View Applicants »</a></p>
             </div>
+ -->
+
         </div>
 
       <hr>
 
       <footer>
-        <p>© QuickHire 2017</p>
+        <p>© QuickHire 2018</p>
       </footer>
     </div> <!-- /container -->
 
   
 
 </body>
+
+<script language="JavaScript" type="text/javascript" src="{{ url_for('static', filename='homePage.js') }}"></script>
 
 </html>

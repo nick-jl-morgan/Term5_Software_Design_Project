@@ -61,6 +61,24 @@ class Posting:
 
 		return key
 
+	def getUserPostings(self, username):
+
+		Userid = User.getIdFromUsername(username)
+
+
+		postingsModels = self.__model.getUserPostings(Userid)
+		info = {}
+		info['postings'] = []
+		for posting in postingsModels:
+			post = {}
+			post['accessKey'] = posting.access_key
+			post['description'] = posting.description
+			post['title'] = posting.title
+			info['postings'].append(post)
+		return info		
+
+
+
 
 	def __init__(self,owner_id=None,jobTitle=None,company=None,description=None,questions=None):
 		self.__model = PostingModel()
@@ -104,9 +122,9 @@ class Posting:
 			print >>sys.stderr, "No Posting Found"
 			raise ValueError('No Posting Found')
 		else:
-			self.loadQuestions()
-		
+			self.loadQuestions()	
 		pass
+
 
 	def loadQuestions(self):
 		posting_id = self.__model.id
@@ -117,8 +135,12 @@ class Posting:
 
 		#Convert Models into Classes for questions[] list
 		for question in questions:
-			if(question.is_multiple_choice == 1):
-			
+			if (question.answer_type==1):
+				vidQuestion = VideoQuestion()
+				vidQuestion.getFromModel(question)
+				self.__questions.append(vidQuestion)
+
+			elif(question.is_multiple_choice == 1):
 				multipleChoice = multipleChoiceQuestion()
 				multipleChoice.getFromModel(question)
 				self.__questions.append(multipleChoice) 
@@ -130,6 +152,11 @@ class Posting:
 				self.__questions.append(textQuestion)
 			else :
 				pass
+
+	def getPostIDfromAccessKey(self,key):
+		postId = self.__model.getIDfromAccessKey(key)
+		return postId
+
 
 
 	def getQuestions(self):
@@ -165,6 +192,46 @@ class QuestionInterface(Interface):
 		pass
 	def getInfo(self):
 		pass
+	def getFromModel(self, textModel):
+		pass
+
+
+
+
+
+class VideoQuestion(implements(QuestionInterface)):
+	def __init__(self , question=None , restriction=None ):
+		self.__model = TextQuestionModel()
+		self.__model.question = question
+		self.__model.answer_restriction = restriction
+		self.__model.answer_type = 1
+	
+	def commitQuestion(self, post_id):
+		try:
+	 	 	self.__model.posting_id = post_id
+	 	 	self.__model.save_to_db()
+	 	except Exception, e:
+	 	 	print >>sys.stderr, "Failed To save Text Question To DataBase"
+	 	pass
+
+	def getFromModel(self, textModel):
+	 	#Assign given text question Model to class object
+	 	self.__model = textModel
+	 	pass 
+
+
+	def getInfo(self):
+		info = {}
+	 	info['type'] = '0'
+	 	info['question'] = self.__model.question
+	 	info['id']= self.__model.id
+	 	info['length'] = self.__model.answer_restriction
+	 	return info		
+
+
+
+
+
 
 
 
@@ -175,8 +242,6 @@ class TextQuestion(implements(QuestionInterface)):
 	def __init__(self , question=None):
 		self.__model = TextQuestionModel()
 	 	self.__model.question = question
-	 	self.__model.answer_type = 0
-	 	self.__model.answer_restriction = 1000
 
 	def commitQuestion(self,post_id):
 	 	try:
@@ -314,6 +379,26 @@ class Application:
 					print >>sys.stderr, str(error)
 		return appID
 
+	def getApplicantsFromAccessKey(self,key):
+		post = Posting()
+		postID = post.getPostIDfromAccessKey(key)
+		applicants = self.__model.getApplicantsFromPostID(postID)
+		print >> sys.stderr , postID
+		print >> sys.stderr , applicants
+		info = {}
+		info['applicants'] = []
+		for applicant in applicants :
+			app = {}
+			#name = UserSettingsModel().getNameFromID(applicant['owner_id'])
+			app['applicationID'] = applicant.id
+			app['name'] = 'loam'
+			app['post_id'] = applicant.posting_id
+			app['owner_id'] = applicant.owner_id
+			info['applicants'].append(app)
+
+		return info
+	
+
 
 
 
@@ -325,6 +410,7 @@ class textAnswer:
 		self.__model = TextAnswerModel()
 		self.__model.answer = answer
 		self.__model.application_id = application_ID 
+		print >> sys.stderr , question_id
 		self.__model.question_id = question_id
 
 	def commitAnswer(self,appID):
@@ -338,7 +424,7 @@ class textAnswer:
 
 class videoAnswer:
 	
-	uploadsFolder = "/home/liam/Developement/Flask/JrDesign/Term5_Software_Design_Project/Flask/QuickHire/QuickHire/uploads/"
+	uploadsFolder = "/home/liam/Developement/Flask/JrDesign/Term5_Software_Design_Project/Flask/QuickHire/QuickHire/static/"
 
 	def __init__(self , binaryFile=None , questionID=None , applicationID=None , userID=None ):
 		self.__model = VideoAnswerModel()
@@ -351,9 +437,11 @@ class videoAnswer:
 		print >> sys.stderr ,"New Video : " +newVideoName
 
 		os.rename(oldVideoName, newVideoName)
-		self.__model.location = newVideoName
+
+		self.__model.location = str(applicationID) + "-" + str(questionID) + ".mp4" 
 		print >> sys.stderr ,"Old Video : " +oldVideoName
 		print >> sys.stderr ,"New Video : " +newVideoName
+	
 	def commitAnswer(self):
 		self.__model.save_to_db()
 		
@@ -373,12 +461,18 @@ class JsonParser:
 
 	 	objectList = []
 		for question in questions:
-			if question['type']==1 :
+			if question['type']==0:
+				objectList.append(JsonParser.parseVideoQuestion(question))
+			elif question['type']==1 :
 				objectList.append(JsonParser.parseTextQuestion(question))
 			elif question['type']==2:	
 				objectList.append(JsonParser.parseMultipleChoiceQuestion(question))
-
 		return objectList
+
+	@staticmethod
+	def parseVideoQuestion(videoQuestion):
+		vidquestion = VideoQuestion( videoQuestion['question'], videoQuestion['length'])
+		return vidquestion
 
 	@staticmethod
 	def parseTextQuestion(questionJson):
@@ -401,23 +495,26 @@ class JsonParser:
 		jsonInfo = posting.getInfo()
 		return jsonInfo
 
+
 	@staticmethod
 	def parseAnswers(AnswersJson = None ):
 	 	objectList = []
 	 	if AnswersJson == None:
 	 		print >> sys.stderr , "No answersArray provided"
-	 	
-
+	 
 		for answer in AnswersJson:
 			if answer['type']==0 :
-				objectList.append(JsonParser.parseVideoAnswer(answer))
-			elif answer['type']==1:	
+				pass #handled in second request
+			elif answer['type']=="1":	
 				objectList.append(JsonParser.parseTextAnswer(answer))
-			elif answer['type']==2:
+			elif answer['type']=="2":
 				objectList.append(JsonParser.parseMultipleChoiceAnswer(answer))
 		return objectList
 
 	@staticmethod
 	def parseTextAnswer(answer):
-		   return textAnswer(None,answer['questionID'],answer['answer'])
+		print >> sys.stderr , "Video Answer Parser Arguments : "
+		print >> sys.stderr , answer
+
+		return textAnswer(None,answer['questionID'],answer['answer'])
 		

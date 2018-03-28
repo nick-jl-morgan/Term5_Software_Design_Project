@@ -6,7 +6,7 @@ from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 import sys
-
+from flask_jwt_extended import (create_access_token, create_refresh_token, jwt_required, jwt_refresh_token_required, get_jwt_identity, get_raw_jwt)
 
 
 
@@ -52,22 +52,56 @@ def landingController():
 
 @app.route('/login',methods = ['POST'])
 def login():
-	result = request.form.to_dict()
+	result = request.form
 
 	username = result['username']
 	password = result['password']
-	mynewstring = username.encode('utf-8')
 
-	print >> sys.stderr , type(mynewstring) 
 	#Try to login the user in
 	try:
 		User.loginUser(username,password)
-	
 	except ValueError as error:
-		return {'message': str(error)}, 500
+		return {'message from login': str(error)}, 500
 	
 	else:
-		return render_template('homePage.html')
+		access_token = create_access_token(identity = username)
+		refresh_token = create_refresh_token(identity = username)
+		return render_template('homePage.html', accessToken=username)
+
+
+@app.route('/getUserPostings',methods = ['POST'])
+def getUserPostings():
+	
+	postings = Posting()
+	name = request.form['user']
+
+	print >> sys.stderr , name
+	postingsDict = postings.getUserPostings(name)
+
+	return jsonify(postingsDict)
+
+
+
+@app.route('/getApplicantsFromAccessKey/<accessKey>')
+def getApplicantsFromAccessKey(accessKey):
+
+	app = Application()
+	data = app.getApplicantsFromAccessKey(accessKey)
+
+	return render_template('viewApplicants.html', data=data)
+
+
+
+
+
+@app.route('/user/<username>')
+def show_user_profile(username):
+    # show the user profile for that user
+    return 'User %s' % username
+
+
+
+
 
 
 

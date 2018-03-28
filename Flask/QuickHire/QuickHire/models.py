@@ -28,8 +28,8 @@ class UserModel(db.Model):
         db.session.add(self)
         db.session.commit()
 
-    def getID( cls , username ):
-    	return cls.query.filter_by( username = username ).first().id
+    def getID( cls , name ):
+    	return cls.query.filter_by( username = name ).first().id
 
 
 
@@ -59,9 +59,11 @@ class PostingModel(db.Model):
 	def keyExists(self , key):
 		return self.query.filter_by(access_key = key).first()
 
+	def getUserPostings(self, userID):
+		return self.query.filter_by(owner_id = userID).all()		
 
-
-
+	def getIDfromAccessKey(self , key):
+		return self.query.filter_by(access_key = key).first().id
 
 
 
@@ -112,8 +114,8 @@ class MultipleChoiceOptionModel(db.Model):
 		db.session.add(self)
 		db.session.commit()
 
-	def getOptionsFromId(self,id):
-		return self.query.filter_by(question_id=id).all()
+	def getOptionsFromId(self,Qid):
+		return self.query.filter_by(question_id=Qid).all()
 		
 
 
@@ -135,6 +137,8 @@ class ApplicationModel(db.Model):
 		db.session.close()
 		return idToUse	
 
+	def getApplicantsFromPostID(self , postId):
+		return self.query.filter_by(posting_id=postId).all()
 
 
 
@@ -146,6 +150,7 @@ class TextAnswerModel(db.Model):
 	__tablename__ = 'textAnswers'
 	id = Column(Integer,primary_key = True)
 	application_id = Column(Integer,db.ForeignKey(ApplicationModel.id), nullable=True )
+	question_id = Column(Integer,db.ForeignKey(TextQuestionModel.id), nullable=True )
 	answer = db.Column(mysql.TEXT)
 
 	def save_to_db(self):
@@ -169,3 +174,11 @@ class VideoAnswerModel(db.Model):
 		db.session.add(self)
 		db.session.commit()
 
+class UserSettingsModel(db.Model):
+	__tablename__ = 'user_settings'
+	id = Column(Integer,primary_key = True)
+	user_id = db.Column(Integer, db.ForeignKey(UserModel.id),  nullable=False )
+	name = db.Column(db.String(120), unique = False)
+	
+	def getNameFromID(self , userID):
+		return self.query.filter_by(user_id=userID).first().name

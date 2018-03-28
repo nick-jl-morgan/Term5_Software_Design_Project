@@ -38,8 +38,8 @@ class UserRegistration(Resource):
 class UserLogin(Resource):
     def post(self):
         #See User Login in Server Terminal
-        print >>sys.stderr, request.get_data()
-        print >>sys.stderr, request.headers
+        #print >>sys.stderr, request.get_data()
+        #print >>sys.stderr, request.headers
         
         #Try to Parse Request Data
         try:
