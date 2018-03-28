@@ -26,7 +26,7 @@ public class videoAnswer extends Answer{
 
     @Override
     protected void beginTransmitting(){
-        new videoStreamer().execute(this);
+        connection.getConnection().uploadVideo(this);
     }
 
     protected Uri getUri(){return this.vid;}

@@ -71,7 +71,7 @@ public class homeActivity extends AppCompatActivity {
             videoButton.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View view){
-                    startActivity(new Intent(homeActivity.this, videoAnswerActivity.class));
+                    startActivity(new Intent(homeActivity.this, videoTester.class));
                 }
             });
         }

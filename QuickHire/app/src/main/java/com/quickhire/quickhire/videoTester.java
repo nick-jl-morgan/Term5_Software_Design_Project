@@ -51,6 +51,7 @@ public class videoTester extends AppCompatActivity {
 
                 videoAnswer a=new videoAnswer(video,999);
                 a.setApplicationID(101);
+                a.beginTransmitting();
             }
         }
     }
