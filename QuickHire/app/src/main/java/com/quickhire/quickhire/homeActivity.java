@@ -50,7 +50,7 @@ public class homeActivity extends AppCompatActivity {
         activity=this;      //Allows the activity to be referenced from the outside.
         configureCreatePostButton();
 
-        configureTestVideoButton();
+//        configureTestVideoButton();
         configureSearchPostButton();
 
     }
@@ -66,15 +66,15 @@ public class homeActivity extends AppCompatActivity {
 
         }
 
-        private void configureTestVideoButton(){
-            Button videoButton = (Button) findViewById(R.id.testVideoButton);
-            videoButton.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View view){
-                    startActivity(new Intent(homeActivity.this, videoAnswerActivity.class));
-                }
-            });
-        }
+//        private void configureTestVideoButton(){
+//            Button videoButton = (Button) findViewById(R.id.testVideoButton);
+//            videoButton.setOnClickListener(new View.OnClickListener(){
+//                @Override
+//                public void onClick(View view){
+//                    startActivity(new Intent(homeActivity.this, videoAnswerActivity.class));
+//                }
+//            });
+//        }
 
         private void configureSearchPostButton(){
             final Button searchPostButton = (Button) findViewById(R.id.searchPostButton);
@@ -91,7 +91,7 @@ public class homeActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             //Do something
-                            homeActivity.display(response.toString());
+//                            homeActivity.display(response.toString());
                             Gson g = new Gson();
                             postResponse = g.fromJson(response.toString(), postingResponse.class);
                             posting = postResponse.convert();

@@ -13,7 +13,7 @@ import org.json.JSONObject;
 class Authenticator{
     static private connection c = connection.getConnection();
 
-    public static void attemptRegistration(String username, String password, Response.Listener<JSONObject> rl,  Response.ErrorListener err){
+    public static void attemptRegistration(String username, String password, String name, Response.Listener<JSONObject> rl,  Response.ErrorListener err){
         final String u = username;
         final Response.Listener<JSONObject> nl=rl;
         final Response.ErrorListener ne = err;
@@ -43,7 +43,7 @@ class Authenticator{
                 nextLayerError.onErrorResponse(error);
             }
         };
-        c.registerUser(username, password, listener, errorListener);
+        c.registerUser(username, password, name, listener, errorListener);
     }
 
     public static void attemptLogin(String username, String password, Response.Listener<JSONObject> rl, Response.ErrorListener err){

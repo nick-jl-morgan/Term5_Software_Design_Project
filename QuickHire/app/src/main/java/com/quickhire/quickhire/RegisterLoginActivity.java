@@ -91,7 +91,7 @@ public class RegisterLoginActivity extends AppCompatActivity{
         registerButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptRegister();
+                startActivity(new Intent(RegisterLoginActivity.this, RegisterPageActivity.class));
             }
         });
 
@@ -117,64 +117,6 @@ public class RegisterLoginActivity extends AppCompatActivity{
      * If there are form errors (invalid email, missing fields, etc.), the
      * errors are presented and no actual login attempt is made.
      */
-    private void attemptRegister() {
-
-        // Reset errors.
-        mEmailView.setError(null);
-        mPasswordView.setError(null);
-
-        // Store values at the time of the login attempt.
-        final String email = mEmailView.getText().toString();
-        final String password = mPasswordView.getText().toString();
-        boolean cancel = false;
-        View focusView = null;
-
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-        }
-
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
-        }
-
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-        }
-        else{
-
-            Response.Listener<JSONObject> r =new Response.Listener<JSONObject>() {
-
-                @Override
-                public void onResponse(JSONObject response) {
-                    mTxtDisplay.setText("Registration Succesfull!");
-                    startActivity(new Intent(RegisterLoginActivity.this, homeActivity.class));
-                }
-            };
-            Response.ErrorListener err =new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    String message = error.getMessage();
-                    mTxtDisplay.setText("Registration Failed!");
-                    //TODO error response handling for specfic error messages!
-                    //if(message == "500")
-                }
-            };
-            Authenticator.attemptRegistration(email,password, r, err);
-        }
-
-    }
     private void attemptLogin() {
 
         // Reset errors.

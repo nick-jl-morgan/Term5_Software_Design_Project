@@ -8,7 +8,7 @@ import java.util.Vector;
 
 public class postingResponse {
     public String accessKey, company, description, title;
-    public Integer postID, ownerID;
+    public Integer postID, ownerID, appIdToUse;
     public Vector<questionResponse> questions = new Vector<questionResponse>();
 
     public jobPosting convert(){

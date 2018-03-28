@@ -75,10 +75,11 @@ public class connection{
     }
 
 
-    protected void registerUser(String username, String password, Response.Listener<JSONObject> responseListener, Response.ErrorListener err) {
+    protected void registerUser(String username, String password, String name, Response.Listener<JSONObject> responseListener, Response.ErrorListener err) {
 
         String JSON="{\"username\":\"" + username + "\","
-                + "\"password\":\"" + password + "\"}";
+                + "\"password\":\"" + password + "\","
+                + "\"name\":\"" + name + "\"}";
         String extension = "registration";
 
         generic(JSON, extension, responseListener, err);

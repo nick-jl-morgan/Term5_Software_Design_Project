@@ -44,11 +44,22 @@ public class ApplyActivity extends AppCompatActivity {
         jobTitle = (TextView)findViewById(R.id.applyJobTitleText);
         jobCompany = (TextView)findViewById(R.id.applyCompanyText);
         jobDescription = (TextView)findViewById(R.id.applyDescriptionText);
-        jobTitle.setText(posting.jobTitle);
-        jobCompany.setText(posting.company);
+        jobTitle.setText("  " + posting.jobTitle);
+        jobCompany.setText("  " + posting.company);
         jobDescription.setText(posting.description);
         configureJobQuestionButton();
         configureSaveApplication();
+        configureCancelButton();
+    }
+
+    private void configureCancelButton() {
+        Button cancel = (Button) findViewById(R.id.cancelButton);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.finish();
+            }
+        });
     }
 
     private void configureSaveApplication() {

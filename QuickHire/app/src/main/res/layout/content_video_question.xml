@@ -10,19 +10,21 @@
 
     <EditText
         android:id="@+id/questionTextVideo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="370dp"
+        android:layout_height="57dp"
+        android:layout_marginTop="16dp"
         android:hint="@string/video_question"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/video_time"
-        android:layout_width="257dp"
+        android:layout_width="255dp"
         android:layout_height="44dp"
-        android:layout_marginEnd="124dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginEnd="136dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/questionTextVideo" />
 
@@ -32,6 +34,7 @@
         android:layout_height="54dp"
         android:layout_marginBottom="335dp"
         android:layout_marginEnd="3dp"
+        android:layout_marginStart="3dp"
         android:text="Save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

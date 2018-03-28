@@ -41,13 +41,13 @@ public class CreateJobPosting2 extends AppCompatActivity {
         setContentView(R.layout.activity_create_job_posting2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 
         activity=this; //important
 
         addKeyLister();
         configureCreatePostButton();
+        configureCancelButton();
     }
 
     private void configureCreatePostButton() {
@@ -60,12 +60,21 @@ public class CreateJobPosting2 extends AppCompatActivity {
         });
     }
 
+    private void configureCancelButton() {
+        Button cancel = (Button) findViewById(R.id.cancelButton2);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.finish();
+            }
+        });
+    }
 
     private void addKeyLister() {
         JobTitle = (EditText) findViewById(R.id.JobTitleText);
         Company = (EditText) findViewById(R.id.CompanyText);
         Description = (EditText) findViewById(R.id.DescriptionText);
-        SaveButton = (Button) findViewById(R.id.SaveButton);
+        SaveButton = (Button) findViewById(R.id.saveButton2);
 
         SaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,7 +116,7 @@ public class CreateJobPosting2 extends AppCompatActivity {
                     });
 
                 } else {
-                    final Snackbar mySnackbar = Snackbar.make(view, "Texts boxes are not full", Snackbar.LENGTH_SHORT);
+                    final Snackbar mySnackbar = Snackbar.make(view, "Please fill all requirements", Snackbar.LENGTH_SHORT);
                     mySnackbar.show();
                 }
             }

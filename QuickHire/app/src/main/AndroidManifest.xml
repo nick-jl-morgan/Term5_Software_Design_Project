@@ -45,7 +45,9 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.quickhire.quickhire.MainActivity" />
         </activity>
-        <activity android:name=".CreateJobPosting2" />
+        <activity
+            android:name=".CreateJobPosting2"
+            android:label="Create Job Posting" />
         <activity
             android:name=".cameraActivity"
             android:label="@string/title_activity_camera" />
@@ -82,6 +84,10 @@
         <activity
             android:name=".videoAnswerActivity"
             android:label="@string/title_activity_video_answer"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".RegisterPageActivity"
+            android:label="@string/title_activity_register_page"
             android:theme="@style/AppTheme"></activity>
     </application>
 

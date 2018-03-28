@@ -29,9 +29,10 @@
     <string name="title_activity_video_question">Edit Video Question</string>
     <string name="video_question">Question</string>
     <string name="title_activity_search_posting">searchPostingActivity</string>
-    <string name="title_activity_apply">ApplyActivity</string>
-    <string name="title_activity_essay_answer">essayAnswerActivity</string>
+    <string name="title_activity_apply">Application</string>
+    <string name="title_activity_essay_answer">Answer Essay Question</string>
     <string name="title_activity_video_tester">videoTester</string>
-    <string name="title_activity_multiple_choice_question">multipleChoiceQuestionActivity</string>
+    <string name="title_activity_multiple_choice_question">Answer Multiple Choice Question</string>
     <string name="title_activity_video_answer">Video Response</string>
+    <string name="title_activity_register_page">RegisterPageActivity</string>
 </resources>
