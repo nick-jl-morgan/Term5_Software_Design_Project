@@ -17,6 +17,7 @@ import java.io.File;
 
 public class videoTester extends AppCompatActivity {
     private VideoView videoV;
+    private videoQuestion q = (videoQuestion) applyQuestionList.selectedQuestion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +34,7 @@ public class videoTester extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-                takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 60);
+                takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, q.getTime());
                 takeVideoIntent.putExtra(MediaStore.EXTRA_FINISH_ON_COMPLETION,true);
 
                 startActivityForResult(takeVideoIntent, 1);
@@ -49,8 +50,8 @@ public class videoTester extends AppCompatActivity {
                 videoV.start();
 
 
-                videoAnswer a=new videoAnswer(video,999);
-                a.setApplicationID(101);
+                videoAnswer a=new videoAnswer(video,q.getId());
+                a.setApplicationID(ApplyActivity.posting.getAppIdToUse());
                 a.beginTransmitting();
             }
         }

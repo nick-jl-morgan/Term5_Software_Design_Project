@@ -114,7 +114,7 @@ public class applyQuestionList extends AppCompatActivity implements SwipeRefresh
                 startActivityForResult(new Intent(applyQuestionList.this, essayAnswerActivity.class), 1);
             } else if (question.getType() == "Video") {
                 videoTime = ((videoQuestion) question).getTime();
-                startActivityForResult(new Intent(applyQuestionList.this, videoAnswerActivity.class), 2);
+                startActivityForResult(new Intent(applyQuestionList.this, videoTester.class), 2);
             }
             Toast.makeText(getApplicationContext(), "Read: " + question.getType(), Toast.LENGTH_SHORT).show();
         }

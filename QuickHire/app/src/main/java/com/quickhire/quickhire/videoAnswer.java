@@ -16,6 +16,10 @@ public class videoAnswer extends Answer{
         this.vid = video;
     }
 
+    public videoAnswer(int id, String value) {
+        super(id, value, questionType.VIDEO.getNumVal());
+    }
+
     public String toJSON(){
         String JSON="{\"questionID\":"+qID+","
                     +"\"Answer\":\"videoTransmitting\","

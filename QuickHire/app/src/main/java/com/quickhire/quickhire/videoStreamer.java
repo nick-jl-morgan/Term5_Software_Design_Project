@@ -33,8 +33,7 @@ public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
 
     @Override
     protected Void doInBackground(videoAnswer... f) {
-        // TODO Auto-generated method stub
-        int q=5;
+
         connection c = connection.getConnection();
         int bytesRead, bytesAvailable, bufferSize;
         byte[] buffer;
@@ -43,11 +42,11 @@ public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
         this.index=0;
         try{
 
-            Uri video = f[0].vid;
-            File file = new File(video.getPath());
-            FileInputStream fileInputStream=new FileInputStream(file);
+            Uri video = f[0].getUri();
+//            File file = new File(video.getPath());
+//            FileInputStream fileInputStream=new FileInputStream(file);
 
-            //InputStream fileInputStream = connection.getConnection().appcontext.getContentResolver().openfile(new File(video.getPath()));
+            InputStream fileInputStream = connection.getConnection().appcontext.getContentResolver().openInputStream(video);//.openfile(new File(video.getPath()));
 
             bytesAvailable = fileInputStream.available();
             bufferSize = Math.min(bytesAvailable, maxBufferSize);
@@ -108,6 +107,7 @@ public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
             Log.e("Debug", "error: " + ioe.getMessage(), ioe);
         }
         catch (Exception fnoe){
+            fnoe.printStackTrace();
             Log.e("Broke", fnoe.getMessage());
         }
         c.disableExternal();

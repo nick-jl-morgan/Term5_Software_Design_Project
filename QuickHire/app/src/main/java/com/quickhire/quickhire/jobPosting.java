@@ -11,6 +11,15 @@ public class jobPosting {
     public String company, jobTitle, description,title;
     public Integer postID, ownerID;
     private String accessKey;
+    private int appIdToUse;
+
+    public int getAppIdToUse() {
+        return appIdToUse;
+    }
+
+    public void setAppIdToUse(int appIdToUse) {
+        this.appIdToUse = appIdToUse;
+    }
 
     public Vector<Question> questions = new Vector<Question>();
 

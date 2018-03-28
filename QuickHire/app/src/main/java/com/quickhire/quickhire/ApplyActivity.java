@@ -62,14 +62,17 @@ public class ApplyActivity extends AppCompatActivity {
                     a = posting.toapplication();
                 } catch(Exception e){
                     e.printStackTrace();
-                    a=new Application(-999,new Vector<Question>());
                 }
                 final Application apply = a;
                String error = null;
-               for(Answer an : apply.answers){
-                   if(an.getAnswer() == null){
-                       error = "Please answer all questions";
+               if(a!=null) {
+                   for (Answer an : apply.answers) {
+                       if (an.getAnswer() == null) {
+                           error = "Please answer all questions";
+                       }
                    }
+               }else{
+                   error = "Something went wrong.";
                }
                if(error == null){
                    connection.getConnection().saveApplication(apply, new Response.Listener<JSONObject>() {

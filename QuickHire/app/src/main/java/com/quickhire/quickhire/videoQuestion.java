@@ -8,7 +8,7 @@ import android.net.Uri;
 
 public class videoQuestion extends Question {
     private int length;
-    private Uri video;
+    private Uri video=null;
 
     public videoQuestion(String question, int length){
         super(question, questionType.VIDEO);
@@ -39,7 +39,11 @@ public class videoQuestion extends Question {
     }
     @Override
     public Answer toAnswer(){
-        return new videoAnswer(this.video,this.getId());
+        if(this.video != null) {
+            return new videoAnswer(this.video, this.getId());
+        }else{
+            return new  videoAnswer(this.getId(), "Transmitting!");
+        }
     }
 
 }
