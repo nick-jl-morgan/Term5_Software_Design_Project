@@ -76,7 +76,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".videoTester"
-            android:label="@string/title_activity_video_tester"
+            android:label="Video Response"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".multipleChoiceQuestionActivity"

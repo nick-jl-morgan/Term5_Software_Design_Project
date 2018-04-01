@@ -1,34 +1,28 @@
 package com.quickhire.quickhire;
 
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
 
+/** ApplyActivity **********************************************
+ * Created by nick on 2018-03-27.
+ * Description: UI for creating a application to a job posting.
+ **************************************************************/
 public class ApplyActivity extends AppCompatActivity {
-
     private TextView jobTitle;
     private TextView jobCompany;
     private TextView jobDescription;
-
     public static jobPosting posting = null;
     public static Activity activity = null;
 
@@ -68,6 +62,7 @@ public class ApplyActivity extends AppCompatActivity {
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final Snackbar mySnackbar = Snackbar.make(view, "Application Submitted", Snackbar.LENGTH_SHORT);
                 Application a = null;
                 try {
                     a = posting.toapplication();
@@ -86,10 +81,11 @@ public class ApplyActivity extends AppCompatActivity {
                    error = "Something went wrong.";
                }
                if(error == null){
-                   connection.getConnection().saveApplication(apply, new Response.Listener<JSONObject>() {
-                       Application application=apply;
+                   connection.getConnection().saveApplication(apply, new Response.Listener<JSONObject>() { //save application to the database using connection class
                        @Override
                        public void onResponse(JSONObject response) {
+                           mySnackbar.show();
+                           activity.finish();
 
                            //Do something
 //                           AlertDialog.Builder builder = new AlertDialog.Builder(activity);
@@ -102,14 +98,14 @@ public class ApplyActivity extends AppCompatActivity {
 //                                   });
 //                           AlertDialog alert = builder.create();
                            //get the application ID
-                           int id = -1;
-                           try {
-                               id = response.getInt("id");
-                           }catch(Exception e){
-                               Log.d("Cannot find Post ID", e.getMessage());
-                           }
-                           application.setApplicationID(id);
-                           application.postResponse();
+//                           int id = -1;
+//                           try {
+//                               id = response.getInt("id");
+//                           }catch(Exception e){
+//                               Log.d("Cannot find Post ID", e.getMessage());
+//                           }
+//                           application.setApplicationID(id);
+//                           application.postResponse();
 //                           alert.show();
                        }
                    }, new Response.ErrorListener() {

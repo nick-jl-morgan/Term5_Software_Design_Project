@@ -9,10 +9,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-/**
- * Created by Ravi Tamada on 21/02/17.
- * www.androidhive.info
- */
+/** DividerItemDecoration ***************************************************************************
+ * Created by nick on 2018-03-27.
+ * Resource: www.androidhive.info
+ * Description: divider for the UI list elements for question list.
+ ******************************************************************************************/
 public class DividerItemDecoration extends RecyclerView.ItemDecoration {
 
     private static final int[] ATTRS = new int[]{

@@ -36,4 +36,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.494" />
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="342dp"
+        android:layout_height="65dp"
+        android:layout_marginEnd="33dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="1dp"
+        android:text="TextView"
+        android:textAlignment="center"
+        android:textColor="@color/from"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/videoView" />
+
 </android.support.constraint.ConstraintLayout>

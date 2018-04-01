@@ -1,13 +1,15 @@
 package com.quickhire.quickhire;
 
-import java.util.Vector;
-
-/**
+/** Question ***************************************************************************
  * Created by matth_000 on 2018-03-04.
- */
-
-
-
+ * Description: question object to store the questions of the job posting.
+ * @param - String questionText: the question being asked
+ *          String answer: answer to the question
+ *          String qType: type of question being asked
+ *          int id: id of the question in the database
+ *          int position: position in the list of questions
+ *          int numericQuestionType: question type numerically
+ ******************************************************************************************/
 public abstract class Question {
     protected String questionText;
     private String answer;
@@ -21,7 +23,6 @@ public abstract class Question {
         this.qType = qType;
         this.numericQuestionType=qType.getNumVal();
     }
-
 
     public abstract String toJSON(); //for display and transport.
 

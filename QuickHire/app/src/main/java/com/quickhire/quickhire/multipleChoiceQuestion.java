@@ -1,14 +1,14 @@
 package com.quickhire.quickhire;
 
-/**
- * Created by matth_000 on 2018-03-04.
- */
-
 import java.util.Iterator;
 import java.util.Vector;
 
+/** multipleChoiceQuestion *******************************************
+ * Created by matth_000 on 2018-03-04.
+ * Description: to create a object to store multiple choice questions.
+ *********************************************************************/
 public class multipleChoiceQuestion extends Question {
-    private Vector<String> choices = new Vector<String>();
+    private Vector<String> choices = new Vector<String>(); //vector of choices for the multiple choice question.
 
     public multipleChoiceQuestion(String question){
         super(question, questionType.M_CHOICE);
@@ -31,13 +31,8 @@ public class multipleChoiceQuestion extends Question {
             return false;
     }
 
-
     @Override public String toJSON() {
         String string = "{\"type\":" + this.numericQuestionType + ",\"question\":\"" + this.questionText + "\",\"options\":[";
-
-        ;
-        //char Alpha = 'A';
-
         StringBuilder builder = new StringBuilder();
         builder.append(string);
         if(!choices.isEmpty()) {

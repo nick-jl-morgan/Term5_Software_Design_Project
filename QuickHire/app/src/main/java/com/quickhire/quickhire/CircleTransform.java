@@ -9,11 +9,11 @@ import android.graphics.Paint;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
-/**
- * Created by Ravi Tamada on 21/02/17.
- * www.androidhive.info
- */
-
+/** applyQuestionList ***************************************************************************
+ * Created by nick on 2018-03-27.
+ * Resource: www.androidhive.info
+ * Description: Gmail UI to show the circle icon used in the lists of the questions.
+ ******************************************************************************************/
 public class CircleTransform  extends BitmapTransformation {
     public CircleTransform(Context context) {
         super(context);

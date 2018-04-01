@@ -25,13 +25,12 @@ import java.io.File;
 import java.net.URI;
 import java.io.InputStream;
 
-
-/**
- * This should be the most frequently visited activity.
- * From here, the user creates post, searches for posts, and may check that their camera is compatable
- *
- */
-
+/** homeActivity ************************************************
+ * Created by matt on 2018-03-27.
+ * Description: This should be the most frequently visited activity.
+ *              From here, the user creates post, searches for posts,
+ *              and may check that their camera is compatable
+ *********************************************************************/
 public class homeActivity extends AppCompatActivity {
     File test;
     private EditText searchPostingText;
@@ -48,9 +47,8 @@ public class homeActivity extends AppCompatActivity {
         searchPostingText = (EditText) findViewById(R.id.searchJobPostingText);
 
         activity=this;      //Allows the activity to be referenced from the outside.
-        configureCreatePostButton();
 
-//        configureTestVideoButton();
+        configureCreatePostButton();
         configureSearchPostButton();
 
     }
@@ -66,16 +64,6 @@ public class homeActivity extends AppCompatActivity {
 
         }
 
-//        private void configureTestVideoButton(){
-//            Button videoButton = (Button) findViewById(R.id.testVideoButton);
-//            videoButton.setOnClickListener(new View.OnClickListener(){
-//                @Override
-//                public void onClick(View view){
-//                    startActivity(new Intent(homeActivity.this, videoAnswerActivity.class));
-//                }
-//            });
-//        }
-
         private void configureSearchPostButton(){
             final Button searchPostButton = (Button) findViewById(R.id.searchPostButton);
             searchPostButton.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +77,7 @@ public class homeActivity extends AppCompatActivity {
                     connection.getConnection().searchJobPosting(id, new Response.Listener<JSONObject>() {
 
                         @Override
-                        public void onResponse(JSONObject response) {
+                        public void onResponse(JSONObject response) { //allows to search for a job posting from a ID
                             //Do something
 //                            homeActivity.display(response.toString());
                             Gson g = new Gson();

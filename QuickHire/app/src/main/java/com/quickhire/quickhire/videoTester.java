@@ -11,12 +11,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.VideoView;
 
 import java.io.File;
 
 public class videoTester extends AppCompatActivity {
     private VideoView videoV;
+    private TextView question;
     private videoQuestion q = (videoQuestion) applyQuestionList.selectedQuestion;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,8 @@ public class videoTester extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         videoV = (VideoView) findViewById(R.id.videoView);
+        question = (TextView) findViewById(R.id.textView2);
+        question.setText(q.questionText);
         configureTestVideoButton();
 
     }
@@ -34,7 +38,7 @@ public class videoTester extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-                takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, q.getTime());
+                takeVideoIntent.putExtra(MediaStore.EXTRA_DURATION_LIMIT, 30);
                 takeVideoIntent.putExtra(MediaStore.EXTRA_FINISH_ON_COMPLETION,true);
 
                 startActivityForResult(takeVideoIntent, 1);

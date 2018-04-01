@@ -2,21 +2,19 @@ package com.quickhire.quickhire;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+/** essayQuestionActivity ********************************************************
+ * Created by nick on 2018-03-27.
+ * Description: Activity to show the UI for viewing and creating a essay question.
+ *********************************************************************************/
 public class essayQuestionActivity extends AppCompatActivity {
-
     private EditText questionText;
-
     public String text = questionList.questionText;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +32,11 @@ public class essayQuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String changedQuestion = questionText.getText().toString();
-//                selectedQuestion.setText(changedQuestion);
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("question", changedQuestion);
-//                returnIntent.putExtra("position", selectedQuestion.getPosition());
                 setResult(RESULT_OK, returnIntent);
                 finish();
             }
         });
-
-
     }
 }

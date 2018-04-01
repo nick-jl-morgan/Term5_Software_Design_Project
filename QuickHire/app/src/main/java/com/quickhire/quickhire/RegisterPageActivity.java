@@ -1,23 +1,22 @@
 package com.quickhire.quickhire;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-
 import org.json.JSONObject;
 
+/** RegisterLoginActivity ************************************************
+ * Created by nick on 2018-03-27.
+ * Description: register page to create a user.
+ *********************************************************************/
 public class RegisterPageActivity extends AppCompatActivity {
-
+    //UI elements
     private EditText firstNameText;
     private EditText lastNameText;
     private EditText emailText;
@@ -35,11 +34,13 @@ public class RegisterPageActivity extends AppCompatActivity {
         lastNameText = (EditText) findViewById(R.id.lastNameEditText);
         emailText = (EditText) findViewById(R.id.emailEditText);
         passwordText = (EditText) findViewById(R.id.passwordEditText);
+        registerButton = (Button) findViewById(R.id.registerButton);
+        registerButton.setText("Register");
         configureRegisterButton();
     }
 
     private void configureRegisterButton() {
-        registerButton = (Button) findViewById(R.id.registerButton);
+
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,7 +103,7 @@ public class RegisterPageActivity extends AppCompatActivity {
                     //if(message == "500")
                 }
             };
-            Authenticator.attemptRegistration(email,password,name, r, err);
+            Authenticator.attemptRegistration(email,password,name, r, err); //register the user into the database
         }
 
     }

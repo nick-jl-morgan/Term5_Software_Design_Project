@@ -2,18 +2,22 @@ package com.quickhire.quickhire;
 
 import java.util.Vector;
 
-/**
- * Created by onick on 2018-03-27.
- */
+/** Application ***************************************************************************
+ * Created by nick on 2018-03-27.
+ * Description: To create a application from the applicant to a job posting.
+ * @param - int applicationID - used to tell which application the answer belonged to
+ *        int postID - id for the job posting
+ *        int hasVideo - flag to tell the database the application contains a video answer.
+ *        Vector<Answer> answers - list of all answers of the application.
+ ******************************************************************************************/
 
 public class Application {
-
-
     private Integer applicationID;
     private Integer postID;
     private Integer hasVideo = 0;
     public Vector<Answer> answers = new Vector<Answer>();
 
+    //Constructor
     public Application(Integer id, Vector<Question> questions){
         for(Question q: questions){
             if(q.intType() == 0){
@@ -25,6 +29,7 @@ public class Application {
         this.postID = id;
     }
 
+    //Creates the JSON for the class
     public String toJSON(){
         String temp = "{\"postID\":\"" + this.postID + "\","
                 + "\"hasVideo\":\""+this.hasVideo  + "\"," +  "\"answers\":[";
@@ -46,6 +51,7 @@ public class Application {
     public void setApplicationID(int id){
         this.applicationID=id;
         for(Answer a: answers){
+            //loop through the answers to set application ID.
             a.setApplicationID(id);
         }
     }

@@ -5,11 +5,11 @@ import android.animation.AnimatorSet;
 import android.content.Context;
 import android.view.View;
 
-/**
- * Created by Ravi Tamada on 22/02/17.
- * www.androidhive.info
- */
-
+/** essayAnswerActivity ************************************************
+ * Created by nick on 2018-03-27.
+ * resource: www.androidhive.info
+ * Description: anamation for question list.
+ *********************************************************************/
 public class FlipAnimator {
     private static String TAG = FlipAnimator.class.getSimpleName();
     private static AnimatorSet leftIn, rightOut, leftOut, rightIn;

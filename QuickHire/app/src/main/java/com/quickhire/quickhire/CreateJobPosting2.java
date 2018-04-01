@@ -3,35 +3,32 @@ package com.quickhire.quickhire;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/** CreateJobPosting2 ************************************************
+ * Created by nick on 2018-03-27.
+ * Description: Activity to show the UI for creating the job posting.
+ *********************************************************************/
 public class CreateJobPosting2 extends AppCompatActivity {
-
     Button SaveButton;
     EditText JobTitle;
     EditText Company;
     EditText Description;
     jobPosting post;
-    public static List<Question> questionsList = new ArrayList<>();
+    public static List<Question> questionsList = new ArrayList<>(); //list of questions created in the job posting
     public static Activity activity = null;
 
 
@@ -41,7 +38,6 @@ public class CreateJobPosting2 extends AppCompatActivity {
         setContentView(R.layout.activity_create_job_posting2);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         activity=this; //important
 
@@ -93,7 +89,7 @@ public class CreateJobPosting2 extends AppCompatActivity {
                     connection.getConnection().saveJobPosting(post, new Response.Listener<JSONObject>() {
 
                         @Override
-                        public void onResponse(JSONObject response) {
+                        public void onResponse(JSONObject response) { //save the job to the database using the connection class.
                             //Do something
                             AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                             builder.setMessage(response.toString())
@@ -105,8 +101,6 @@ public class CreateJobPosting2 extends AppCompatActivity {
                                     });
                             AlertDialog alert = builder.create();
                             alert.show();
-//                            mySnackbar.show();
-//                            CreateJobPosting2.display(response.toString());
                         }
                     }, new Response.ErrorListener() {
                             @Override

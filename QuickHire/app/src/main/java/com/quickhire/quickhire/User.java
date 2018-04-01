@@ -7,9 +7,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.io.Serializable;
 
 public class User implements java.io.Serializable{
     private int userID=9999;
@@ -35,13 +32,6 @@ public class User implements java.io.Serializable{
     public static void createUser(String username){
         theUser = new User(username);
     }
-
-/*
-    public boolean registerUser(String username, String password){
-        //hit the server, get the tokens, save the tokens, save the user.
-        ret
-    }
-*/
 
     public void setCreds(credentials creds){
         this.creds=creds;

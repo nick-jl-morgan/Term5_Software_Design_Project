@@ -1,9 +1,11 @@
 package com.quickhire.quickhire;
 
-/**
+/** Application ***************************************************************************
  * Created by matth_000 on 2018-03-06.
- */
-
+ * Description: credentials of the user for the tokens.
+ * @param - String access_token: token that allows the user to access the application.
+ *          String refresh_token: token used to refresh authentication.
+ ******************************************************************************************/
 public class credentials {
     private String access_token, refresh_token;
 

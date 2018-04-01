@@ -18,8 +18,8 @@
 
     <TextView
         android:id="@+id/applyDescriptionText"
-        android:layout_width="395dp"
-        android:layout_height="116dp"
+        android:layout_width="384dp"
+        android:layout_height="205dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:text="Description"
@@ -30,7 +30,7 @@
 
     <TextView
         android:id="@+id/applyJobTitleText"
-        android:layout_width="420dp"
+        android:layout_width="380dp"
         android:layout_height="44dp"
         android:background="@color/background"
         android:text=" Job Title"
@@ -43,7 +43,7 @@
 
     <TextView
         android:id="@+id/applyCompanyText"
-        android:layout_width="415dp"
+        android:layout_width="383dp"
         android:layout_height="30dp"
         android:background="@color/background"
         android:text="  Company"
@@ -71,9 +71,11 @@
         android:id="@+id/sendButton"
         android:layout_width="136dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="318dp"
+        android:layout_marginEnd="138dp"
+        android:layout_marginStart="137dp"
+        android:layout_marginTop="200dp"
         android:text="Send"
-        app:layout_constraintEnd_toStartOf="@+id/cancelButton"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/applicationQuestionButton" />
 
@@ -82,10 +84,14 @@
         style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="187dp"
+        android:layout_marginBottom="68dp"
+        android:layout_marginEnd="160dp"
+        android:layout_marginStart="163dp"
+        android:layout_marginTop="7dp"
         android:text="Cancel"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/sendButton" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sendButton" />
 
 </android.support.constraint.ConstraintLayout>

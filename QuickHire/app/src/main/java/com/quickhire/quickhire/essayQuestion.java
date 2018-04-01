@@ -1,13 +1,10 @@
 package com.quickhire.quickhire;
-/**
+
+/** Application ***********************************
  * Created by matth_000 on 2018-03-04.
- */
-
-
+ * Description: object for storing essay questions.
+ **************************************************/
 public class essayQuestion extends Question {
-
-    int maxLength = 1000; //may change
-
     public essayQuestion(String question){
         super(question, questionType.ESSAY);
     }

@@ -19,11 +19,11 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Ravi Tamada on 21/02/17.
- * www.androidhive.info
- */
-
+/** questionAdapter ************************************************
+ * Created by nick on 2018-03-27.
+ * resource: www.androidhive.info
+ * Description: adapter for question list.
+ *********************************************************************/
 public class questionAdapter extends RecyclerView.Adapter<questionAdapter.MyViewHolder> {
     private Context mContext;
     private List<Question> questions;
@@ -207,30 +207,6 @@ public class questionAdapter extends RecyclerView.Adapter<questionAdapter.MyView
     public long getItemId(int position) {
         return questions.get(position).getPosition();
     }
-
-//    private void applyImportant(MyViewHolder holder, Message message) {
-//        if (message.isImportant()) {
-//            holder.iconImp.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_star_black_24dp));
-//            holder.iconImp.setColorFilter(ContextCompat.getColor(mContext, R.color.icon_tint_selected));
-//        } else {
-//            holder.iconImp.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_star_border_black_24dp));
-//            holder.iconImp.setColorFilter(ContextCompat.getColor(mContext, R.color.icon_tint_normal));
-//        }
-//    }
-
-//    private void applyReadStatus(MyViewHolder holder, Message message) {
-//        if (message.isRead()) {
-//            holder.from.setTypeface(null, Typeface.NORMAL);
-//            holder.subject.setTypeface(null, Typeface.NORMAL);
-//            holder.from.setTextColor(ContextCompat.getColor(mContext, R.color.subject));
-//            holder.subject.setTextColor(ContextCompat.getColor(mContext, R.color.message));
-//        } else {
-//            holder.from.setTypeface(null, Typeface.BOLD);
-//            holder.subject.setTypeface(null, Typeface.BOLD);
-//            holder.from.setTextColor(ContextCompat.getColor(mContext, R.color.from));
-//            holder.subject.setTextColor(ContextCompat.getColor(mContext, R.color.subject));
-//        }
-//    }
 
     @Override
     public int getItemCount() {

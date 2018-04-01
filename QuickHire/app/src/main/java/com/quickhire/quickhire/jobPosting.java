@@ -4,7 +4,6 @@ package com.quickhire.quickhire;
  * Created by matth_000 on 2018-03-04.
  */
 
-import java.util.Iterator;
 import java.util.Vector;
 
 public class jobPosting {

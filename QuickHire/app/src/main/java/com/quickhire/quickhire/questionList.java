@@ -18,9 +18,13 @@ import com.github.clans.fab.FloatingActionMenu;
 import com.github.clans.fab.FloatingActionButton;
 import java.util.List;
 
-
+/** questionList ************************************************
+ * Created by nick on 2018-03-27.
+ * resource: www.androidhive.info
+ * Description: list of questions used in the job posting.
+ *********************************************************************/
 public class questionList extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, questionAdapter.MessageAdapterListener {
-    private List<Question> questions = CreateJobPosting2.questionsList;
+    private List<Question> questions = CreateJobPosting2.questionsList; //list of question in the job posting
     private RecyclerView recyclerView;
     private questionAdapter mAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
@@ -31,7 +35,7 @@ public class questionList extends AppCompatActivity implements SwipeRefreshLayou
     private Integer questionPosition;
     public static String questionText;
     public static int videoTime;
-    public static Question selectedQuestion;
+    public static Question selectedQuestion; //question selected in the list.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

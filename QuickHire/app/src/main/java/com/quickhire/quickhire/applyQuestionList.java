@@ -16,13 +16,16 @@ import android.widget.Toast;
 import java.util.List;
 import java.util.Vector;
 
-
+/** applyQuestionList ***************************************************************************
+ * Created by nick on 2018-03-27.
+ * Resource: www.androidhive.info
+ * Description: Gmail UI to show a list of questions for the applicant to answer.
+ ******************************************************************************************/
 public class applyQuestionList extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener, questionAdapter.MessageAdapterListener {
-    private jobPosting post = ApplyActivity.posting;
+    private jobPosting post = ApplyActivity.posting; //application the applicant is applying to
     private RecyclerView recyclerView;
     private questionAdapter mAdapter;
     private SwipeRefreshLayout swipeRefreshLayout;
-    //    private ActionModeCallback actionModeCallback;
     private ActionMode actionMode;
     private Integer questionPosition;
     public static String questionText;
@@ -80,17 +83,10 @@ public class applyQuestionList extends AppCompatActivity implements SwipeRefresh
 
     @Override
     public void onRefresh() {
-        // swipe refresh is performed, fetch the messages again
-//        getInbox();
     }
 
     @Override
     public void onIconClicked(int position) {
-//        if (actionMode == null) {
-//            actionMode = startSupportActionMode(actionModeCallback);
-//        }
-//
-//        toggleSelection(position);
     }
 
     @Override
@@ -144,94 +140,4 @@ public class applyQuestionList extends AppCompatActivity implements SwipeRefresh
         }
     }
 }
-//
-//    @Override
-//    public void onRowLongClicked(int position) {
-//        // long press is performed, enable action mode
-//        enableActionMode(position);
-//    }
-//
-//    private void enableActionMode(int position) {
-//        if (actionMode == null) {
-//            actionMode = startSupportActionMode(actionModeCallback);
-//        }
-//        toggleSelection(position);
-//    }
-//
-//    //
-//    private void toggleSelection(int position) {
-//        mAdapter.toggleSelection(position);
-//        int count = mAdapter.getSelectedItemCount();
-//
-//        if (count == 0) {
-//            actionMode.finish();
-//        } else {
-//            actionMode.setTitle(String.valueOf(count));
-//            actionMode.invalidate();
-//        }
-//    }
-//
-//
-//    private class ActionModeCallback implements ActionMode.Callback {
-//        @Override
-//        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-//            mode.getMenuInflater().inflate(R.menu.menu_action_mode, menu);
-//
-//            // disable swipe refresh if action mode is enabled
-//            swipeRefreshLayout.setEnabled(false);
-//            return true;
-//        }
-//
-//        @Override
-//        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-//            return false;
-//        }
-//
-//        @Override
-//        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-//            switch (item.getItemId()) {
-//                case R.id.action_delete:
-//                    // delete all the selected messages
-//                    deleteMessages();
-//                    mode.finish();
-//                    return true;
-//
-//                default:
-//                    return false;
-//            }
-//        }
-//
-//        @Override
-//        public void onDestroyActionMode(ActionMode mode) {
-//            mAdapter.clearSelections();
-//            swipeRefreshLayout.setEnabled(true);
-//            actionMode = null;
-//            recyclerView.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    mAdapter.resetAnimationIndex();
-//                    // mAdapter.notifyDataSetChanged();
-//                }
-//            });
-//        }
-//    }
-//
-//    // deleting the messages from recycler view
-//    private void deleteMessages() {
-//        mAdapter.resetAnimationIndex();
-//        List<Integer> selectedItemPositions =
-//                mAdapter.getSelectedItems();
-//        for (int i = selectedItemPositions.size() - 1; i >= 0; i--) {
-//            mAdapter.removeData(selectedItemPositions.get(i));
-//        }
-//        mAdapter.notifyDataSetChanged();
-//    }
-//
-//    @Override
-//    protected void onDestroy() {
-//        CreateJobPosting2.questionsList = questions;
-//        super.onDestroy();
-//    }
-//}
-//
-//
+
