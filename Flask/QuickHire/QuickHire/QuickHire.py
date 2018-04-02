@@ -94,10 +94,13 @@ def getApplicantsFromAccessKey(accessKey):
 
 
 
-@app.route('/user/<username>')
-def show_user_profile(username):
-    # show the user profile for that user
-    return 'User %s' % username
+@app.route('/viewApplicant/<applicationID>')
+def viewApplicant(applicationID):
+    
+	app = Application()
+	data = app.getApplicationInfoFromID(applicationID)
+
+	return render_template('applicant.html', data=data)
 
 
 

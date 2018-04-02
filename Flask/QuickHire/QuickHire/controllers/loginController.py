@@ -21,7 +21,7 @@ class UserRegistration(Resource):
             return {'message': "JSON request not properly formatted"}, 500          
 
         try:
-            User.createUser(data['username'],data['password'])
+            User.createUser(data['username'],data['password'], data['name'])
         except ValueError as error:
             print >>sys.stderr, str(error)
             return {'message': str(error)}, 500

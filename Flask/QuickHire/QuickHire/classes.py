@@ -7,7 +7,7 @@ import os
 
 class User:
 	@staticmethod
-	def createUser(username,password):
+	def createUser(username,password,name):
 		#Check if user already exists
 		if UserModel.find_by_username(username):
 			raise ValueError('This User Already Exists')
@@ -15,10 +15,11 @@ class User:
 		hashedPassword = UserModel.generate_hash(password)
 		new_user = UserModel(
             username = username,
-            password = hashedPassword
+            password = hashedPassword,
+            name = name
         )
 		try:
-			new_user.save_to_db()
+			id = new_user.save_to_db()
 		except:
 			raise ValueError('DataBase Error')
 		finally:
@@ -42,6 +43,11 @@ class User:
 	def getIdFromUsername(username):
 		model = UserModel()
 		return model.getID(username)
+
+	@staticmethod
+	def getNameFromID(userID):
+		model = UserModel()
+		return model.getNameFromID(userID)
 
 
 
@@ -77,7 +83,10 @@ class Posting:
 			info['postings'].append(post)
 		return info		
 
-
+	def getPostingFromID(self, postID):
+		self.__model = self.__model.getPostingFromID(postID)
+		self.loadQuestions()
+	
 
 
 	def __init__(self,owner_id=None,jobTitle=None,company=None,description=None,questions=None):
@@ -117,7 +126,6 @@ class Posting:
 	
 	def getPostingFromAccessCode(self,code):
 		self.__model = self.__model.getPostingFromAccessCode(code)
-		#self.__questions[:]=[]
 		if self.__model == None :
 			print >>sys.stderr, "No Posting Found"
 			raise ValueError('No Posting Found')
@@ -132,7 +140,11 @@ class Posting:
 		
 		#Get all the text question models associated with the posting ID
 		questions = textQuestionsModel.getTextQuestionsFromPostId(posting_id)
+		introQuestion = VideoQuestion()
+		introQuestion.makeIntro(posting_id)
+		
 
+		self.__questions.append(introQuestion)
 		#Convert Models into Classes for questions[] list
 		for question in questions:
 			if (question.answer_type==1):
@@ -228,9 +240,11 @@ class VideoQuestion(implements(QuestionInterface)):
 	 	info['length'] = self.__model.answer_restriction
 	 	return info		
 
-
-
-
+	def makeIntro(self,postID):
+		self.__model.question = "Introduce yourself in 30 seconds"
+		self.__model.answer_restriction = 30
+		self.__model.posting_id = postID
+		self.__model.id = 0
 
 
 
@@ -389,16 +403,34 @@ class Application:
 		info['applicants'] = []
 		for applicant in applicants :
 			app = {}
-			#name = UserSettingsModel().getNameFromID(applicant['owner_id'])
 			app['applicationID'] = applicant.id
-			app['name'] = 'loam'
+			app['name'] = User.getNameFromID(applicant.owner_id)
 			app['post_id'] = applicant.posting_id
 			app['owner_id'] = applicant.owner_id
+			app['introVid'] = str(applicant.id)+"-"+"0.mp4"
 			info['applicants'].append(app)
 
 		return info
 	
+	def reserveID(self):
+		return self.__model.reserveID() + 1
 
+	def getApplicationInfoFromID(self,appID):
+
+		self.__model= self.__model.getFromID(appID)
+		postID = self.__model.posting_id
+		posting = Posting()
+		posting.getPostingFromID(postID)
+		postingInfo = posting.getInfo()
+		questions = postingInfo['questions']
+		
+		for question in questions:
+			if question['type']=="0":
+				question['answer'] = videoAnswer.getFromIDs(appID , question['id'])		
+			else:
+				question['answer'] = textAnswer.getFromIDs(appID,question['id'])
+
+		return questions
 
 
 
@@ -410,21 +442,31 @@ class textAnswer:
 		self.__model = TextAnswerModel()
 		self.__model.answer = answer
 		self.__model.application_id = application_ID 
-		print >> sys.stderr , question_id
 		self.__model.question_id = question_id
 
 	def commitAnswer(self,appID):
 		self.__model.application_id = appID
 		self.__model.save_to_db()
 
-
+	@staticmethod
+	def getFromIDs(appID,questionID):
+		model = TextAnswerModel()
+		
+		return model.getFromIDs(appID,questionID)
 
 
 
 
 class videoAnswer:
+
+	@staticmethod
+	def getFromIDs(appID,questionID):
+
+		
+		model = VideoAnswerModel()
+		return model.getFromIDs(appID,questionID)
 	
-	uploadsFolder = "/home/liam/Developement/Flask/JrDesign/Term5_Software_Design_Project/Flask/QuickHire/QuickHire/static/"
+	uploadsFolder = "/home/liam/Developement/Flask/JrDesign/Term5_Software_Design_Project/Flask/QuickHire/QuickHire/static/uploads/"
 
 	def __init__(self , binaryFile=None , questionID=None , applicationID=None , userID=None ):
 		self.__model = VideoAnswerModel()
@@ -444,6 +486,8 @@ class videoAnswer:
 	
 	def commitAnswer(self):
 		self.__model.save_to_db()
+
+	
 		
 
 '''
@@ -491,8 +535,12 @@ class JsonParser:
 
 	@staticmethod
 	def postingToJSON(posting):
-		dictinfo = {}
 		jsonInfo = posting.getInfo()
+
+		application = Application()
+		reservedID = application.reserveID()
+
+		jsonInfo['appIdToUse'] = reservedID
 		return jsonInfo
 
 

@@ -11,7 +11,9 @@ class UserModel(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String(120), unique = True, nullable = False)
     password = db.Column(db.String(120), nullable = False)
+    name = db.Column(db.String(120))
     
+
     @classmethod
     def generate_hash(cls, password):
         return sha256.hash(password)    
@@ -25,13 +27,17 @@ class UserModel(db.Model):
 		return cls.query.filter_by(username = username).first()
 
     def save_to_db(self):
-        db.session.add(self)
-        db.session.commit()
+		db.session.add(self)
+		db.session.commit()
+		idToUse= self.id
+		db.session.close()
+		return idToUse
 
     def getID( cls , name ):
     	return cls.query.filter_by( username = name ).first().id
 
-
+    def getNameFromID(self, userID):
+    	return self.query.filter_by(id = userID).first().name
 
 
 	
@@ -64,6 +70,9 @@ class PostingModel(db.Model):
 
 	def getIDfromAccessKey(self , key):
 		return self.query.filter_by(access_key = key).first().id
+
+	def getPostingFromID(self,postID):
+		return self.query.filter_by(id = postID).first()		
 
 
 
@@ -140,8 +149,11 @@ class ApplicationModel(db.Model):
 	def getApplicantsFromPostID(self , postId):
 		return self.query.filter_by(posting_id=postId).all()
 
+	def reserveID(self):
+		return self.query.order_by("id desc").first().id
 
-
+	def getFromID(self,appID):
+		return self.query.filter_by(id=appID).first()
 
 
 
@@ -157,7 +169,8 @@ class TextAnswerModel(db.Model):
 		db.session.add(self)
 		db.session.commit()
 
-
+	def getFromIDs(self,appID, questionID):
+		return self.query.filter_by(application_id=appID).filter_by(question_id=questionID).first().answer
 
 
 
@@ -174,11 +187,6 @@ class VideoAnswerModel(db.Model):
 		db.session.add(self)
 		db.session.commit()
 
-class UserSettingsModel(db.Model):
-	__tablename__ = 'user_settings'
-	id = Column(Integer,primary_key = True)
-	user_id = db.Column(Integer, db.ForeignKey(UserModel.id),  nullable=False )
-	name = db.Column(db.String(120), unique = False)
-	
-	def getNameFromID(self , userID):
-		return self.query.filter_by(user_id=userID).first().name
+
+	def getFromIDs(self,appID, questionID):
+		return self.query.filter_by(application_id=appID).filter_by(question_id=questionID).first().location

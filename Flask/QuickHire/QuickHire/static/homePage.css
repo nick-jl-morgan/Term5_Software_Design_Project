@@ -12,13 +12,15 @@
 
 .job-posting-card-title{
         font-family: 'Raleway', serif;
-        font-weight: 500;
+        font-weight: 300;
+        color: white
 
 }
 
 .job-posting-access-code{
 	margin-top: 0px;
 	font-weight: 400;
+    
 }
 
 .job-posting-access-code-digits{
@@ -34,14 +36,24 @@ font-weight: 200;
  background-color: #5F758E;
  padding :20px;
  margin : 20px;
+ color: white;
+ height: 30em;
 }
 
 .jumbotron p {
     font-weight: 300;
 }
 
-hr {
+.header-hr {
 
 	margin-bottom: -20px;
 
+}
+
+.job-description{
+    font-size: 12px;
+}
+
+.btn-secondary{
+    color: white;
 }

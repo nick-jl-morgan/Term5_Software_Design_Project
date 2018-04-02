@@ -27,6 +27,7 @@ class submitApplication (Resource):
 		curent_user_id = User.getIdFromUsername(get_jwt_identity())
 
 		answersArray = JsonParser.parseAnswers(data['answers'])
+
 		app = Application( curent_user_id , data['postID'] , answersArray )
 
 		appID = app.commitApplication() 
@@ -38,12 +39,18 @@ class submitApplication (Resource):
 class submitApplicationVideo (Resource):
     @jwt_required
     def post(self):
+
+		location = "/home/liam/Developement/Flask/JrDesign/Term5_Software_Design_Project/Flask/QuickHire/QuickHire/static/uploads/"
+
 		data = request.get_json()
 
-		if(data['data'] == 'done'):
+		file = str(data['applicationID']) +"-"+str(data['questionID']) + ".txt"
 
+		if(data['data'] == 'done'):
+			print >> sys.stderr , "Done"
 			curent_user_id = User.getIdFromUsername(get_jwt_identity())
-			answer = videoAnswer('binary.txt' , data['questionID'] , data['applicationID'], curent_user_id) 		
+
+			answer = videoAnswer( file , data['questionID'] , data['applicationID'], curent_user_id) 		
 			answer.commitAnswer()
 
 			return {'message': "Video Posted"}, 200
@@ -53,9 +60,8 @@ class submitApplicationVideo (Resource):
 			
 			binaryString = ""
 			decoded_string = pybase64.urlsafe_b64decode(data['data'])
-			f = '/home/liam/Developement/Flask/JrDesign/Term5_Software_Design_Project/Flask/QuickHire/QuickHire/static/binary.txt'
-			
-			with open('/home/liam/Developement/Flask/JrDesign/Term5_Software_Design_Project/Flask/QuickHire/QuickHire/static/binary.txt', 'ab+') as wfile:
+
+			with open('/home/liam/Developement/Flask/JrDesign/Term5_Software_Design_Project/Flask/QuickHire/QuickHire/static/uploads/'+file , 'ab+') as wfile:
 				wfile.write(decoded_string)
 			wfile.close()
 		

@@ -3,7 +3,7 @@ function appendPostings(jsonData){
     var content = "";
 
     jsonData['postings'].forEach(function(element) {
-        var card = "<div class='col-md-4 job-posting-card'> <h2 class='job-posting-card-title' >" + element['title'] + "</h2> <h4 class='job-posting-access-code'>Access Code : <span class='job-posting-access-code-digits'>" + element['accessKey'] +"</span></h3> <p></p>"+ element['description']+"<p><a class='btn btn-secondary view-applicants-btn' id='"+ element['accessKey'] +"'>View Applicants »</a></p> </div> ";
+        var card = "<div class='col-md-4 job-posting-card'> <h2 class='job-posting-card-title' >" + element['title'] + "</h2> <h4 class='job-posting-access-code'>Access Code : <span class='job-posting-access-code-digits'>" + element['accessKey'] +"</span></h3><hr> <p class'job-description'>"+ element['description']+"</p><a class='btn btn-secondary view-applicants-btn' id='"+ element['accessKey'] +"'>View Applicants »</a></p> </div> ";
         content += card;
     });
 
