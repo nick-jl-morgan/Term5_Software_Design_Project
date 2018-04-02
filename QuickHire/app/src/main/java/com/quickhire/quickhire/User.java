@@ -18,6 +18,7 @@ public class User implements java.io.Serializable{
     private User(){
     }
 
+    //sinlgeton constuctor
     private User(String username){
         this.username = username;
     }
@@ -37,6 +38,8 @@ public class User implements java.io.Serializable{
         this.creds=creds;
     }
 
+    //returns the credentials (i.e. Java Web Token) associated with this user's most recent login.
+    //Required for all HTTP requests.
     public String getCredentials(){
         return this.creds.getAccessToken();
     }
@@ -55,31 +58,32 @@ public class User implements java.io.Serializable{
         }
     }
 
-    public boolean recoverUser(){
-        boolean recovered;
-        if(theUser == null) {
-            try {
-                FileInputStream stream = new FileInputStream("user.data");
-                ObjectInputStream objectStream = new ObjectInputStream(stream);
-                theUser  = (User) objectStream.readObject();
-                recovered = true;
-            } catch (java.io.FileNotFoundException e) {
-                e.printStackTrace();
-                recovered=false;
-            } catch (java.io.IOException e) {
-                e.printStackTrace();
-                recovered=false;
-            } catch(java.lang.ClassNotFoundException e){
-                e.printStackTrace();
-                recovered=false;
-            }
-
-        }
-        else{
-            recovered =false;
-        }
-        return recovered;
-    }
+    //Never used. Early iteration plan for saving user. Was never fully implemented.
+//    public boolean recoverUser(){
+//        boolean recovered;
+//        if(theUser == null) {
+//            try {
+//                FileInputStream stream = new FileInputStream("user.data");
+//                ObjectInputStream objectStream = new ObjectInputStream(stream);
+//                theUser  = (User) objectStream.readObject();
+//                recovered = true;
+//            } catch (java.io.FileNotFoundException e) {
+//                e.printStackTrace();
+//                recovered=false;
+//            } catch (java.io.IOException e) {
+//                e.printStackTrace();
+//                recovered=false;
+//            } catch(java.lang.ClassNotFoundException e){
+//                e.printStackTrace();
+//                recovered=false;
+//            }
+//
+//        }
+//        else{
+//            recovered =false;
+//        }
+//        return recovered;
+//    }
 
 
 }

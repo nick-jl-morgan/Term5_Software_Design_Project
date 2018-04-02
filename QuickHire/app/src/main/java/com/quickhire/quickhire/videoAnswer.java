@@ -8,7 +8,7 @@ import android.net.Uri;
 
 public class videoAnswer extends Answer{
     int type = questionType.VIDEO.getNumVal();
-    Uri vid;
+    Uri vid;    //URI - Universal Resource Identifier is used to store the video information.
     int qID;
 
     public videoAnswer(Uri video, int questionID){
@@ -20,6 +20,7 @@ public class videoAnswer extends Answer{
         super(id, value, questionType.VIDEO.getNumVal());
     }
 
+    //Converts to JSON (not including actual video itself. Only metadata).
     public String toJSON(){
         String JSON="{\"questionID\":"+qID+","
                     +"\"Answer\":\"videoTransmitting\","
@@ -28,6 +29,7 @@ public class videoAnswer extends Answer{
         return JSON;
     }
 
+    //begins upload of video to server.
     @Override
     protected void beginTransmitting(){
         connection.getConnection().uploadVideo(this);

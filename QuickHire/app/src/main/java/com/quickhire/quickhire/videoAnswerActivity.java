@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+
+//This was originally how we answered videoQuestions but due to bugs was not used. See videoTester instead.
 public class videoAnswerActivity extends AppCompatActivity {
 
     private Camera camera;

@@ -22,12 +22,13 @@ public class jobPosting {
 
     public Vector<Question> questions = new Vector<Question>();
 
+    //basic constructor
     public jobPosting(String company, String jobTitle, String description){
         this.company=company;
         this.jobTitle=jobTitle;
         this.description = description;
     }
-
+    //Constructor with more details
     public jobPosting(String company, String jobTitle, String description, Integer postID, Integer ownerID){
         this.company=company;
         this.jobTitle=jobTitle;
@@ -62,6 +63,7 @@ public class jobPosting {
         this.questions.add(question);
     }
 
+    //converts to an application.
     public Application toapplication(){
         Application apply = new Application(this.postID, this.questions);
         return apply;

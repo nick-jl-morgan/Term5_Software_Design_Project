@@ -16,6 +16,11 @@ import android.widget.VideoView;
 
 import java.io.File;
 
+/*******************
+ * Created by matth_000
+ * This activity is used to record the video responses and then begins their upload.
+ * As the name may imply, that was not the original intent of this activity.
+ * ***********************/
 public class videoTester extends AppCompatActivity {
     private VideoView videoV;
     private TextView question;
@@ -45,6 +50,8 @@ public class videoTester extends AppCompatActivity {
             }
         });
     }
+    //This is where the video is returned from the devices default video app.
+    //The videoquestion is marked as repsponded to and the video begins transmission immediately because it is a very long process.
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1){

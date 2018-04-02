@@ -54,13 +54,14 @@ public class connection{
         this.queue = Volley.newRequestQueue(ctx);
     }
 
-    //Con
+
     private connection(Context ctx,  String URL){
         this.URL=URL;
         this.appcontext=ctx;
         this.queue = Volley.newRequestQueue(ctx);
     }
 
+    //Initlialize the singleton
     public synchronized static boolean createinitialConnection(Context ctx){
         if(singleConnection==null){
             singleConnection= new connection(ctx);
@@ -74,7 +75,7 @@ public class connection{
         return singleConnection;
     }
 
-
+    //formats JSON and passes to generic
     protected void registerUser(String username, String password, String name, Response.Listener<JSONObject> responseListener, Response.ErrorListener err) {
 
         String JSON="{\"username\":\"" + username + "\","
@@ -84,7 +85,7 @@ public class connection{
 
         generic(JSON, extension, responseListener, err);
     }
-
+    //formats JSON and passes to generic
     protected void searchJobPosting(String id, Response.Listener<JSONObject> responseListener, Response.ErrorListener err) {
 
         String JSON="{\"AccessCode\":\"" + id + "\"}";
@@ -94,7 +95,7 @@ public class connection{
 
         generic(JSON, extension, responseListener, err);
     }
-
+    //formats JSON and passes to generic
     protected void loginUser(String username, String password, final Response.Listener<JSONObject> responseListener, Response.ErrorListener err) {
 
         String JSON="{\"username\":\"" + username + "\","
@@ -106,20 +107,20 @@ public class connection{
 
             @Override
             public void onResponse(JSONObject response) {
-                responseListener.onResponse(response);
+                responseListener.onResponse(response);  //Leave opportunity to implement connection level actions.
                 //DoStuff
             }
         };
 
         generic(JSON, extension, r, err);
     }
-
+    //formats JSON and passes to generic
     protected void saveJobPosting(jobPosting posting, Response.Listener<JSONObject> responseListener, Response.ErrorListener err){
         String JSON = posting.toJSON();
         String extension = "AddPosting";
         generic(JSON, extension, responseListener, err);
     }
-
+    //formats JSON and passes to generic
     protected void saveApplication(Application application, Response.Listener<JSONObject> responseListener, Response.ErrorListener err){
         String JSON = application.toJSON();
         String extension = "submitApplication";
@@ -175,7 +176,7 @@ public class connection{
     }
     protected void disableExternal(){this.external=false;}
 
-    //Enabled third party upload and creates a new thread which handles video streaming to server.
+    //Enables third party access to generic and creates a new thread which handles video streaming to server.
     public void uploadVideo(videoAnswer answer){
         external=true;
         new videoStreamer().execute(answer);

@@ -8,11 +8,16 @@ import org.json.JSONObject;
 
 /**
  * Created by matth_000 on 2018-03-24.
+ * This class is responsible for creating the user class and ensuring the validty of login/registration.
+ * The class acts as a middleman between the registerlogin activity, the connection class, and the User class.
+ *
  */
 
 class Authenticator{
     static private connection c = connection.getConnection();
 
+    //This method is passed the user's username and password, a response listener and error listener that define the frontend behaviour for registration.
+    // It also creates new listeners that define take care of user instantiation before calling the other listeners to take care of UI response.
     public static void attemptRegistration(String username, String password, String name, Response.Listener<JSONObject> rl,  Response.ErrorListener err){
         final String u = username;
         final Response.Listener<JSONObject> nl=rl;
@@ -46,6 +51,8 @@ class Authenticator{
         c.registerUser(username, password, name, listener, errorListener);
     }
 
+    //This method is passed the user's username and password, a response listener and error listener that define the frontend behaviour for login.
+    // It also creates new listeners that define take care of user instantiation before calling the other listeners to take care of UI response.
     public static void attemptLogin(String username, String password, Response.Listener<JSONObject> rl, Response.ErrorListener err){
         final String u = username;
         final Response.Listener<JSONObject> nl=rl;

@@ -25,6 +25,7 @@ import java.util.Arrays;
 
 /**
  * Created by matth_000 on 2018-03-27.
+ * This activity
  */
 
 public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
