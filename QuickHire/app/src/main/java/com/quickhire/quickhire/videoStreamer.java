@@ -25,9 +25,8 @@ import java.util.Arrays;
 
 /**
  * Created by matth_000 on 2018-03-27.
- * This activity
+ * This class is an asycronous thread which handles the serialization, encoding, and uploading of the video files used as for the video reponses.
  */
-
 public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
 
     int index = 0;
@@ -37,23 +36,22 @@ public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
 
         connection c = connection.getConnection();
         int bytesRead, bytesAvailable, bufferSize;
-        byte[] buffer;
-        int maxBufferSize = 1*1024*1024;
+        byte[] buffer;  //Bytearray
+        int maxBufferSize = 1*1024*1024;    //Max packet size of 1Mb
         String urlString = "UploadVideo";
         this.index=0;
         try{
 
-            Uri video = f[0].getUri();
-//            File file = new File(video.getPath());
-//            FileInputStream fileInputStream=new FileInputStream(file);
+            Uri video = f[0].getUri(); //assume only one video at a time (async task supports arbitrary number of inputs)
 
-            InputStream fileInputStream = connection.getConnection().appcontext.getContentResolver().openInputStream(video);//.openfile(new File(video.getPath()));
+            InputStream fileInputStream = connection.getConnection().appcontext.getContentResolver().openInputStream(video); //open the file as an inputstream.
 
             bytesAvailable = fileInputStream.available();
             bufferSize = Math.min(bytesAvailable, maxBufferSize);
             buffer = new byte[bufferSize];
             bytesRead = fileInputStream.read(buffer, 0, bufferSize);
             while (bytesRead > 0){
+                //create a listener for each packet.
                 Response.Listener<JSONObject> listener = new Response.Listener<JSONObject>() {
                     int i = index;
                     @Override
@@ -68,16 +66,17 @@ public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
 
                     }
                 };
+                //Format json
                 String JSON = "{\"applicationID\":"+f[0].getApplicationID()+","
                             +"\"questionID\":"+f[0].getQuestionID()+","
                             +"\"packetNum\":"+this.index+","
-                            +"\"data\":\""+ Base64.encodeToString(buffer,Base64.URL_SAFE)+"\"}";
+                            +"\"data\":\""+ Base64.encodeToString(buffer,Base64.URL_SAFE)+"\"}";    //
                 c.publicgeneric(JSON,urlString,listener,errorListener);
                 //Logic for next request generation
                 bytesAvailable = fileInputStream.available();
                 bufferSize = Math.min(bytesAvailable, maxBufferSize);
-                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
-                this.index++;
+                bytesRead = fileInputStream.read(buffer, 0, bufferSize);    //Read the next set of data.
+                this.index++;   //index the packets. They must be numbered so they may be put together in order on the serverside.
             }
             Response.Listener<JSONObject> listener = new Response.Listener<JSONObject>() {
                 int i = index;
@@ -97,7 +96,7 @@ public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
                     +"\"questionID\":"+f[0].getQuestionID()+","
                     +"\"packetNum\":"+this.index+","
                     +"\"data\":\"done\"}";
-            c.publicgeneric(JSON,urlString,listener,errorListener);
+            c.publicgeneric(JSON,urlString,listener,errorListener); //A final message to tell the server that the video upload is complete.
 
             fileInputStream.close();
         }
@@ -111,7 +110,8 @@ public class videoStreamer extends AsyncTask<videoAnswer, Void, Void> {
             fnoe.printStackTrace();
             Log.e("Broke", fnoe.getMessage());
         }
-        c.disableExternal();
+
+        c.disableExternal();    //Security purposes
         return null;
     }
 
