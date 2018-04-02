@@ -1,0 +1,34 @@
+.signInContainer{
+	padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.form-signin {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+
+}
+
+.form-control{
+	margin: 4px;
+}
+
+h2{
+        font-family: 'Raleway', serif;
+        font-weight: 200
+}
+
+input{
+        font-family: 'Raleway', serif;
+        font-weight: 500;
+        padding: 10
+
+}
+
+.sign-in-btn{
+	font-family: 'Raleway', serif;
+	font-weight: 300;
+}

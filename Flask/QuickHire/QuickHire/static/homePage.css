@@ -1,0 +1,59 @@
+.title{
+        font-family: 'Raleway', serif;
+        font-weight: 100;
+        color: white !important;
+}
+
+.title-text{
+        font-family: 'Raleway', serif;
+        font-weight: 500;
+
+}
+
+.job-posting-card-title{
+        font-family: 'Raleway', serif;
+        font-weight: 300;
+        color: white
+
+}
+
+.job-posting-access-code{
+	margin-top: 0px;
+	font-weight: 400;
+    
+}
+
+.job-posting-access-code-digits{
+font-family: 'Raleway', serif;
+font-weight: 200;
+}
+
+.jumbotron{
+	background-color: #DB162F;
+}
+
+.job-posting-card{
+ background-color: #5F758E;
+ padding :20px;
+ margin : 20px;
+ color: white;
+ height: 30em;
+}
+
+.jumbotron p {
+    font-weight: 300;
+}
+
+.header-hr {
+
+	margin-bottom: -20px;
+
+}
+
+.job-description{
+    font-size: 12px;
+}
+
+.btn-secondary{
+    color: white;
+}
