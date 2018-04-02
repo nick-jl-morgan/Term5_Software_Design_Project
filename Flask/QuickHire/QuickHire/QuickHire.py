@@ -119,6 +119,3 @@ mobileAPI.add_resource(postingController.addPosting,'/API/AddPosting')
 mobileAPI.add_resource(postingController.getPostingFromAccessCode,'/API/getPostingFromAccessCode')
 mobileAPI.add_resource(applicationController.submitApplicationVideo,'/API/UploadVideo')
 mobileAPI.add_resource(applicationController.submitApplication,'/API/submitApplication')
-
-
-app.run(host='0.0.0.0', port=5000)
