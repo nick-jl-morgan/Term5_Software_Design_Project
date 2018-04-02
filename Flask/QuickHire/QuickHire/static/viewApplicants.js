@@ -2,7 +2,7 @@
 
 
 
-
+//On button click retrieve all applicants and redirect to page
 $(document).ready(function(){ 
 
 		$( ".view-applicant-btn" ).click(function(btn) {

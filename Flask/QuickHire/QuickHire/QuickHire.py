@@ -45,11 +45,15 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 import controllers.loginController as loginController, controllers.applicationController as applicationController, controllers.postingController as postingController
 from classes import *
+
+
 #LandingPage for WebApp
 @app.route('/')
 def landingController():
 	return render_template('loginPage.html')
 
+
+#Login Service for WebApp
 @app.route('/login',methods = ['POST'])
 def login():
 	result = request.form
@@ -68,7 +72,7 @@ def login():
 		refresh_token = create_refresh_token(identity = username)
 		return render_template('homePage.html', accessToken=username)
 
-
+#When a user on the webapp logs in this API is called to retrieve all of their postings
 @app.route('/getUserPostings',methods = ['POST'])
 def getUserPostings():
 	
@@ -81,7 +85,7 @@ def getUserPostings():
 	return jsonify(postingsDict)
 
 
-
+#When an posting is selected on the webapp, this API is called to retrieve all the postings
 @app.route('/getApplicantsFromAccessKey/<accessKey>')
 def getApplicantsFromAccessKey(accessKey):
 
@@ -93,7 +97,7 @@ def getApplicantsFromAccessKey(accessKey):
 
 
 
-
+#API to view a specific applicant
 @app.route('/viewApplicant/<applicationID>')
 def viewApplicant(applicationID):
     
@@ -108,12 +112,9 @@ def viewApplicant(applicationID):
 
 
 
-#Mobile API Routes
+#Mobile API Routes 
 mobileAPI.add_resource(loginController.UserRegistration, '/API/registration')
 mobileAPI.add_resource(loginController.UserLogin, '/API/login')
-mobileAPI.add_resource(loginController.UserLogoutAccess, '/API/logout/access')
-mobileAPI.add_resource(loginController.UserLogoutRefresh, '/API/logout/refresh')
-mobileAPI.add_resource(loginController.TokenRefresh, '/API/token/refresh')
 mobileAPI.add_resource(postingController.addPosting,'/API/AddPosting')
 mobileAPI.add_resource(postingController.getPostingFromAccessCode,'/API/getPostingFromAccessCode')
 mobileAPI.add_resource(applicationController.submitApplicationVideo,'/API/UploadVideo')
